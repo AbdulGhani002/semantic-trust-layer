@@ -1,0 +1,1221 @@
+{
+ "thresholds": {
+  "threat": 0.99560546875,
+  "hate": 0.96875,
+  "abuse": 0.78857421875,
+  "fraud": 0.60009765625
+ },
+ "datasets": {
+  "abuse_civil": {
+   "rows": 60000,
+   "ms_per_item": 17.03,
+   "labels": {
+    "threat": {
+     "keyword_filter": {
+      "precision": 0.0261,
+      "recall": 0.3083,
+      "f1": 0.0481,
+      "false_alarm_rate": 0.0256,
+      "average_precision": null,
+      "positives": 133,
+      "rows": 60000
+     },
+     "linear_tfidf": {
+      "precision": 0.1004,
+      "recall": 0.7744,
+      "f1": 0.1777,
+      "false_alarm_rate": 0.0154,
+      "average_precision": 0.221,
+      "positives": 133,
+      "rows": 60000
+     },
+     "transformer": {
+      "precision": 0.2895,
+      "recall": 0.4962,
+      "f1": 0.3657,
+      "false_alarm_rate": 0.0027,
+      "average_precision": 0.2577,
+      "positives": 133,
+      "rows": 60000
+     }
+    },
+    "hate": {
+     "keyword_filter": {
+      "precision": 0.0499,
+      "recall": 0.102,
+      "f1": 0.0671,
+      "false_alarm_rate": 0.0144,
+      "average_precision": null,
+      "positives": 441,
+      "rows": 60000
+     },
+     "linear_tfidf": {
+      "precision": 0.1762,
+      "recall": 0.7868,
+      "f1": 0.288,
+      "false_alarm_rate": 0.0272,
+      "average_precision": 0.2988,
+      "positives": 441,
+      "rows": 60000
+     },
+     "transformer": {
+      "precision": 0.3263,
+      "recall": 0.5986,
+      "f1": 0.4224,
+      "false_alarm_rate": 0.0092,
+      "average_precision": 0.364,
+      "positives": 441,
+      "rows": 60000
+     }
+    },
+    "abuse": {
+     "keyword_filter": {
+      "precision": 0.6822,
+      "recall": 0.243,
+      "f1": 0.3584,
+      "false_alarm_rate": 0.0102,
+      "average_precision": null,
+      "positives": 4938,
+      "rows": 60000
+     },
+     "linear_tfidf": {
+      "precision": 0.4264,
+      "recall": 0.842,
+      "f1": 0.5661,
+      "false_alarm_rate": 0.1016,
+      "average_precision": 0.6965,
+      "positives": 4938,
+      "rows": 60000
+     },
+     "transformer": {
+      "precision": 0.5377,
+      "recall": 0.7659,
+      "f1": 0.6318,
+      "false_alarm_rate": 0.0591,
+      "average_precision": 0.6729,
+      "positives": 4938,
+      "rows": 60000
+     }
+    }
+   }
+  },
+  "hate_unseen_source": {
+   "rows": 27829,
+   "ms_per_item": 7.1,
+   "labels": {
+    "hate": {
+     "keyword_filter": {
+      "precision": 0.6777,
+      "recall": 0.1509,
+      "f1": 0.2468,
+      "false_alarm_rate": 0.0425,
+      "average_precision": null,
+      "positives": 10354,
+      "rows": 27829
+     },
+     "linear_tfidf": {
+      "precision": 0.4037,
+      "recall": 0.3149,
+      "f1": 0.3538,
+      "false_alarm_rate": 0.2756,
+      "average_precision": 0.4023,
+      "positives": 10354,
+      "rows": 27829
+     },
+     "transformer": {
+      "precision": 0.4341,
+      "recall": 0.2231,
+      "f1": 0.2947,
+      "false_alarm_rate": 0.1723,
+      "average_precision": 0.4363,
+      "positives": 10354,
+      "rows": 27829
+     }
+    }
+   }
+  },
+  "fraud_email_unseen_source": {
+   "rows": 6058,
+   "ms_per_item": 115.84,
+   "labels": {
+    "fraud": {
+     "keyword_filter": {
+      "precision": 0.9284,
+      "recall": 0.7901,
+      "f1": 0.8537,
+      "false_alarm_rate": 0.2379,
+      "average_precision": null,
+      "positives": 4822,
+      "rows": 6058
+     },
+     "linear_tfidf": {
+      "precision": 0.9834,
+      "recall": 0.9345,
+      "f1": 0.9583,
+      "false_alarm_rate": 0.0615,
+      "average_precision": 0.9928,
+      "positives": 4822,
+      "rows": 6058
+     },
+     "transformer": {
+      "precision": 0.976,
+      "recall": 0.928,
+      "f1": 0.9514,
+      "false_alarm_rate": 0.089,
+      "average_precision": 0.9908,
+      "positives": 4822,
+      "rows": 6058
+     }
+    }
+   }
+  },
+  "sms_unseen": {
+   "rows": 1059,
+   "ms_per_item": 4.94,
+   "labels": {
+    "fraud": {
+     "keyword_filter": {
+      "precision": 0.4634,
+      "recall": 0.413,
+      "f1": 0.4368,
+      "false_alarm_rate": 0.0217,
+      "average_precision": null,
+      "positives": 46,
+      "rows": 1059
+     },
+     "linear_tfidf": {
+      "precision": 0.5233,
+      "recall": 0.9783,
+      "f1": 0.6818,
+      "false_alarm_rate": 0.0405,
+      "average_precision": 0.9467,
+      "positives": 46,
+      "rows": 1059
+     },
+     "transformer": {
+      "precision": 0.9,
+      "recall": 0.9783,
+      "f1": 0.9375,
+      "false_alarm_rate": 0.0049,
+      "average_precision": 0.9927,
+      "positives": 46,
+      "rows": 1059
+     }
+    }
+   }
+  },
+  "roman_urdu": {
+   "rows": 1997,
+   "ms_per_item": 5.29,
+   "labels": {
+    "abuse": {
+     "keyword_filter": {
+      "precision": 0.7619,
+      "recall": 0.0172,
+      "f1": 0.0337,
+      "false_alarm_rate": 0.0047,
+      "average_precision": null,
+      "positives": 928,
+      "rows": 1997
+     },
+     "linear_tfidf": {
+      "precision": 0.7432,
+      "recall": 0.9138,
+      "f1": 0.8197,
+      "false_alarm_rate": 0.2741,
+      "average_precision": 0.9023,
+      "positives": 928,
+      "rows": 1997
+     },
+     "transformer": {
+      "precision": 0.9008,
+      "recall": 0.7144,
+      "f1": 0.7969,
+      "false_alarm_rate": 0.0683,
+      "average_precision": 0.9111,
+      "positives": 928,
+      "rows": 1997
+     }
+    }
+   }
+  }
+ },
+ "semantic_test": {
+  "all": {
+   "keyword": {
+    "recall": 0.333,
+    "false_alarm_rate": 0.286,
+    "caught": "12/36",
+    "false_alarms": "6/21"
+   },
+   "transformer": {
+    "recall": 0.417,
+    "false_alarm_rate": 0.143,
+    "caught": "15/36",
+    "false_alarms": "3/21"
+   },
+   "combined": {
+    "recall": 0.917,
+    "false_alarm_rate": 0.095,
+    "caught": "33/36",
+    "false_alarms": "2/21"
+   }
+  },
+  "language_en": {
+   "keyword": {
+    "recall": 0.417,
+    "false_alarm_rate": 0.4,
+    "caught": "10/24",
+    "false_alarms": "6/15"
+   },
+   "transformer": {
+    "recall": 0.458,
+    "false_alarm_rate": 0.2,
+    "caught": "11/24",
+    "false_alarms": "3/15"
+   },
+   "combined": {
+    "recall": 0.958,
+    "false_alarm_rate": 0.133,
+    "caught": "23/24",
+    "false_alarms": "2/15"
+   }
+  },
+  "language_ru": {
+   "keyword": {
+    "recall": 0.333,
+    "false_alarm_rate": 0.0,
+    "caught": "2/6",
+    "false_alarms": "0/3"
+   },
+   "transformer": {
+    "recall": 0.167,
+    "false_alarm_rate": 0.0,
+    "caught": "1/6",
+    "false_alarms": "0/3"
+   },
+   "combined": {
+    "recall": 0.833,
+    "false_alarm_rate": 0.0,
+    "caught": "5/6",
+    "false_alarms": "0/3"
+   }
+  },
+  "language_ur": {
+   "keyword": {
+    "recall": 0.0,
+    "false_alarm_rate": 0.0,
+    "caught": "0/6",
+    "false_alarms": "0/3"
+   },
+   "transformer": {
+    "recall": 0.5,
+    "false_alarm_rate": 0.0,
+    "caught": "3/6",
+    "false_alarms": "0/3"
+   },
+   "combined": {
+    "recall": 0.833,
+    "false_alarm_rate": 0.0,
+    "caught": "5/6",
+    "false_alarms": "0/3"
+   }
+  },
+  "no_obvious_keyword": {
+   "keyword": {
+    "recall": 0.2,
+    "false_alarm_rate": 0.0,
+    "caught": "4/20",
+    "false_alarms": "0/0"
+   },
+   "transformer": {
+    "recall": 0.35,
+    "false_alarm_rate": 0.0,
+    "caught": "7/20",
+    "false_alarms": "0/0"
+   },
+   "combined": {
+    "recall": 0.85,
+    "false_alarm_rate": 0.0,
+    "caught": "17/20",
+    "false_alarms": "0/0"
+   }
+  },
+  "language_model_used": true,
+  "reviewed_items": 57,
+  "median_review_seconds": 1.79,
+  "gates": [
+   {
+    "gate": 0.0,
+    "caught": "33/36",
+    "false_alarms": "2/21",
+    "normal_mail_read": 1.0,
+    "normal_comments_read": 1.0
+   },
+   {
+    "gate": 0.005,
+    "caught": "31/36",
+    "false_alarms": "2/21",
+    "normal_mail_read": 0.93,
+    "normal_comments_read": 0.823
+   },
+   {
+    "gate": 0.02,
+    "caught": "29/36",
+    "false_alarms": "2/21",
+    "normal_mail_read": 0.743,
+    "normal_comments_read": 0.443
+   },
+   {
+    "gate": 0.08,
+    "caught": "26/36",
+    "false_alarms": "1/21",
+    "normal_mail_read": 0.5,
+    "normal_comments_read": 0.247
+   },
+   {
+    "gate": 0.3,
+    "caught": "22/36",
+    "false_alarms": "0/21",
+    "normal_mail_read": 0.315,
+    "normal_comments_read": 0.11
+   }
+  ],
+  "rows": [
+   {
+    "id": "t01",
+    "expected": "flag",
+    "label": "threat",
+    "language": "en",
+    "kind": "explicit",
+    "risk": 0.966,
+    "keyword": true,
+    "transformer": true,
+    "combined": true,
+    "review_labels": [
+     "threat"
+    ]
+   },
+   {
+    "id": "t02",
+    "expected": "flag",
+    "label": "threat",
+    "language": "en",
+    "kind": "explicit",
+    "risk": 0.926,
+    "keyword": true,
+    "transformer": true,
+    "combined": true,
+    "review_labels": [
+     "threat"
+    ]
+   },
+   {
+    "id": "t03",
+    "expected": "flag",
+    "label": "threat",
+    "language": "en",
+    "kind": "veiled",
+    "risk": 0.021,
+    "keyword": false,
+    "transformer": false,
+    "combined": true,
+    "review_labels": [
+     "threat"
+    ]
+   },
+   {
+    "id": "t04",
+    "expected": "flag",
+    "label": "threat",
+    "language": "en",
+    "kind": "veiled",
+    "risk": 0.005,
+    "keyword": false,
+    "transformer": false,
+    "combined": true,
+    "review_labels": [
+     "threat"
+    ]
+   },
+   {
+    "id": "t05",
+    "expected": "flag",
+    "label": "threat",
+    "language": "en",
+    "kind": "veiled",
+    "risk": 0.005,
+    "keyword": false,
+    "transformer": false,
+    "combined": false,
+    "review_labels": [
+     "threat"
+    ]
+   },
+   {
+    "id": "t06",
+    "expected": "flag",
+    "label": "threat",
+    "language": "en",
+    "kind": "veiled",
+    "risk": 0.063,
+    "keyword": false,
+    "transformer": false,
+    "combined": true,
+    "review_labels": [
+     "hate"
+    ]
+   },
+   {
+    "id": "t07",
+    "expected": "flag",
+    "label": "threat",
+    "language": "en",
+    "kind": "veiled",
+    "risk": 0.003,
+    "keyword": false,
+    "transformer": false,
+    "combined": true,
+    "review_labels": [
+     "threat"
+    ]
+   },
+   {
+    "id": "t08",
+    "expected": "flag",
+    "label": "threat",
+    "language": "ru",
+    "kind": "veiled",
+    "risk": 0.084,
+    "keyword": false,
+    "transformer": false,
+    "combined": false,
+    "review_labels": [
+     "threat"
+    ]
+   },
+   {
+    "id": "t09",
+    "expected": "flag",
+    "label": "threat",
+    "language": "ru",
+    "kind": "explicit",
+    "risk": 0.104,
+    "keyword": false,
+    "transformer": false,
+    "combined": true,
+    "review_labels": [
+     "threat"
+    ]
+   },
+   {
+    "id": "t10",
+    "expected": "flag",
+    "label": "threat",
+    "language": "ur",
+    "kind": "veiled",
+    "risk": 0.007,
+    "keyword": false,
+    "transformer": false,
+    "combined": false,
+    "review_labels": [
+     "threat"
+    ]
+   },
+   {
+    "id": "t11",
+    "expected": "flag",
+    "label": "threat",
+    "language": "ur",
+    "kind": "explicit",
+    "risk": 0.97,
+    "keyword": false,
+    "transformer": true,
+    "combined": true,
+    "review_labels": [
+     "threat"
+    ]
+   },
+   {
+    "id": "h01",
+    "expected": "flag",
+    "label": "hate",
+    "language": "en",
+    "kind": "slur",
+    "risk": 0.92,
+    "keyword": true,
+    "transformer": true,
+    "combined": true,
+    "review_labels": [
+     "hate",
+     "abuse"
+    ]
+   },
+   {
+    "id": "h02",
+    "expected": "flag",
+    "label": "hate",
+    "language": "en",
+    "kind": "obfuscated",
+    "risk": 0.992,
+    "keyword": false,
+    "transformer": true,
+    "combined": true,
+    "review_labels": [
+     "hate"
+    ]
+   },
+   {
+    "id": "h03",
+    "expected": "flag",
+    "label": "hate",
+    "language": "en",
+    "kind": "implicit",
+    "risk": 0.247,
+    "keyword": false,
+    "transformer": false,
+    "combined": true,
+    "review_labels": [
+     "hate"
+    ]
+   },
+   {
+    "id": "h04",
+    "expected": "flag",
+    "label": "hate",
+    "language": "en",
+    "kind": "implicit",
+    "risk": 0.606,
+    "keyword": false,
+    "transformer": true,
+    "combined": true,
+    "review_labels": [
+     "hate"
+    ]
+   },
+   {
+    "id": "h05",
+    "expected": "flag",
+    "label": "hate",
+    "language": "en",
+    "kind": "implicit",
+    "risk": 0.098,
+    "keyword": false,
+    "transformer": false,
+    "combined": true,
+    "review_labels": [
+     "hate"
+    ]
+   },
+   {
+    "id": "h06",
+    "expected": "flag",
+    "label": "hate",
+    "language": "en",
+    "kind": "implicit",
+    "risk": 0.993,
+    "keyword": false,
+    "transformer": true,
+    "combined": true,
+    "review_labels": [
+     "hate"
+    ]
+   },
+   {
+    "id": "h07",
+    "expected": "flag",
+    "label": "hate",
+    "language": "ur",
+    "kind": "implicit",
+    "risk": 0.567,
+    "keyword": false,
+    "transformer": true,
+    "combined": true,
+    "review_labels": [
+     "hate"
+    ]
+   },
+   {
+    "id": "a01",
+    "expected": "flag",
+    "label": "abuse",
+    "language": "en",
+    "kind": "insult",
+    "risk": 0.983,
+    "keyword": true,
+    "transformer": true,
+    "combined": true,
+    "review_labels": [
+     "abuse"
+    ]
+   },
+   {
+    "id": "a02",
+    "expected": "flag",
+    "label": "abuse",
+    "language": "en",
+    "kind": "insult",
+    "risk": 0.955,
+    "keyword": true,
+    "transformer": true,
+    "combined": true,
+    "review_labels": [
+     "abuse"
+    ]
+   },
+   {
+    "id": "a03",
+    "expected": "flag",
+    "label": "abuse",
+    "language": "en",
+    "kind": "implicit",
+    "risk": 0.004,
+    "keyword": false,
+    "transformer": false,
+    "combined": true,
+    "review_labels": [
+     "abuse"
+    ]
+   },
+   {
+    "id": "a04",
+    "expected": "flag",
+    "label": "abuse",
+    "language": "ru",
+    "kind": "insult",
+    "risk": 0.341,
+    "keyword": false,
+    "transformer": false,
+    "combined": true,
+    "review_labels": [
+     "abuse"
+    ]
+   },
+   {
+    "id": "a05",
+    "expected": "flag",
+    "label": "abuse",
+    "language": "ur",
+    "kind": "insult",
+    "risk": 0.933,
+    "keyword": false,
+    "transformer": true,
+    "combined": true,
+    "review_labels": [
+     "abuse"
+    ]
+   },
+   {
+    "id": "f01",
+    "expected": "flag",
+    "label": "fraud",
+    "language": "en",
+    "kind": "polite",
+    "risk": 0.999,
+    "keyword": true,
+    "transformer": true,
+    "combined": true,
+    "review_labels": [
+     "fraud"
+    ]
+   },
+   {
+    "id": "f02",
+    "expected": "flag",
+    "label": "fraud",
+    "language": "en",
+    "kind": "polite",
+    "risk": 0.987,
+    "keyword": false,
+    "transformer": true,
+    "combined": true,
+    "review_labels": [
+     "fraud"
+    ]
+   },
+   {
+    "id": "f03",
+    "expected": "flag",
+    "label": "fraud",
+    "language": "en",
+    "kind": "polite",
+    "risk": 0.082,
+    "keyword": true,
+    "transformer": false,
+    "combined": true,
+    "review_labels": [
+     "fraud"
+    ]
+   },
+   {
+    "id": "f04",
+    "expected": "flag",
+    "label": "fraud",
+    "language": "en",
+    "kind": "polite",
+    "risk": 0.026,
+    "keyword": false,
+    "transformer": false,
+    "combined": true,
+    "review_labels": [
+     "fraud"
+    ]
+   },
+   {
+    "id": "f05",
+    "expected": "flag",
+    "label": "fraud",
+    "language": "en",
+    "kind": "polite",
+    "risk": 0.554,
+    "keyword": true,
+    "transformer": true,
+    "combined": true,
+    "review_labels": [
+     "fraud"
+    ]
+   },
+   {
+    "id": "f06",
+    "expected": "flag",
+    "label": "fraud",
+    "language": "en",
+    "kind": "prize",
+    "risk": 0.203,
+    "keyword": true,
+    "transformer": false,
+    "combined": true,
+    "review_labels": [
+     "fraud"
+    ]
+   },
+   {
+    "id": "f07",
+    "expected": "flag",
+    "label": "fraud",
+    "language": "en",
+    "kind": "job",
+    "risk": 0.007,
+    "keyword": false,
+    "transformer": false,
+    "combined": true,
+    "review_labels": [
+     "fraud"
+    ]
+   },
+   {
+    "id": "f08",
+    "expected": "flag",
+    "label": "fraud",
+    "language": "en",
+    "kind": "no_link",
+    "risk": 0.016,
+    "keyword": true,
+    "transformer": false,
+    "combined": true,
+    "review_labels": [
+     "fraud"
+    ]
+   },
+   {
+    "id": "f09",
+    "expected": "flag",
+    "label": "fraud",
+    "language": "ru",
+    "kind": "prize",
+    "risk": 0.064,
+    "keyword": true,
+    "transformer": false,
+    "combined": true,
+    "review_labels": [
+     "fraud"
+    ]
+   },
+   {
+    "id": "f10",
+    "expected": "flag",
+    "label": "fraud",
+    "language": "ru",
+    "kind": "gov",
+    "risk": 0.089,
+    "keyword": false,
+    "transformer": false,
+    "combined": true,
+    "review_labels": [
+     "fraud"
+    ]
+   },
+   {
+    "id": "f11",
+    "expected": "flag",
+    "label": "fraud",
+    "language": "ru",
+    "kind": "bank",
+    "risk": 1.0,
+    "keyword": true,
+    "transformer": true,
+    "combined": true,
+    "review_labels": [
+     "fraud"
+    ]
+   },
+   {
+    "id": "f12",
+    "expected": "flag",
+    "label": "fraud",
+    "language": "ur",
+    "kind": "prize",
+    "risk": 0.019,
+    "keyword": false,
+    "transformer": false,
+    "combined": true,
+    "review_labels": [
+     "fraud"
+    ]
+   },
+   {
+    "id": "f13",
+    "expected": "flag",
+    "label": "fraud",
+    "language": "ur",
+    "kind": "bank",
+    "risk": 0.006,
+    "keyword": false,
+    "transformer": false,
+    "combined": true,
+    "review_labels": [
+     "fraud"
+    ]
+   },
+   {
+    "id": "s01",
+    "expected": "allow",
+    "label": "none",
+    "language": "en",
+    "kind": "strong_words",
+    "risk": 0.904,
+    "keyword": false,
+    "transformer": true,
+    "combined": false,
+    "review_labels": []
+   },
+   {
+    "id": "s02",
+    "expected": "allow",
+    "label": "none",
+    "language": "en",
+    "kind": "strong_words",
+    "risk": 0.041,
+    "keyword": false,
+    "transformer": false,
+    "combined": false,
+    "review_labels": []
+   },
+   {
+    "id": "s03",
+    "expected": "allow",
+    "label": "none",
+    "language": "en",
+    "kind": "strong_words",
+    "risk": 0.986,
+    "keyword": true,
+    "transformer": true,
+    "combined": false,
+    "review_labels": []
+   },
+   {
+    "id": "s04",
+    "expected": "allow",
+    "label": "none",
+    "language": "en",
+    "kind": "reporting",
+    "risk": 0.024,
+    "keyword": false,
+    "transformer": false,
+    "combined": false,
+    "review_labels": []
+   },
+   {
+    "id": "s05",
+    "expected": "allow",
+    "label": "none",
+    "language": "en",
+    "kind": "reporting",
+    "risk": 0.012,
+    "keyword": false,
+    "transformer": false,
+    "combined": false,
+    "review_labels": []
+   },
+   {
+    "id": "s06",
+    "expected": "allow",
+    "label": "none",
+    "language": "en",
+    "kind": "reporting",
+    "risk": 0.061,
+    "keyword": true,
+    "transformer": false,
+    "combined": true,
+    "review_labels": [
+     "fraud"
+    ]
+   },
+   {
+    "id": "s07",
+    "expected": "allow",
+    "label": "none",
+    "language": "en",
+    "kind": "security",
+    "risk": 0.021,
+    "keyword": true,
+    "transformer": false,
+    "combined": false,
+    "review_labels": []
+   },
+   {
+    "id": "s08",
+    "expected": "allow",
+    "label": "none",
+    "language": "en",
+    "kind": "notice",
+    "risk": 0.005,
+    "keyword": false,
+    "transformer": false,
+    "combined": false,
+    "review_labels": []
+   },
+   {
+    "id": "s09",
+    "expected": "allow",
+    "label": "none",
+    "language": "en",
+    "kind": "notice",
+    "risk": 0.003,
+    "keyword": false,
+    "transformer": false,
+    "combined": false,
+    "review_labels": []
+   },
+   {
+    "id": "s10",
+    "expected": "allow",
+    "label": "none",
+    "language": "en",
+    "kind": "notice",
+    "risk": 0.006,
+    "keyword": false,
+    "transformer": false,
+    "combined": false,
+    "review_labels": []
+   },
+   {
+    "id": "s11",
+    "expected": "allow",
+    "label": "none",
+    "language": "en",
+    "kind": "notice",
+    "risk": 0.176,
+    "keyword": true,
+    "transformer": false,
+    "combined": true,
+    "review_labels": [
+     "fraud"
+    ]
+   },
+   {
+    "id": "s12",
+    "expected": "allow",
+    "label": "none",
+    "language": "en",
+    "kind": "notice",
+    "risk": 0.032,
+    "keyword": true,
+    "transformer": false,
+    "combined": false,
+    "review_labels": []
+   },
+   {
+    "id": "s13",
+    "expected": "allow",
+    "label": "none",
+    "language": "en",
+    "kind": "complaint",
+    "risk": 0.004,
+    "keyword": false,
+    "transformer": false,
+    "combined": false,
+    "review_labels": []
+   },
+   {
+    "id": "s14",
+    "expected": "allow",
+    "label": "none",
+    "language": "en",
+    "kind": "complaint",
+    "risk": 0.004,
+    "keyword": false,
+    "transformer": false,
+    "combined": false,
+    "review_labels": []
+   },
+   {
+    "id": "s15",
+    "expected": "allow",
+    "label": "none",
+    "language": "en",
+    "kind": "casual",
+    "risk": 0.963,
+    "keyword": true,
+    "transformer": true,
+    "combined": false,
+    "review_labels": []
+   },
+   {
+    "id": "s16",
+    "expected": "allow",
+    "label": "none",
+    "language": "ru",
+    "kind": "notice",
+    "risk": 0.081,
+    "keyword": false,
+    "transformer": false,
+    "combined": false,
+    "review_labels": []
+   },
+   {
+    "id": "s17",
+    "expected": "allow",
+    "label": "none",
+    "language": "ru",
+    "kind": "casual",
+    "risk": 0.138,
+    "keyword": false,
+    "transformer": false,
+    "combined": false,
+    "review_labels": []
+   },
+   {
+    "id": "s18",
+    "expected": "allow",
+    "label": "none",
+    "language": "ru",
+    "kind": "complaint",
+    "risk": 0.014,
+    "keyword": false,
+    "transformer": false,
+    "combined": false,
+    "review_labels": []
+   },
+   {
+    "id": "s19",
+    "expected": "allow",
+    "label": "none",
+    "language": "ur",
+    "kind": "notice",
+    "risk": 0.005,
+    "keyword": false,
+    "transformer": false,
+    "combined": false,
+    "review_labels": []
+   },
+   {
+    "id": "s20",
+    "expected": "allow",
+    "label": "none",
+    "language": "ur",
+    "kind": "complaint",
+    "risk": 0.003,
+    "keyword": false,
+    "transformer": false,
+    "combined": false,
+    "review_labels": []
+   },
+   {
+    "id": "s21",
+    "expected": "allow",
+    "label": "none",
+    "language": "ur",
+    "kind": "casual",
+    "risk": 0.004,
+    "keyword": false,
+    "transformer": false,
+    "combined": false,
+    "review_labels": []
+   }
+  ]
+ },
+ "held_out_sample": {
+  "rows": [
+   {
+    "name": "Threat, Civil Comments",
+    "size_each": 75,
+    "seconds_each": 1.87,
+    "fast_caught": 59,
+    "both_caught": 40,
+    "fast_wrong": 4,
+    "both_wrong": 3
+   },
+   {
+    "name": "Hate, Civil Comments",
+    "size_each": 75,
+    "seconds_each": 1.98,
+    "fast_caught": 66,
+    "both_caught": 52,
+    "fast_wrong": 4,
+    "both_wrong": 5
+   },
+   {
+    "name": "Abuse, Civil Comments",
+    "size_each": 75,
+    "seconds_each": 1.96,
+    "fast_caught": 54,
+    "both_caught": 28,
+    "fast_wrong": 4,
+    "both_wrong": 3
+   },
+   {
+    "name": "Hate, unseen source",
+    "size_each": 75,
+    "seconds_each": 1.73,
+    "fast_caught": 63,
+    "both_caught": 69,
+    "fast_wrong": 26,
+    "both_wrong": 20
+   },
+   {
+    "name": "Fraud email, unseen source",
+    "size_each": 75,
+    "seconds_each": 2.38,
+    "fast_caught": 66,
+    "both_caught": 75,
+    "fast_wrong": 13,
+    "both_wrong": 4
+   },
+   {
+    "name": "SMS, unseen messages",
+    "size_each": 46,
+    "seconds_each": 2.0,
+    "fast_caught": 45,
+    "both_caught": 41,
+    "fast_wrong": 1,
+    "both_wrong": 2
+   },
+   {
+    "name": "Abuse, Roman Urdu",
+    "size_each": 75,
+    "seconds_each": 1.94,
+    "fast_caught": 60,
+    "both_caught": 50,
+    "fast_wrong": 8,
+    "both_wrong": 8
+   }
+  ]
+ },
+ "clear_comments": {
+  "size": 300,
+  "share_of_test": 0.669,
+  "fast_flagged": 8,
+  "both_flagged": 6
+ }
+}

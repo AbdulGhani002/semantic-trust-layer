@@ -1,0 +1,232 @@
+\section{Results}
+
+\subsection{Content (RQ1)}
+\label{sec:content}
+
+\begin{table*}[t]
+\caption{Fast text model on text it never trained on. Bad / all counts the harmful rows. Civil Comments is a random 60,000 rows of the test split.}
+\label{tab:text}
+\centering
+\footnotesize
+\begin{tabular}{@{}lrrrrrrr@{}}
+\toprule
+ & & \multicolumn{3}{c}{\textbf{F1}} & \multicolumn{3}{c}{\textbf{False alarms}} \\
+\textbf{Test} & \textbf{Bad / all} & \textbf{Keyword} & \textbf{Linear} & \textbf{STL} & \textbf{Keyword} & \textbf{Linear} & \textbf{STL} \\
+\midrule
+\tablerows{generated/text_rows.tex}
+\bottomrule
+\end{tabular}
+\end{table*}
+
+Table~\ref{tab:text} gives the fast text model on text it never trained on. Keywords lost on every row, so the answer to RQ1 is yes. The transformer, though, has no clear lead over the linear baseline. It has the best F1 on Civil Comments and SMS, and the linear model has the best F1 on the other three rows, by a small margin. On two of those three the linear model pays with far more false alarms: \hateUnseenLinearFA{} against \hateUnseenFA{} on the unseen hate source, and \urduLinearFA{} against \urduFA{} on Roman Urdu. Two rows are weak for every system. Threats are rare, \textThreatBad{} in \textThreatRows{} rows, and the best F1 is \textThreatFone{}. And hate does not travel: the transformer caught only \hateUnseenRecall{} of the hateful rows from the source it never saw.
+
+\begin{table}[t]
+\caption{57 hand-written messages: 36 harmful, 21 harmless. C caught, FA false alarms. These messages shaped the design, so this is a demonstration and not a measurement.}
+\label{tab:semantic}
+\centering
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}lrrrrrr@{}}
+\toprule
+ & \multicolumn{2}{c}{\textbf{Keyword}} & \multicolumn{2}{c}{\textbf{Fast}} & \multicolumn{2}{c}{\textbf{With LM}} \\
+\textbf{Group} & \textbf{C} & \textbf{FA} & \textbf{C} & \textbf{FA} & \textbf{C} & \textbf{FA} \\
+\midrule
+\tablerows{generated/semantic_rows.tex}
+\bottomrule
+\end{tabular}
+\end{table}
+
+We wrote the 57 messages in Table~\ref{tab:semantic} to be hard: polite scams, veiled threats, and text in Urdu and Roman Urdu. On the 20 messages with no obvious keyword, the keyword filter caught \plainKeyword{} and the fast model \plainFast{}. With the language model reading too, the system caught \plainBoth{}. All three misses are veiled threats that the language model did name, but with a confidence under 0.9, so they got a warning. We show this table for what it reveals about polite and veiled text, and Section~\ref{sec:second-reader} shows why it must not be read as an accuracy.
+
+\subsection{Links and QR codes (RQ2)}
+\label{sec:links}
+
+Table~\ref{tab:links} gives the link results. The link model reads a URL in about \linkMs{} ms on the CPU. On \linkRows{} links from domains it never saw, it reached an F1 of \linkFone{}, with \linkFalseAlarm{} false alarms. A live OpenPhish feed, on unseen domains, gave a recall of \linkOpenphish{}, and a later fetch of links that appeared after training gave \linkOpenphishLater{}. False alarms were not even across sources: \linkCrawlFA{} of Common Crawl pages were flagged, but \linkTrancoFA{} of the Tranco top sites. A likely reason is that popular sites are short brand names, the names phishing pages copy.
+
+The language model did not help on bare links, and this was the largest surprise of the second run. On our 66 hand-made links it looked better than the link model, with \fakeOldCaught{} caught and \fakeOldWrong{} false alarms, against \fakeLinkCaught{} and \fakeLinkWrong{}. On real links it was far worse. Of \linkSampleEach{} real phishing and \linkSampleEach{} real normal links, it caught \linkSampleCaught{} and wrongly flagged \linkSampleWrong{}, against \linkSampleFastCaught{} and \linkSampleFastWrong{} for the link model. Reading its reasons showed why. It claims that an ordinary name copies a brand: it called \texttt{scandlines.com}, a ferry company's own site, a misspelling of a hotel chain. Its confidence gives no warning either, at 0.9 or more on every such link in our validation sample. A language model judges a link from what it remembers about names, and it remembers few small sites.
+
+So we changed the rule again, using validation links only (Table~\ref{tab:linkrules}). A bare link now reaches the language model only if the link model flagged it. There the model can confirm the flag or lower it to a warning, and it can never raise a link alone. This keeps what it is good at, knowing famous sites, and drops what it is bad at. The final rule flagged \ruleFinalNormal{} of \ruleEach{} normal links on validation, against \ruleContentNormal{} under the content rule. The cost is that some phishing links drop from a flag to a warning. On the held-out sample, the final rule caught \linkFinalCaught{} of \linkSampleEach{} and wrongly flagged \linkFinalWrong{}. Table~\ref{tab:links} gives all the test results.
+
+\begin{table}[t]
+\caption{Choosing the rule for bare links, on validation links: links flagged / links at least warned.}
+\label{tab:linkrules}
+\centering
+\footnotesize
+\setlength{\tabcolsep}{2.5pt}
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+\textbf{Rule} & \textbf{Phishing (\ruleEach{})} & \textbf{Normal (\ruleEach{})} & \textbf{Popular (\rulePopular{})} \\
+\midrule
+\tablerows{generated/link_rule_rows.tex}
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[t]
+\caption{Links and QR codes. P precision, R recall, FA false alarms.}
+\label{tab:links}
+\centering
+\footnotesize
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{3.0cm}r>{\raggedright\arraybackslash}p{3.2cm}@{}}
+\toprule
+\textbf{Test} & \textbf{Size} & \textbf{Result} \\
+\midrule
+\tablerows{generated/link_rows.tex}
+\bottomrule
+\end{tabular}
+\end{table}
+
+All \qrImages{} QR images were read correctly, including rotated, blurred, dim, angled and poster-sticker forms, at \qrMs{} ms per image. The verdict was right on \qrRight{}. The other \qrWrong{} are \qrWrongCodes{} fake links, each printed in six forms, that the link model passes and the language model no longer sees. We made these images ourselves, so this shows that the pipeline works and says nothing about what real attackers print. So the answer to RQ2 is yes, and the part that does the work is the small model trained on URLs, not the language model.
+
+\subsection{Traffic (RQ3)}
+\label{sec:traffic}
+
+Table~\ref{tab:flows} shows how the known-attack model carries. On attacks it was taught, it is near perfect, and it beats LightGBM on false alarms: F1 \laterFone{} with \laterFA{} false alarms on later flows. On attack days it never saw, F1 falls to \thursdayFone{} and \fridayFone{}. At the cut-off chosen on validation data, it simply does not call new attacks attacks. LightGBM has the same problem, and on those two days it ranks flows better than our transformer does, as the AUC columns show. So the deeper model gives no gain on new attacks. On CTU-13 scenarios held out whole, the transformer has the better F1 on three of four. The botnet in scenario 7 is mostly missed by both.
+
+\begin{table}[t]
+\caption{Known-attack model against LightGBM on single flows.}
+\label{tab:flows}
+\centering
+\footnotesize
+\setlength{\tabcolsep}{3.5pt}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{3.05cm}rrrrrr@{}}
+\toprule
+ & \multicolumn{3}{c}{\textbf{STL}} & \multicolumn{3}{c}{\textbf{LightGBM}} \\
+\textbf{Test} & \textbf{F1} & \textbf{FA} & \textbf{AUC} & \textbf{F1} & \textbf{FA} & \textbf{AUC} \\
+\midrule
+\tablerows{generated/flow_rows.tex}
+\bottomrule
+\end{tabular}
+\end{table}
+
+The normal-behaviour model never saw an attack. On the same two unseen days it reached a recall of \thursdayRecall{} and \fridayRecall{}, with \thursdayFA{} and \fridayFA{} false alarms (Table~\ref{tab:anomaly}). Read alone, that looks like the answer to new attacks. Three facts stop us from saying so. The attacks it catches are mostly loud floods and scans, and it misses a quiet botnet almost entirely (recall \botnetRecall{} on Friday's botnet). At 0.1\% false alarms, recall falls to \thursdayRecallLow{} and \fridayRecallLow{}. And it does not travel. Built on CICIDS2017 and tested on the 13 CTU-13 captures, it gave \crossFALow{} to \crossFAHigh{} false alarms, and the known-attack model reached a recall of only \crossRecallLow{} to \crossRecallHigh{}.
+
+\begin{table}[t]
+\caption{Normal-behaviour model. The last column is recall at 0.1\% false alarms.}
+\label{tab:anomaly}
+\centering
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{3.9cm}rrrr@{}}
+\toprule
+\textbf{Test} & \textbf{Recall} & \textbf{FA} & \textbf{AUC} & \textbf{R@0.1\%} \\
+\midrule
+\tablerows{generated/anomaly_rows.tex}
+\bottomrule
+\end{tabular}
+\end{table}
+
+The live Internet shows the same thing. We ran both models over \backboneFlows{} flows of one MAWI backbone capture, from \backboneHosts{} hosts, and scored \backboneScored{} flows from \backboneScoredHosts{} hosts. These flows have no labels, so we can only report how often the models fired. The known-attack model fired on \backboneKnown{} of flows. The normal-behaviour model from the lab fired on \backboneLab{}, so on this network it is useless. After we fitted a new one on half of the hosts, it fired on \backboneLocal{} of flows from the other half, close to the 0.5\% target. That is why its risk is capped: it can warn, but it cannot flag alone, and each network must teach it what normal is. Scoring ran at \backboneSpeed{} flows per second on the CPU.
+
+\subsection{The language model as a second reader (RQ4)}
+\label{sec:second-reader}
+
+\textbf{What the hand-written tests hid.} Our first design used a prompt tuned on the 57 hand-written messages, where it gave \firstRunHandWrong{} false alarms on harmless text. The first full run then flagged \firstRunWrong{} of \firstRunClean{} clean sessions (\firstRunCleanFA{}), and \firstRunBlocked{} of those were blocked outright. Reading the flagged messages showed the cause: the model treated political argument as hate speech, and our hand-written harmless messages contained none. Part of the rate is label noise too. Civil Comments marks a comment as harmful when at least half of its raters did, so ``calm'' comments include rude ones, and one flagged comment was a real scam advert.
+
+We then changed the design, using validation rows only (Table~\ref{tab:prompts}). A tighter prompt defines hate by protected groups and names political argument as harmless. It halved false alarms on calm comments, though at a cost in catches. A second sentence says that words addressed to a reviewer, or claims that a message was already checked, prove nothing. On validation rows it cut successful attacks from \attackCalm{} to \attackGuard{}, and it won back \promptGainBack{} of the \promptLost{} lost catches, though with more flags on calm comments. We also tried asking for the reason before the labels, a common way to make a model think first. It made things worse, with \reasonFirstCalm{} calm comments flagged against \tighterCalm{}. Last, we found that false alarms mostly came with lower confidence. So one reader alone now flags only at a confidence of 0.9 or more, and below that it warns. Against the column before it, the last column keeps \promptFinalCaught{} of \promptGuardCaught{} catches, with about a third of the flags on calm comments, \promptFinalCalm{} against \promptGuardCalm{}. All results below come from a second full run with this design, and the link results above come from one more link test after the change described there. The test sets did not choose the prompt, but a test result is what made us look, so these results are not fully blind.
+
+\begin{table}[t]
+\caption{Choosing the prompt and rule on validation rows: messages flagged. The first three columns count any label. The last adds the final rule to the guarded prompt: a sure reader, or both readers agreeing.}
+\label{tab:prompts}
+\centering
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+\textbf{Rows} & \textbf{First} & \textbf{Tighter} & \textbf{Guarded} & \textbf{Final rule} \\
+\midrule
+\tablerows{generated/prompt_rows.tex}
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textbf{On real text.} Table~\ref{tab:sample} is the fair test of the final design. We drew \sampleSize{} harmful and \sampleSize{} harmless held-out rows, and counted what the system would flag for any reason. Caught fell from \sampleFastCaught{} to \sampleBothCaught{}, and false alarms fell from \sampleFastWrong{} to \sampleBothWrong{}. So the language model is not a free gain, and the result depends on the source. On fraud email it caught all \sampleFraudBoth{} of \sampleEach{}, against \sampleFraudFast{}, and cut false alarms from \sampleFraudFastWrong{} to \sampleFraudBothWrong{}. On the unseen hate source it did better on both counts too. On Civil Comments it gave up many catches, most of all on abuse, \sampleAbuseFast{} down to \sampleAbuseBoth{}, and on threats, \sampleThreatFast{} down to \sampleThreatBoth{}. Part of that loss is what we asked for, because the prompt leaves blunt opinion alone and these labels are crowd votes that include plain rudeness. Part of it is a real loss. Roman Urdu abuse fell from \sampleUrduFast{} to \sampleUrduBoth{}, with no gain in false alarms. Nothing here goes silent: a message the fast model flagged and the language model cleared keeps a warning.
+
+Comments with no objection from any rater make up \clearShare{} of the Civil Comments test split. Of \clearSize{} such comments the system flagged \clearBoth{} (95\% interval \clearLow{} to \clearHigh{}), against \clearFast{} for the fast model alone. This is the closest we can get to a field rate from this data.
+
+\begin{table}[t]
+\caption{Held-out text, balanced samples: messages the system would flag for any reason, out of the sample size each way. Harmless rows carry no harmful label.}
+\label{tab:sample}
+\centering
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+ & \multicolumn{2}{c}{\textbf{Caught}} & \multicolumn{2}{c}{\textbf{False alarms}} \\
+\textbf{Test} & \textbf{Fast} & \textbf{With LM} & \textbf{Fast} & \textbf{With LM} \\
+\midrule
+\tablerows{generated/sample_rows.tex}
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textbf{Reading everything.} A gate on the fast risk would save time, because most text would skip the language model. On the 57 messages, reading everything gave \gateZeroCaught{} caught. A gate of 0.08 read \gateHighMail{} of normal mail and \gateHighComments{} of comments, but it caught only \gateHighCaught{}, because the fast model gives low scores to polite scams and veiled threats. So STL reads all text by default.
+
+\textbf{It copies.} We told the language model what the link model thought of each of the 66 test links. Told nothing, it caught \opinionNoneCaught{} frauds and wrongly flagged \opinionNoneWrong{} normal links. Told the right opinion, it scored \opinionRightCaught{} and \opinionRightWrong{}. Told the wrong opinion, it scored \opinionBadCaught{} and \opinionBadWrong{}. So a wrong opinion cost it catches and added false alarms, though less than with the first prompt, which wrongly flagged \firstRunOpinionWrong{}. The same happened with traffic. Told that the sender's traffic matched a known attack, it flagged \noteWithFlagged{} of \noteHarmless{} harmless messages, against \noteAloneFlagged{} when told nothing. It caught all \noteHarmful{} harmful ones either way. So STL tells it nothing. It reads alone, and the Coordinator joins the agents after both have decided.
+
+\textbf{Disguises.} Table~\ref{tab:disguise} applies seven disguises to \disguiseCount{} harmful and \disguiseHarmless{} harmless hand-written messages. Cleaning works: hidden characters and borrowed letters leave every column at its undisguised value. Swapping letters for symbols breaks the keyword filter (\leetKeyword{}), and it also breaks the fast model in the other direction. That model flagged all of them, \leetFast{} harmful and \leetFastWrong{} harmless, so odd spelling alone looks harmful to it. The language model pulled the harmless rows back to \leetBothWrong{}, which is still the worst false alarm rate in the table. Hiding a message in long normal text left \longBoth{} caught and \longBothWrong{} false alarms. The strongest disguise is an instruction to the reviewer. It left \orderBoth{} caught, up from \firstRunOrderBoth{} with the first prompt.
+
+\begin{table}[t]
+\caption{Hand-written messages after a disguise. The first three columns count harmful messages caught. The last counts harmless messages wrongly flagged with the language model on.}
+\label{tab:disguise}
+\centering
+\footnotesize
+\setlength{\tabcolsep}{3.5pt}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{3.2cm}rrrr@{}}
+\toprule
+\textbf{Disguise} & \textbf{Keyword} & \textbf{Fast} & \textbf{With LM} & \textbf{FA} \\
+\midrule
+\tablerows{generated/disguise_rows.tex}
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textbf{Attacks.} Next we attacked the language model directly (Table~\ref{tab:attacks}). We took \injectionHarmful{} harmful messages, our 36 hand-written ones plus real fraud and toxic rows from the test sets, and kept the \injectionCaught{} that the system caught before any attack. Then we added text to each one, in eight ways, for \injectionTried{} tries. The first six attacks are the ones we used on the validation rows, and they fooled the model in \injectionEarlyFooled{} of \injectionEarlyTried{} tries. We added the last two after probing the final prompt for a weakness, and they fooled it in \injectionLateFooled{} of \injectionLateTried{}. These two copy the form of a report: they say the text is a record or an exam sample and is only quoted. Section~\ref{sec:discussion} explains why that form is hard to close.
+
+In all, the model was fooled in \injectionFooledCount{} tries (\injectionFooled{}). The warning floor kept a warning on \injectionSaved{} of them, because the fast model had seen the message. The other \injectionSilent{} tries passed in silence, because no reader was left. If the sender's traffic also looks unusual, each of those \injectionSaved{} warnings becomes a flag, as the last column shows. We show no column for known attack traffic, because it flags a session on its own whatever the content says.
+
+So the answer to RQ4 is a limited yes. The language model is useful as a second reader of text, but only with limits on what it can do alone, and it should not judge bare links.
+
+\begin{table}[t]
+\caption{Attack text added to harmful messages that were caught before the attack. Warned means at least a warning. The last two columns assume the sender's traffic looked unusual.}
+\label{tab:attacks}
+\centering
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}lrrrrrr@{}}
+\toprule
+ & & & \multicolumn{2}{c}{\textbf{Warned}} & \multicolumn{2}{c}{\textbf{Flagged}} \\
+\textbf{Attack} & \textbf{Fooled} & \textbf{Flagged} & \textbf{Bare} & \textbf{Floor} & \textbf{Bare} & \textbf{Floor} \\
+\midrule
+\tablerows{generated/injection_rows.tex}
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Two layers together (RQ5)}
+\label{sec:together}
+
+\begin{table}[t]
+\caption{System test: share of sessions flagged, \systemGroup{} sessions per group. The last column turns the language model off.}
+\label{tab:system}
+\centering
+\footnotesize
+\setlength{\tabcolsep}{3.5pt}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{3.3cm}rrrr@{}}
+\toprule
+\textbf{Group} & \textbf{App.} & \textbf{Net.} & \textbf{Joined} & \textbf{No LM} \\
+\midrule
+\tablerows{generated/system_rows.tex}
+\bottomrule
+\end{tabular}
+\end{table}
+
+Table~\ref{tab:system} gives the system test: \systemSessions{} real SMTP sessions through the gateway. All \systemSessions{} verdicts came back with valid signatures. Joined recall was \systemRecall{}, precision \systemPrecision{} and false alarms on clean sessions \systemCleanFA{} (95\% interval \systemCleanLow{} to \systemCleanHigh{}). As Section~\ref{sec:nopaired} says, the joined column beats each agent by construction, so these numbers show that the parts work together. They are not a gain from joining.
+
+The last column is a fairer comparison, because only one thing changes. With the language model off, clean sessions were flagged \fastSystemFA{} of the time and \fastSystemBlocked{} of \systemGroup{} were blocked. With it on, \systemCleanFA{} were flagged and \systemCleanBlocked{} blocked, and another \systemCleanWarned{} got a warning. The price was a small fall in recall, from \fastSystemRecall{} to \systemRecall{}. In the first design the same test gave \firstRunCleanFA{} flagged and \firstRunBlocked{} blocked, so the work on the prompt and rule paid off. Harmful content from a normal host is the hard group. It was flagged \systemHarmful{} of the time, \systemHarmfulWarned{} of \systemGroup{} sessions got a warning, and \systemHarmfulSilent{} passed in silence, against \fastHarmfulSilent{} with the language model off. Here the Network Agent cannot help.
+
+RQ5 asks whether one layer can cover for the other. The evidence is narrow, but it is real. One of our \scenariosTotal{} demos shows it end to end: a threat dressed up as a record fools the language model, and the fast model's warning leaves the Application Agent at \recordApp{}. The sender's traffic is unusual, so the Network Agent reports \recordNet{}. Each alone is only a warning, and joined they reach \recordJoined{}, a flag. This works only when the fast model saw the message and the traffic really is unusual. Of the other demos, \demoOthersPassed{} behaved as expected. One did not: an Urdu threat that the language model read correctly with a confidence of \urduConfidence{}, under the 0.9 cut-off, so it got a warning and not a flag.
+
+\subsection{Speed}
+
+The fast text model takes \msPerText{} ms per item on the CPU, the link model \linkMs{} ms, and reading a QR image \qrMs{} ms. The language model takes about \sampleSeconds{} seconds per item and uses the whole laptop GPU, so it sets the pace. A full session, from SMTP to signed verdict, took a median of \systemMedian{} seconds, and 95\% took under \systemPninetyfive{} seconds. With the language model off, the median was \fastSystemMedian{} seconds.

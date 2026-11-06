@@ -1,0 +1,39 @@
+<!doctype html><meta charset=utf-8><title>Look C</title><style>*{box-sizing:border-box}
+    body{margin:0;font:12px/1.35 'Segoe UI',Tahoma,Arial,sans-serif;background:#f0f0f0;color:#000;height:900px;overflow:hidden}
+    .menu{background:#f6f6f6;padding:3px 8px;border-bottom:1px solid #cfcfcf;display:flex;gap:14px}
+    .tool{background:#ececec;padding:4px 8px;border-bottom:1px solid #bdbdbd;display:flex;gap:6px}
+    .tool span{border:1px solid #b5b5b5;background:#fafafa;padding:2px 10px}
+    .filter{padding:4px 8px;display:flex;gap:6px;border-bottom:1px solid #bdbdbd;align-items:center}
+    .filter div{flex:1;background:#c8f7c5;border:1px solid #8fbf8b;padding:2px 6px;font-family:Consolas,monospace}
+    .list{height:372px;overflow:hidden;background:#fff;border-bottom:3px solid #bdbdbd}
+    table{width:100%;border-collapse:collapse;font-family:Consolas,monospace;font-size:12px}
+    th{background:#ececec;border-right:1px solid #cfcfcf;border-bottom:1px solid #bdbdbd;text-align:left;padding:2px 6px;font:12px 'Segoe UI',Arial;font-weight:400}
+    td{padding:1px 6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:330px}
+    .block td{background:#a40000;color:#fff}.flag td{background:#f4c7c3}.warn td{background:#fff2b3}.allow td{background:#e7f6e7}
+    tr.sel td{outline:1px solid #000;outline-offset:-1px}
+    .tree{height:236px;background:#fff;border-bottom:3px solid #bdbdbd;padding:4px 8px;font-family:Consolas,monospace;overflow:hidden}
+    .tree div{padding-left:0;white-space:nowrap}.tree .i{padding-left:22px}.tree .h{background:#dbe9ff}
+    .raw{height:198px;background:#fff;padding:4px 8px;font-family:Consolas,monospace;overflow:hidden;white-space:pre}
+    .raw mark{background:#ffd27f}
+    .status{background:#ececec;border-top:1px solid #bdbdbd;padding:3px 8px;display:flex;gap:18px}
+    </style>
+    <div class=menu><span>File</span><span>View</span><span>Scenarios</span><span>Agents</span><span>Results</span><span>Help</span></div>
+    <div class=tool><span>Start gateway</span><span>Stop</span><span>Run scenario</span><span>Open capture</span><span>Check item</span></div>
+    <div class=filter><b>Filter:</b><div>stl.action == block || stl.action == flag</div><span>Apply</span></div>
+    <div class=list><table><tr><th>No.</th><th>Time</th><th>Type</th><th>Source</th><th>Action</th><th>Risk</th><th>Found by</th><th>Item</th></tr><tr class='sel block'><td>1204</td><td>14:02:11</td><td>EMAIL</td><td>ahmed.raza@student.test</td><td>BLOCK</td><td>0.97</td><td>Application</td><td>Fee policy</td></tr><tr class='flag'><td>1203</td><td>14:01:58</td><td>QR</td><td>poster camera 2</td><td>FLAG</td><td>0.91</td><td>Application</td><td>hbl-digital-banking.test/signin</td></tr><tr class='flag'><td>1202</td><td>14:01:40</td><td>EMAIL</td><td>billing@vendor.test</td><td>FLAG</td><td>0.72</td><td>Both</td><td>Updated bank details for invoice</td></tr><tr class='flag'><td>1201</td><td>14:01:22</td><td>SESSION</td><td>10.20.4.17</td><td>FLAG</td><td>0.66</td><td>Network</td><td>TLS to update-cdn-check.test</td></tr><tr class='allow'><td>1200</td><td>14:00:47</td><td>EMAIL</td><td>registrar@nutech.test</td><td>ALLOW</td><td>0.04</td><td>-</td><td>Spring semester fee challan</td></tr><tr class='block'><td>1199</td><td>14:00:31</td><td>MESSAGE</td><td>+92 300 0000000</td><td>BLOCK</td><td>0.93</td><td>Application</td><td>Mubarak ho! Aap ka inam nikla hai</td></tr><tr class='allow'><td>1198</td><td>14:00:12</td><td>EMAIL</td><td>council@nutech.test</td><td>ALLOW</td><td>0.02</td><td>-</td><td>Minutes of the academic council</td></tr><tr class='allow'><td>1197</td><td>13:59:58</td><td>LINK</td><td>check page</td><td>ALLOW</td><td>0.06</td><td>-</td><td>en.wikipedia.org/wiki/Phishing</td></tr><tr class='flag'><td>1196</td><td>13:59:41</td><td>EMAIL</td><td>unknown@mail.test</td><td>FLAG</td><td>0.78</td><td>Application</td><td>Accidents happen to people who ask</td></tr><tr class='block'><td>1195</td><td>13:59:20</td><td>SESSION</td><td>10.20.4.33</td><td>BLOCK</td><td>0.89</td><td>Network</td><td>312 connections to port 445</td></tr><tr class='allow'><td>1194</td><td>13:58:55</td><td>FILE</td><td>check page</td><td>ALLOW</td><td>0.08</td><td>-</td><td>semester_report.pdf</td></tr><tr class='warn'><td>1193</td><td>13:58:30</td><td>EMAIL</td><td>it-helpdesk@mail.test</td><td>WARN</td><td>0.41</td><td>Application</td><td>Your mailbox is full</td></tr><tr class='allow'><td>1192</td><td>13:58:02</td><td>QR</td><td>check page</td><td>ALLOW</td><td>0.03</td><td>-</td><td>nutech.edu.pk</td></tr><tr class='allow'><td>1191</td><td>13:57:44</td><td>EMAIL</td><td>dean.office@nutech.test</td><td>ALLOW</td><td>0.05</td><td>-</td><td>Exam schedule update</td></tr><tr class='allow'><td>1190</td><td>13:57:19</td><td>SESSION</td><td>10.20.4.8</td><td>ALLOW</td><td>0.02</td><td>-</td><td>HTTPS to github.com</td></tr><tr class='warn'><td>1189</td><td>13:56:51</td><td>MESSAGE</td><td>+92 300 0000001</td><td>WARN</td><td>0.44</td><td>Application</td><td>Your parcel is held at customs</td></tr></table></div>
+    <div class=tree>
+    <div>&#9656; Item 1204: EMAIL, 412 bytes, from ahmed.raza@student.test to rector@nutech.test</div>
+    <div class=h>&#9662; Application Agent, risk 0.97, flagged</div>
+    <div class=i>hate 0.98, abuse 0.94, threat 0.12, fraud 0.01</div>
+    <div class=i>Strongest words: [hidden in this mock]</div>
+    <div class=i>Language model: uses a racial slur to attack the recipient</div>
+    <div>&#9662; Network Agent, risk 0.03, not flagged</div>
+    <div class=i>3 recent connections to 1 host, port 25, average 812 bytes</div>
+    <div>&#9656; Coordinator: joined risk 0.97, action BLOCK, 6.41 s</div>
+    <div>&#9656; Signatures: application-agent valid, network-agent valid, coordinator valid</div>
+    </div><div class=raw>Subject: Fee policy
+From: ahmed.raza@student.test
+To: rector@nutech.test
+
+Dear Rector, you are a <mark>[slur hidden in this mock]</mark> and you should leave this university.</div>
+    <div class=status><span>Items 1,204</span><span>Flagged 38</span><span>Blocked 12</span><span>Models: text, link, traffic, language</span><span>Sample data for choosing a look</span></div>

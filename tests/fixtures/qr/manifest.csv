@@ -1,0 +1,127 @@
+file,name,label,kind,variant,payload,decoded_ok
+qr_bank_login_clean.png,qr_bank_login,fraud,url,clean,https://hbl-digital-banking.test/signin,True
+qr_bank_login_rotated.png,qr_bank_login,fraud,url,rotated,https://hbl-digital-banking.test/signin,True
+qr_bank_login_blurred.png,qr_bank_login,fraud,url,blurred,https://hbl-digital-banking.test/signin,True
+qr_bank_login_dim.png,qr_bank_login,fraud,url,dim,https://hbl-digital-banking.test/signin,True
+qr_bank_login_perspective.png,qr_bank_login,fraud,url,perspective,https://hbl-digital-banking.test/signin,True
+qr_bank_login_sticker.png,qr_bank_login,fraud,url,sticker,https://hbl-digital-banking.test/signin,True
+qr_parking_pay_clean.png,qr_parking_pay,fraud,url,clean,https://city-parking-payment.test/pay?meter=4471,True
+qr_parking_pay_rotated.png,qr_parking_pay,fraud,url,rotated,https://city-parking-payment.test/pay?meter=4471,True
+qr_parking_pay_blurred.png,qr_parking_pay,fraud,url,blurred,https://city-parking-payment.test/pay?meter=4471,True
+qr_parking_pay_dim.png,qr_parking_pay,fraud,url,dim,https://city-parking-payment.test/pay?meter=4471,True
+qr_parking_pay_perspective.png,qr_parking_pay,fraud,url,perspective,https://city-parking-payment.test/pay?meter=4471,True
+qr_parking_pay_sticker.png,qr_parking_pay,fraud,url,sticker,https://city-parking-payment.test/pay?meter=4471,True
+qr_gov_refund_clean.png,qr_gov_refund,fraud,url,clean,https://bisp-8171-payment.test/register,True
+qr_gov_refund_rotated.png,qr_gov_refund,fraud,url,rotated,https://bisp-8171-payment.test/register,True
+qr_gov_refund_blurred.png,qr_gov_refund,fraud,url,blurred,https://bisp-8171-payment.test/register,True
+qr_gov_refund_dim.png,qr_gov_refund,fraud,url,dim,https://bisp-8171-payment.test/register,True
+qr_gov_refund_perspective.png,qr_gov_refund,fraud,url,perspective,https://bisp-8171-payment.test/register,True
+qr_gov_refund_sticker.png,qr_gov_refund,fraud,url,sticker,https://bisp-8171-payment.test/register,True
+qr_campus_portal_clean.png,qr_campus_portal,fraud,url,clean,https://nutech-edu-pk.test/portal/password-reset,True
+qr_campus_portal_rotated.png,qr_campus_portal,fraud,url,rotated,https://nutech-edu-pk.test/portal/password-reset,True
+qr_campus_portal_blurred.png,qr_campus_portal,fraud,url,blurred,https://nutech-edu-pk.test/portal/password-reset,True
+qr_campus_portal_dim.png,qr_campus_portal,fraud,url,dim,https://nutech-edu-pk.test/portal/password-reset,True
+qr_campus_portal_perspective.png,qr_campus_portal,fraud,url,perspective,https://nutech-edu-pk.test/portal/password-reset,True
+qr_campus_portal_sticker.png,qr_campus_portal,fraud,url,sticker,https://nutech-edu-pk.test/portal/password-reset,True
+qr_apk_clean.png,qr_apk,fraud,url,clean,http://whatsapp-gold.test/download/WhatsAppGold.apk,True
+qr_apk_rotated.png,qr_apk,fraud,url,rotated,http://whatsapp-gold.test/download/WhatsAppGold.apk,True
+qr_apk_blurred.png,qr_apk,fraud,url,blurred,http://whatsapp-gold.test/download/WhatsAppGold.apk,True
+qr_apk_dim.png,qr_apk,fraud,url,dim,http://whatsapp-gold.test/download/WhatsAppGold.apk,True
+qr_apk_perspective.png,qr_apk,fraud,url,perspective,http://whatsapp-gold.test/download/WhatsAppGold.apk,True
+qr_apk_sticker.png,qr_apk,fraud,url,sticker,http://whatsapp-gold.test/download/WhatsAppGold.apk,True
+qr_ip_host_clean.png,qr_ip_host,fraud,url,clean,http://192.0.2.44/hbl/login.php,True
+qr_ip_host_rotated.png,qr_ip_host,fraud,url,rotated,http://192.0.2.44/hbl/login.php,True
+qr_ip_host_blurred.png,qr_ip_host,fraud,url,blurred,http://192.0.2.44/hbl/login.php,True
+qr_ip_host_dim.png,qr_ip_host,fraud,url,dim,http://192.0.2.44/hbl/login.php,True
+qr_ip_host_perspective.png,qr_ip_host,fraud,url,perspective,http://192.0.2.44/hbl/login.php,True
+qr_ip_host_sticker.png,qr_ip_host,fraud,url,sticker,http://192.0.2.44/hbl/login.php,True
+qr_payment_clean.png,qr_payment,fraud,payment,clean,upi://pay?pa=refund-desk@scam.test&pn=Refund%20Desk&am=5000&cu=PKR,True
+qr_payment_rotated.png,qr_payment,fraud,payment,rotated,upi://pay?pa=refund-desk@scam.test&pn=Refund%20Desk&am=5000&cu=PKR,True
+qr_payment_blurred.png,qr_payment,fraud,payment,blurred,upi://pay?pa=refund-desk@scam.test&pn=Refund%20Desk&am=5000&cu=PKR,True
+qr_payment_dim.png,qr_payment,fraud,payment,dim,upi://pay?pa=refund-desk@scam.test&pn=Refund%20Desk&am=5000&cu=PKR,True
+qr_payment_perspective.png,qr_payment,fraud,payment,perspective,upi://pay?pa=refund-desk@scam.test&pn=Refund%20Desk&am=5000&cu=PKR,True
+qr_payment_sticker.png,qr_payment,fraud,payment,sticker,upi://pay?pa=refund-desk@scam.test&pn=Refund%20Desk&am=5000&cu=PKR,True
+qr_wifi_clean.png,qr_wifi,fraud,wifi,clean,WIFI:T:nopass;S:Free_Airport_WiFi_Login;;,True
+qr_wifi_rotated.png,qr_wifi,fraud,wifi,rotated,WIFI:T:nopass;S:Free_Airport_WiFi_Login;;,True
+qr_wifi_blurred.png,qr_wifi,fraud,wifi,blurred,WIFI:T:nopass;S:Free_Airport_WiFi_Login;;,True
+qr_wifi_dim.png,qr_wifi,fraud,wifi,dim,WIFI:T:nopass;S:Free_Airport_WiFi_Login;;,True
+qr_wifi_perspective.png,qr_wifi,fraud,wifi,perspective,WIFI:T:nopass;S:Free_Airport_WiFi_Login;;,True
+qr_wifi_sticker.png,qr_wifi,fraud,wifi,sticker,WIFI:T:nopass;S:Free_Airport_WiFi_Login;;,True
+qr_sms_clean.png,qr_sms,fraud,sms,clean,SMSTO:+920000000000:Send 5000 to confirm your prize,True
+qr_sms_rotated.png,qr_sms,fraud,sms,rotated,SMSTO:+920000000000:Send 5000 to confirm your prize,True
+qr_sms_blurred.png,qr_sms,fraud,sms,blurred,SMSTO:+920000000000:Send 5000 to confirm your prize,True
+qr_sms_dim.png,qr_sms,fraud,sms,dim,SMSTO:+920000000000:Send 5000 to confirm your prize,True
+qr_sms_perspective.png,qr_sms,fraud,sms,perspective,SMSTO:+920000000000:Send 5000 to confirm your prize,True
+qr_sms_sticker.png,qr_sms,fraud,sms,sticker,SMSTO:+920000000000:Send 5000 to confirm your prize,True
+qr_text_clean.png,qr_text,fraud,text,clean,Congratulations! Your CNIC won Rs 500000. Send your OTP to claim: visit prize-desk.test,True
+qr_text_rotated.png,qr_text,fraud,text,rotated,Congratulations! Your CNIC won Rs 500000. Send your OTP to claim: visit prize-desk.test,True
+qr_text_blurred.png,qr_text,fraud,text,blurred,Congratulations! Your CNIC won Rs 500000. Send your OTP to claim: visit prize-desk.test,True
+qr_text_dim.png,qr_text,fraud,text,dim,Congratulations! Your CNIC won Rs 500000. Send your OTP to claim: visit prize-desk.test,True
+qr_text_perspective.png,qr_text,fraud,text,perspective,Congratulations! Your CNIC won Rs 500000. Send your OTP to claim: visit prize-desk.test,True
+qr_text_sticker.png,qr_text,fraud,text,sticker,Congratulations! Your CNIC won Rs 500000. Send your OTP to claim: visit prize-desk.test,True
+qr_contact_clean.png,qr_contact,fraud,contact,clean,"BEGIN:VCARD
+VERSION:3.0
+FN:HBL Support
+TEL:+920000000000
+URL:https://hbl-login.test
+END:VCARD",True
+qr_contact_rotated.png,qr_contact,fraud,contact,rotated,"BEGIN:VCARD
+VERSION:3.0
+FN:HBL Support
+TEL:+920000000000
+URL:https://hbl-login.test
+END:VCARD",True
+qr_contact_blurred.png,qr_contact,fraud,contact,blurred,"BEGIN:VCARD
+VERSION:3.0
+FN:HBL Support
+TEL:+920000000000
+URL:https://hbl-login.test
+END:VCARD",True
+qr_contact_dim.png,qr_contact,fraud,contact,dim,"BEGIN:VCARD
+VERSION:3.0
+FN:HBL Support
+TEL:+920000000000
+URL:https://hbl-login.test
+END:VCARD",True
+qr_contact_perspective.png,qr_contact,fraud,contact,perspective,"BEGIN:VCARD
+VERSION:3.0
+FN:HBL Support
+TEL:+920000000000
+URL:https://hbl-login.test
+END:VCARD",True
+qr_contact_sticker.png,qr_contact,fraud,contact,sticker,"BEGIN:VCARD
+VERSION:3.0
+FN:HBL Support
+TEL:+920000000000
+URL:https://hbl-login.test
+END:VCARD",True
+qr_safe_university_clean.png,qr_safe_university,safe,url,clean,https://nutech.edu.pk/,True
+qr_safe_university_rotated.png,qr_safe_university,safe,url,rotated,https://nutech.edu.pk/,True
+qr_safe_university_blurred.png,qr_safe_university,safe,url,blurred,https://nutech.edu.pk/,True
+qr_safe_university_dim.png,qr_safe_university,safe,url,dim,https://nutech.edu.pk/,True
+qr_safe_university_perspective.png,qr_safe_university,safe,url,perspective,https://nutech.edu.pk/,True
+qr_safe_university_sticker.png,qr_safe_university,safe,url,sticker,https://nutech.edu.pk/,True
+qr_safe_wikipedia_clean.png,qr_safe_wikipedia,safe,url,clean,https://en.wikipedia.org/wiki/QR_code,True
+qr_safe_wikipedia_rotated.png,qr_safe_wikipedia,safe,url,rotated,https://en.wikipedia.org/wiki/QR_code,True
+qr_safe_wikipedia_blurred.png,qr_safe_wikipedia,safe,url,blurred,https://en.wikipedia.org/wiki/QR_code,True
+qr_safe_wikipedia_dim.png,qr_safe_wikipedia,safe,url,dim,https://en.wikipedia.org/wiki/QR_code,True
+qr_safe_wikipedia_perspective.png,qr_safe_wikipedia,safe,url,perspective,https://en.wikipedia.org/wiki/QR_code,True
+qr_safe_wikipedia_sticker.png,qr_safe_wikipedia,safe,url,sticker,https://en.wikipedia.org/wiki/QR_code,True
+qr_safe_python_clean.png,qr_safe_python,safe,url,clean,https://www.python.org/,True
+qr_safe_python_rotated.png,qr_safe_python,safe,url,rotated,https://www.python.org/,True
+qr_safe_python_blurred.png,qr_safe_python,safe,url,blurred,https://www.python.org/,True
+qr_safe_python_dim.png,qr_safe_python,safe,url,dim,https://www.python.org/,True
+qr_safe_python_perspective.png,qr_safe_python,safe,url,perspective,https://www.python.org/,True
+qr_safe_python_sticker.png,qr_safe_python,safe,url,sticker,https://www.python.org/,True
+qr_safe_wifi_clean.png,qr_safe_wifi,safe,wifi,clean,WIFI:T:WPA;S:NUTECH_Lab_3;P:lab-guest-2026;;,True
+qr_safe_wifi_rotated.png,qr_safe_wifi,safe,wifi,rotated,WIFI:T:WPA;S:NUTECH_Lab_3;P:lab-guest-2026;;,True
+qr_safe_wifi_blurred.png,qr_safe_wifi,safe,wifi,blurred,WIFI:T:WPA;S:NUTECH_Lab_3;P:lab-guest-2026;;,True
+qr_safe_wifi_dim.png,qr_safe_wifi,safe,wifi,dim,WIFI:T:WPA;S:NUTECH_Lab_3;P:lab-guest-2026;;,True
+qr_safe_wifi_perspective.png,qr_safe_wifi,safe,wifi,perspective,WIFI:T:WPA;S:NUTECH_Lab_3;P:lab-guest-2026;;,True
+qr_safe_wifi_sticker.png,qr_safe_wifi,safe,wifi,sticker,WIFI:T:WPA;S:NUTECH_Lab_3;P:lab-guest-2026;;,True
+qr_safe_text_clean.png,qr_safe_text,safe,text,clean,PDC lab moved to Lab 3 on Thursday at 2 pm.,True
+qr_safe_text_rotated.png,qr_safe_text,safe,text,rotated,PDC lab moved to Lab 3 on Thursday at 2 pm.,True
+qr_safe_text_blurred.png,qr_safe_text,safe,text,blurred,PDC lab moved to Lab 3 on Thursday at 2 pm.,True
+qr_safe_text_dim.png,qr_safe_text,safe,text,dim,PDC lab moved to Lab 3 on Thursday at 2 pm.,True
+qr_safe_text_perspective.png,qr_safe_text,safe,text,perspective,PDC lab moved to Lab 3 on Thursday at 2 pm.,True
+qr_safe_text_sticker.png,qr_safe_text,safe,text,sticker,PDC lab moved to Lab 3 on Thursday at 2 pm.,True

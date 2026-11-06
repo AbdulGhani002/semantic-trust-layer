@@ -1,0 +1,43 @@
+\documentclass[conference]{IEEEtran}
+\usepackage{iftex}
+\ifXeTeX
+  \usepackage{fontspec}
+  \setmainfont{texgyretermes}[Extension=.otf, UprightFont=*-regular, BoldFont=*-bold, ItalicFont=*-italic, BoldItalicFont=*-bolditalic]
+\else
+  \usepackage[T1]{fontenc}
+\fi
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{amsmath}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning}
+\usepackage[hidelinks]{hyperref}
+\usepackage{url}
+\urlstyle{tt}
+\input{generated/numbers.tex}
+\makeatletter
+\newcommand{\tablerows}[1]{\@@input #1 }
+\makeatother
+
+\begin{document}
+
+\title{One Event, Two Layers: Measuring a Local Agent System That Reads Content and Traffic Together}
+
+\author{
+\IEEEauthorblockN{Muhammad Abdul Ghani Qureshi, Muhammad Usman Nasir, Raja Mahad Ali, Maj. Babar}
+\IEEEauthorblockA{National University of Technology (NUTECH), Islamabad, Pakistan}
+}
+
+\maketitle
+
+\input{paper/sections/abstract}
+
+\input{paper/sections/intro_to_method}
+
+\input{paper/sections/results}
+
+\input{paper/sections/ending}
+
+\input{paper/references}
+
+\end{document}

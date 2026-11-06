@@ -1,0 +1,157 @@
+\section{Introduction}
+
+Much of the harm that reaches people today looks clean to a machine. A polite email can carry a fake bank link. A veiled threat can use no bad word at all. An email to a university rector with a racial slur in it passes a firewall and a virus scanner, because the file is clean and the sender's host behaves normally. The reverse also happens: a well-written email can come from a machine that is part of a botnet.
+
+Two families of tools look at these problems, and they rarely meet. Content tools read text, and they cannot see how a host behaves. Network tools read traffic, and they cannot see what a message says, more so now that most traffic is encrypted. Products such as Darktrace~\cite{darktrace} and Microsoft Defender~\cite{triage} correlate across domains, but they do not publish how far their models read one event at both layers. In public research, the best controlled study of joining two data sources found that at a 1\% false alarm rate, a second source helped only two of seven models and hurt the other five~\cite{fard}. That study joined radio data with flows, not network data with content. We found no study that reads one event at both layers by meaning and measures what each layer adds.
+
+This paper describes a working prototype, the Semantic Trust Layer (STL), and measures it on real data. Two agents check every item at the same time, on one laptop, with no outside service. The Application Agent reads content. The Network Agent reads traffic metadata and never reads content. A Coordinator joins their findings into one signed verdict with a reason. Here \emph{semantic} means judged by what the data means or does. It does not refer to semantic communication or semantic routing.
+
+We ask five questions:
+
+\begin{itemize}
+  \item \textbf{RQ1.} Do trained models beat keywords on text sources they never saw?
+  \item \textbf{RQ2.} Can links and QR codes be judged without opening them?
+  \item \textbf{RQ3.} How far does a traffic model carry to new attacks, another network and the live Internet?
+  \item \textbf{RQ4.} Can a local language model be trusted as a second reader?
+  \item \textbf{RQ5.} Can one layer cover for the other when an attacker fools it?
+\end{itemize}
+
+Our main contributions are:
+
+\begin{enumerate}
+  \item An open prototype~\cite{code} that checks one event at both layers on a consumer laptop, tested with real SMTP sessions through a gateway.
+  \item A measurement on unseen sources that reports what fails as well as what works.
+  \item Evidence on how a language model behaves as a second reader: it leans on any opinion it is told, it can be argued out of a correct answer, and a prompt tuned on our own examples failed on real text.
+  \item A deception test that measures how much a warning floor and the network layer save when the language model is attacked.
+  \item Public test sets: 57 hand-written messages in English, Urdu and Roman Urdu, 66 links and 96 QR images, all safe to share.
+\end{enumerate}
+
+\section{Related Work}
+
+\subsection{Reading content}
+
+Production systems give the best evidence for fraud, because they report results at very low false alarm rates. BEC-Guard reached 98.2\% precision with under one false alarm in five million emails~\cite{becguard}, and URLTran caught 86.80\% of phishing URLs at 0.01\% false alarms~\cite{urltran}. Language models look strong on small balanced tests~\cite{chatspam}. On 2,742 real scams, however, their precision peaked at 69\%, and the authors advise against using them alone~\cite{topcuoglu}. Attackers have these models too. Rephrasing by a language model cut one commercial filter's recall from 98.95\% to 93.16\%~\cite{afane}. Reference-based detection, which checks a claim against facts, holds up better than judging style~\cite{phishllm}.
+
+Abuse detection shows a large gap between lab and field. On a real day of tweets, average precision fell to 9.4\%, against 40\% on academic sets~\cite{hateday}. Veiled threats are hard: Perspective caught almost none, and the best zero-shot language model reached a macro-F1 of 0.721~\cite{threatcore}. Models also punish people who report abuse. Teaching the difference between using a word and mentioning it cut false positives on counterspeech by 82.61\%~\cite{gligoric}.
+
+Local data is thin. Most SMS fraud in Pakistan is written in Roman Urdu~\cite{pervaiz}, yet no public Roman Urdu fraud dataset exists~\cite{ayaz}. Roman Urdu hate speech has public data~\cite{ruhsold}. The best F1 for Urdu threats at FIRE 2021 was 0.545~\cite{fire}. QR phishing work is young and mostly synthetic~\cite{trad}.
+
+\subsection{Reading traffic}
+
+Encryption leaves sizes, directions, timing and connection patterns. Classifiers on encrypted traffic mostly rely on such metadata and not on patterns in the ciphertext~\cite{wickramasinghe}. Public results here need care. An independent re-test found scores up to 80\% lower than those reported, and simple models often won~\cite{zhao}. CICIDS2017~\cite{cicids} contained flow errors that later work corrected~\cite{engelen}, and other benchmarks have design flaws~\cite{flood}. A held-out attack family at 1\% false alarms left a transformer far behind Random Forest~\cite{zaro}, and padding choices can decide transformer results~\cite{moczkodan}. Language models make poor flow detectors, with results near chance on raw NetFlows~\cite{houssel}. We follow the checklist of Arp et al.~\cite{arp} and keep a simple baseline in every test.
+
+\subsection{Joining layers}
+
+Fard et al.~\cite{fard} give the best template: seven architectures, repeated runs and results at a fixed false alarm rate. Gains appeared only where both single sources were weak. Joining application logs with audit logs has strong support, but for forensics on one host after an attack~\cite{alchemist}. Among public projects, AiSOC~\cite{aisoc} joins alerts after detection, and Slips~\cite{slips} reads network behaviour but not content. Student systems often place several models behind one dashboard, with no real join.
+
+\subsection{Attacking language models}
+
+Text that a language model reads is text an attacker wrote. Hidden instructions beat language model phishing detectors 39.9\% to 84.7\% of the time~\cite{clouding}, and attacks on models that read logs reached 88.2\%~\cite{loginject}. Malicious prompts can copy themselves between agents~\cite{promptinfection}. Fixed checks placed before any language model stopped most blocked attacks in one study of agent systems~\cite{mitra}. Li~\cite{li2026} argues that attackers do not control all network features equally. This leads to the idea we test in RQ5: if a fooled content agent says a message is safe, a network agent working from facts that the attacker controls less can still disagree.
+
+\section{Threat Model and Design}
+
+\subsection{Threat model}
+
+The attacker writes the content freely. They can reword it, disguise it, and add text aimed at the language model. They send from a host they control, often a compromised one, and they cannot cheaply change how that host behaves over time. An attacker who sends through a clean relay defeats the Network Agent, and we do not claim otherwise. We leave out attacks on the STL machine itself. In this prototype all signing keys are plain files on one machine.
+
+\subsection{Overview}
+
+Fig.~\ref{fig:arch} shows the system. An item is an email, message, link, QR code, file or network session. The Coordinator starts both agents in parallel. Each returns a finding without seeing the other's. The Coordinator joins the two, picks an action, writes a reason and signs the record.
+
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}[x=0.96cm,y=1cm,>={Stealth[length=1.8mm,width=1.3mm]},
+  b/.style={draw, rounded corners=1.5pt, align=center, inner sep=2.5pt, font=\scriptsize, minimum height=7mm},
+  g/.style={b, fill=black!7}, h/.style={b, fill=black!16}]
+  \node[g, minimum width=1.5cm, minimum height=17mm] (in) at (0,0) {Email,\\message,\\link, QR,\\session};
+  \node[h, minimum width=3.3cm, minimum height=12mm] (app) at (3.0,1.05) {Application Agent\\[-1pt]{\tiny text model, link model,}\\[-2pt]{\tiny language model}};
+  \node[h, minimum width=3.3cm, minimum height=12mm] (net) at (3.0,-1.05) {Network Agent\\[-1pt]{\tiny known-attack model,}\\[-2pt]{\tiny normal-behaviour model, names}};
+  \node[b, minimum width=1.4cm, minimum height=17mm] (co) at (6.0,0) {Coordi-\\nator\\[1pt]{\tiny join, decide,}\\[-2pt]{\tiny sign}};
+  \node[g, minimum width=1.2cm, minimum height=17mm] (out) at (7.75,0) {Signed\\verdict\\and\\reason};
+  \draw[->] (in.east) -- (app.west);
+  \draw[->] (in.east) -- (net.west);
+  \draw[->] (app.east) -- (co.west);
+  \draw[->] (net.east) -- (co.west);
+  \draw[->] (co) -- (out);
+\end{tikzpicture}
+\caption{STL. Both agents check the same item at the same time on one machine.}
+\label{fig:arch}
+\end{figure}
+
+\subsection{Application Agent}
+
+A reader opens email, HTML, QR codes and files. It also undoes tricks that change how text is stored but not how it reads: hidden characters, and letters borrowed from another alphabet inside a Latin word. It makes no judgement.
+
+The \textbf{text model} is \texttt{Multilingual-MiniLM-L12-H384}~\cite{minilm} with mean pooling and a linear layer. It scores threat, hate, abuse and fraud at once. Training uses masked binary cross-entropy, because most sources say nothing about some labels. Long texts are read in up to eight windows of 128 tokens. The model runs on the CPU as an 8-bit ONNX file of 118 MB.
+
+The \textbf{link model} is a character-level CNN that reads a URL as text, so no link is ever opened. Addresses are lower-cased and stripped of scheme and \texttt{www}. This stops the model from learning how each source formatted its URLs.
+
+The \textbf{language model} is \texttt{qwen3.5:9b} (9 billion parameters, 4-bit), run locally through Ollama at temperature 0, with the whole model on the laptop GPU. It reads every item with text, because a gate on the fast risk loses polite and veiled messages (Section~\ref{sec:second-reader}). A bare link reaches it only if the link model flagged it, for the reason given in Section~\ref{sec:links}. It gets written label definitions, a use-or-mention instruction and short examples, and it returns labels, a confidence value and a reason as JSON. Its labels replace the fast labels. It cannot clear an item alone: if the fast models flagged an item and the language model finds nothing, the risk stays at a \emph{warning floor} of 0.3. It cannot block alone either: if the fast models saw no problem, its risk stops at 0.84, just under the block line, so a person decides. If it is alone and its confidence is under 0.9, a cut-off chosen on validation data, the item only gets a warning. It is not told any other model's opinion, neither the fast models' nor the Network Agent's, for the reason given in Section~\ref{sec:second-reader}.
+
+\subsection{Network Agent}
+
+This agent reads the last 32 connections of the sending host. For each connection it uses duration, packets, bytes each way, mean packet size, share sent, time since the last connection, whether the destination and port are new, protocol and one of 15 port groups. Host addresses only group the connections, and they are never model inputs.
+
+The \textbf{known-attack model} is a small transformer (two layers, four heads, size 64) that scores the newest connection in that window. The \textbf{normal-behaviour model} is an Isolation Forest~\cite{iforest} on window features, fitted only on normal traffic. It can notice attacks it was never taught, but Section~\ref{sec:traffic} shows that it holds only on the network it learned. So its risk is capped at 0.45: it can warn, but it cannot flag alone. The link model also scores DNS and TLS server names, which stay readable in most encrypted sessions.
+
+\subsection{Coordinator}
+
+Each model has its own best cut-off $t$, chosen on validation data. A score $s$ maps to a common risk $r$, where 0.5 always means that cut-off:
+\begin{equation}
+r = \begin{cases} 0.5\, s / t & s < t \\ 0.5 + 0.5\,(s-t)/(1-t) & s \ge t \end{cases}
+\end{equation}
+The agents are joined as two witnesses:
+\begin{equation}
+R = 1 - (1 - r_a)(1 - r_n)
+\end{equation}
+An agent with nothing to say is left out. The rule can only raise risk, so the system inherits false alarms from both agents. The actions are allow below 0.3, warn from 0.3, flag from 0.5 and block from 0.85. These were set before testing and were not tuned on the tests.
+
+Each agent signs its finding with its own Ed25519 key, and the Coordinator signs the whole record. A signature shows who said something and that nobody changed it. It does not show that the statement is true.
+
+\section{Data and Method}
+
+\subsection{Data}
+
+Table~\ref{tab:data} lists the data. All of it is public and real. Live phishing URLs are stored as text and never opened, and no malware files were downloaded.
+
+\begin{table}[t]
+\caption{Data. Unseen means whole sources kept out of training.}
+\label{tab:data}
+\centering
+\footnotesize
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{3.7cm}r>{\raggedright\arraybackslash}p{2.75cm}@{}}
+\toprule
+\textbf{Source} & \textbf{Rows} & \textbf{Use} \\
+\midrule
+\multicolumn{3}{@{}l}{\emph{Text}} \\
+Civil Comments~\cite{civil}, emails, SMS~\cite{smsspam}, Roman Urdu~\cite{ruhsold} & 458,304 & Training \\
+Measuring Hate Speech~\cite{mhs} & 27,829 & Unseen source test \\
+Nazario, Nigerian Fraud & 6,058 & Unseen source test \\
+Civil Comments (test) & 96,629 & Held-out test \\
+Roman Urdu (test)~\cite{ruhsold} & 1,997 & Held-out test \\
+\multicolumn{3}{@{}l}{\emph{Links}} \\
+Phishing.Database, PhiUSIIL~\cite{phiusiil}, Common Crawl, Tranco~\cite{tranco} & 2,316,801 & Training \\
+Same sources, new domains & 295,390 & Held-out domains \\
+OpenPhish feed & 276 & Live links, unseen domains \\
+\multicolumn{3}{@{}l}{\emph{Traffic}} \\
+Corrected CICIDS2017~\cite{cicids,engelen} & 2,099,976 & Five days \\
+CTU-13~\cite{ctu13} & 4,907,237 & 13 botnet scenarios \\
+MAWI backbone~\cite{mawi} & 1,648,523 & Unlabelled live traffic \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Rules against leaks}
+
+We split links by registered domain, so a domain seen in training never appears in a test. Whole text sources stay out of training. Training text that shared passages of 50 characters or more with the unseen tests was removed, 1,968 fraud rows and 3,614 normal rows. For traffic we use two splits. In the first, attack days never appear in training. In the second, the last 20\% of each label in time is held out. For CTU-13, whole scenarios are held out. Thresholds come from validation data only.
+
+\subsection{Baselines and measures}
+
+The text baselines are a keyword filter and a TF-IDF linear model. The traffic baseline is LightGBM~\cite{lightgbm} on single flows. We report precision, recall, F1 and false alarm rate. Traffic results also give recall at 1\% and 0.1\% false alarms, because of the base rate: if one flow in 10,000 is bad and all are caught, a 1\% false alarm rate still gives a precision of about 1\%.
+
+\subsection{Testing without paired data}
+\label{sec:nopaired}
+
+No public dataset links one event across both layers. A flow in CICIDS2017 and an email in the Nazario set share no session, host or attack. So the system test pairs real held-out content with real held-out traffic histories from separate sources and sends them as real SMTP sessions through the gateway. In this design each agent alone must miss a whole group of sessions, so the joined result beats either agent by construction. We report it as a system test, not as a gain from joining.
+
+The training and evaluation ran on a laptop with an NVIDIA RTX 4050 (6 GB). The fast models run on the CPU, and the language model shares the laptop GPU.

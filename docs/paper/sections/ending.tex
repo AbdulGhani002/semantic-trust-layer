@@ -1,0 +1,48 @@
+\section{Discussion}
+\label{sec:discussion}
+
+\subsection{The language model is the best reader and the weakest link}
+
+The language model turned out to be the part that decides most of the content results. It reads polite scams and veiled threats that the fast model passes with confidence, and it cut false alarms on clean sessions to a third. It also has three faults, and each one changed the design.
+
+First, it copies. Told what another model thinks, it leans that way, and that holds for a link opinion and for a traffic finding. A tighter prompt reduced this, but it did not end it. A second reader that leans on the first is worth little, so STL tells it nothing and leaves the joining to the Coordinator.
+
+Second, it can be argued with. A plain order to ignore its instructions rarely works now, but a believable story does. The fake record works because of a rule we added on purpose: a report about abuse is not abuse. That rule protects people who report harm, which earlier work shows is needed~\cite{gligoric}, and an attacker can copy the form of a report. We do not see how a prompt alone can give one without the other. The warning floor and the traffic signal limit the damage, but they do not remove it.
+
+Third, it can look better than it is. Our first prompt was tuned on 57 hand-written messages and gave \firstRunHandWrong{} false alarms on the harmless ones. On real text in the first full run, the same prompt flagged \firstRunCleanFA{} of clean sessions. Our hand-written harmless messages were simply easier than a comment section about politics. Links then told the same story. On our 66 hand-made links the model beat the link model, and on real links it flagged \linkSampleWrong{} of \linkSampleEach{} normal ones, where the link model flagged \linkSampleFastWrong{}. Any team that tests a language model only on examples it wrote itself is likely to make the same mistake.
+
+\subsection{What joining the layers does and does not show}
+
+The system test shows that the parts work together under real sessions. It does not show that joining beats one layer, because the test is built so that one layer must miss a whole group. The honest evidence for RQ5 is narrower. When an attack fools the language model and the fast model saw the message, a warning stays, and if the sender's host also looks unusual, the session is flagged. That held for \injectionSaved{} of the \injectionFooledCount{} fooled tries. For the rest, no reader was left. It also depends on the attacker's host looking unusual, and an attacker who sends through a clean relay escapes it.
+
+\subsection{Behaviour models belong to their network}
+
+The normal-behaviour model looked very strong on the days it was built for and failed on every other network. That is not a flaw of one model. Normal traffic differs between networks, so a model of normal has to learn the network it guards. Reports that train and test such a model on one capture say little about how it would behave anywhere else.
+
+\section{Limits}
+
+\begin{itemize}
+  \item \textbf{No paired data.} Content and traffic in our system test come from separate sources. The gain from joining on real paired events is still unmeasured.
+  \item \textbf{Small hand-written sets.} The 57 messages, 66 links and 96 QR images show the type of error. They are not benchmarks, and the 57 messages also shaped the design.
+  \item \textbf{Noisy labels.} Civil Comments labels come from crowd votes on North American news comments. Hate labels from one source do not always match another's. Some of our false alarms may be labelling disagreements, and some of our catches may be luck.
+  \item \textbf{Old traffic.} CICIDS2017 and CTU-13 are years old and come from lab or campus networks. Our MAWI result has no labels, so it shows behaviour and not accuracy.
+  \item \textbf{No field base rate.} Real harmful messages are rare. Our false alarm rates are measured on balanced or planned samples, so precision in the field would be lower.
+  \item \textbf{Links inside messages.} The final rule covers bare links only. Links inside a message still reach the language model with the text, and we did not test whether it invents problems there too.
+  \item \textbf{Thin local coverage.} We have Roman Urdu abuse data, but no public Urdu or Roman Urdu fraud data. Only the hand-written messages test this.
+  \item \textbf{No fairness test.} We did not measure whether false alarms fall more on some dialects or groups. Abuse models are known to do this, so it must be tested before any real use.
+  \item \textbf{Two rounds of changes.} We changed the design after the first full run and again after the second. Validation rows chose each change, and no test set chose a prompt or a rule. But test results told us where to look, so our final numbers are not fully blind.
+  \item \textbf{One training run.} Each model was trained once, so we give no spread across seeds. The language model runs at temperature 0, so repeating a test gives nearly the same answers.
+  \item \textbf{One laptop.} The language model takes about \sampleSeconds{} seconds per item and uses the whole GPU. A busy mail server would need more hardware or a queue. All keys are plain files on one machine.
+\end{itemize}
+
+\section{Future Work}
+
+The next step is a paired testbed: a lab network where the same hosts send real content and produce real traffic, some of them infected, so one event exists at both layers. Only that can measure what joining adds. We also plan to test larger local language models, to separate instructions from data in a stronger way than a prompt can, to train the fast models against attacks like those in Section~\ref{sec:second-reader}, and to let operators exchange signed verdicts as the full STL design proposes.
+
+\section{Conclusion}
+
+We built a system that reads one event at both layers on a single laptop, and measured it on real data with whole sources kept out of training. Trained models beat keywords on unseen sources, links can be judged without opening them, and known-attack traffic models work well on attacks they were taught. New attacks and new networks remain hard. A local language model is a useful second reader for text, and it cut false alarms on clean sessions to a third. But it leans on opinions it is told, it can be talked out of correct answers, and it can look far better on hand-written tests than on real text. The joined design limits the harm of a fooled reader, and how much it adds on real paired events is still an open question.
+
+\section*{Acknowledgment}
+
+This work was done as a final year project at NUTECH, Islamabad, under the supervision of Maj. Babar. We used Anthropic Claude (Claude Code) to help write and debug the prototype code and test scripts, to search the literature, and to draft the text of all sections of this paper. We checked the code, results and text, and we take responsibility for them.

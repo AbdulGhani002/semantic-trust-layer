@@ -1,0 +1,248 @@
+{
+ "passed": 13,
+ "total": 14,
+ "rows": [
+  {
+   "scenario": "rector-slur",
+   "expected": "flag",
+   "action": "block",
+   "risk": 0.9751,
+   "application_risk": 0.975,
+   "network_risk": 0.002,
+   "labels": [
+    "hate"
+   ],
+   "flagged_by": [
+    "application-agent"
+   ],
+   "language_model_used": true,
+   "signature_valid": true,
+   "seconds": 1.94,
+   "passed": true
+  },
+  {
+   "scenario": "veiled-threat",
+   "expected": "flag",
+   "action": "block",
+   "risk": 0.9751,
+   "application_risk": 0.975,
+   "network_risk": 0.002,
+   "labels": [
+    "threat"
+   ],
+   "flagged_by": [
+    "application-agent"
+   ],
+   "language_model_used": true,
+   "signature_valid": true,
+   "seconds": 1.61,
+   "passed": true
+  },
+  {
+   "scenario": "polite-phish",
+   "expected": "flag",
+   "action": "block",
+   "risk": 0.9995,
+   "application_risk": 0.999,
+   "network_risk": 0.002,
+   "labels": [
+    "fraud",
+    "link"
+   ],
+   "flagged_by": [
+    "application-agent"
+   ],
+   "language_model_used": true,
+   "signature_valid": true,
+   "seconds": 1.97,
+   "passed": true
+  },
+  {
+   "scenario": "roman-urdu-scam",
+   "expected": "flag",
+   "action": "block",
+   "risk": 0.99,
+   "application_risk": 0.99,
+   "network_risk": 0.0,
+   "labels": [
+    "fraud"
+   ],
+   "flagged_by": [
+    "application-agent"
+   ],
+   "language_model_used": true,
+   "signature_valid": true,
+   "seconds": 2.05,
+   "passed": true
+  },
+  {
+   "scenario": "urdu-threat",
+   "expected": "flag",
+   "action": "block",
+   "risk": 0.925,
+   "application_risk": 0.925,
+   "network_risk": 0.0,
+   "labels": [
+    "threat"
+   ],
+   "flagged_by": [
+    "application-agent"
+   ],
+   "language_model_used": true,
+   "signature_valid": true,
+   "seconds": 1.69,
+   "passed": true
+  },
+  {
+   "scenario": "botnet-polite",
+   "expected": "flag",
+   "action": "block",
+   "risk": 0.9964,
+   "application_risk": 0.0,
+   "network_risk": 0.996,
+   "labels": [
+    "behaviour"
+   ],
+   "flagged_by": [
+    "network-agent"
+   ],
+   "language_model_used": true,
+   "signature_valid": true,
+   "seconds": 1.94,
+   "passed": true
+  },
+  {
+   "scenario": "botnet-phish",
+   "expected": "flag",
+   "action": "block",
+   "risk": 1.0,
+   "application_risk": 1.0,
+   "network_risk": 0.996,
+   "labels": [
+    "fraud",
+    "link",
+    "behaviour"
+   ],
+   "flagged_by": [
+    "application-agent",
+    "network-agent"
+   ],
+   "language_model_used": true,
+   "signature_valid": true,
+   "seconds": 1.85,
+   "passed": true
+  },
+  {
+   "scenario": "fake-qr",
+   "expected": "flag",
+   "action": "block",
+   "risk": 0.9995,
+   "application_risk": 0.999,
+   "network_risk": 0.0,
+   "labels": [
+    "fraud",
+    "link"
+   ],
+   "flagged_by": [
+    "application-agent"
+   ],
+   "language_model_used": true,
+   "signature_valid": true,
+   "seconds": 1.65,
+   "passed": true
+  },
+  {
+   "scenario": "encrypted-session",
+   "expected": "flag",
+   "action": "block",
+   "risk": 1.0,
+   "application_risk": 0.0,
+   "network_risk": 1.0,
+   "labels": [
+    "behaviour",
+    "server_name"
+   ],
+   "flagged_by": [
+    "network-agent"
+   ],
+   "language_model_used": false,
+   "signature_valid": true,
+   "seconds": 0.05,
+   "passed": true
+  },
+  {
+   "scenario": "threat-as-report",
+   "expected": "flag",
+   "action": "flag",
+   "risk": 0.6445,
+   "application_risk": 0.3,
+   "network_risk": 0.492,
+   "labels": [],
+   "flagged_by": [],
+   "language_model_used": true,
+   "signature_valid": true,
+   "seconds": 1.83,
+   "passed": true
+  },
+  {
+   "scenario": "same-report-normal-host",
+   "expected": "allow",
+   "action": "block",
+   "risk": 0.9751,
+   "application_risk": 0.975,
+   "network_risk": 0.002,
+   "labels": [
+    "threat"
+   ],
+   "flagged_by": [
+    "application-agent"
+   ],
+   "language_model_used": true,
+   "signature_valid": true,
+   "seconds": 2.37,
+   "passed": false
+  },
+  {
+   "scenario": "normal-notice",
+   "expected": "allow",
+   "action": "allow",
+   "risk": 0.0022,
+   "application_risk": 0.0,
+   "network_risk": 0.002,
+   "labels": [],
+   "flagged_by": [],
+   "language_model_used": true,
+   "signature_valid": true,
+   "seconds": 1.47,
+   "passed": true
+  },
+  {
+   "scenario": "strong-words",
+   "expected": "allow",
+   "action": "warn",
+   "risk": 0.3001,
+   "application_risk": 0.3,
+   "network_risk": 0.0,
+   "labels": [],
+   "flagged_by": [],
+   "language_model_used": true,
+   "signature_valid": true,
+   "seconds": 1.7,
+   "passed": true
+  },
+  {
+   "scenario": "reported-hate",
+   "expected": "allow",
+   "action": "allow",
+   "risk": 0.0022,
+   "application_risk": 0.0,
+   "network_risk": 0.002,
+   "labels": [],
+   "flagged_by": [],
+   "language_model_used": true,
+   "signature_valid": true,
+   "seconds": 1.48,
+   "passed": true
+  }
+ ]
+}

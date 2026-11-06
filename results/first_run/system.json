@@ -1,0 +1,45 @@
+{
+ "sessions": 600,
+ "language_model": true,
+ "application_only": {
+  "recall": 0.5222,
+  "precision": 0.8902,
+  "false_alarm_rate": 0.1933,
+  "f1": 0.6583,
+  "by_group": {
+   "bad_behaviour": 0.08,
+   "both_bad": 0.7133,
+   "clean_clean": 0.1933,
+   "harmful_content": 0.7733
+  }
+ },
+ "network_only": {
+  "recall": 0.6644,
+  "precision": 1.0,
+  "false_alarm_rate": 0.0,
+  "f1": 0.7984,
+  "by_group": {
+   "bad_behaviour": 0.9933,
+   "both_bad": 1.0,
+   "clean_clean": 0.0,
+   "harmful_content": 0.0
+  }
+ },
+ "both_joined": {
+  "recall": 0.9222,
+  "precision": 0.9347,
+  "false_alarm_rate": 0.1933,
+  "f1": 0.9284,
+  "by_group": {
+   "bad_behaviour": 0.9933,
+   "both_bad": 1.0,
+   "clean_clean": 0.1933,
+   "harmful_content": 0.7733
+  }
+ },
+ "all_signatures_valid": true,
+ "seconds_per_session": {
+  "median": 2.257,
+  "p95": 4.421
+ }
+}

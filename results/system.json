@@ -1,0 +1,67 @@
+{
+ "sessions": 600,
+ "language_model": true,
+ "application_only": {
+  "recall": 0.4378,
+  "precision": 0.961,
+  "false_alarm_rate": 0.0533,
+  "f1": 0.6015,
+  "by_group": {
+   "bad_behaviour": 0.02,
+   "both_bad": 0.6467,
+   "clean_clean": 0.0533,
+   "harmful_content": 0.6467
+  }
+ },
+ "network_only": {
+  "recall": 0.6644,
+  "precision": 1.0,
+  "false_alarm_rate": 0.0,
+  "f1": 0.7984,
+  "by_group": {
+   "bad_behaviour": 0.9933,
+   "both_bad": 1.0,
+   "clean_clean": 0.0,
+   "harmful_content": 0.0
+  }
+ },
+ "both_joined": {
+  "recall": 0.88,
+  "precision": 0.9802,
+  "false_alarm_rate": 0.0533,
+  "f1": 0.9274,
+  "by_group": {
+   "bad_behaviour": 0.9933,
+   "both_bad": 1.0,
+   "clean_clean": 0.0533,
+   "harmful_content": 0.6467
+  }
+ },
+ "actions_by_group": {
+  "bad_behaviour": {
+   "block": 149,
+   "warn": 1
+  },
+  "both_bad": {
+   "block": 150
+  },
+  "clean_clean": {
+   "allow": 116,
+   "warn": 26,
+   "block": 7,
+   "flag": 1
+  },
+  "harmful_content": {
+   "block": 89,
+   "warn": 28,
+   "allow": 25,
+   "flag": 8
+  }
+ },
+ "clean_sessions_blocked": 7,
+ "all_signatures_valid": true,
+ "seconds_per_session": {
+  "median": 1.904,
+  "p95": 2.969
+ }
+}

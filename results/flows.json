@@ -1,0 +1,534 @@
+{
+ "cic_unseen_attack_days": {
+  "threshold": 0.0043131085112690926,
+  "tests": {
+   "thursday": {
+    "flow_transformer": {
+     "recall_at_0.01_false_alarms": 0.0826,
+     "recall_at_0.001_false_alarms": 0.0015,
+     "precision": 0.4408,
+     "recall": 0.0015,
+     "f1": 0.003,
+     "false_alarm_rate": 0.00047,
+     "auc": 0.8877,
+     "average_precision": 0.6991,
+     "rows": 362076,
+     "attacks": 71907
+    },
+    "lightgbm_single_flow": {
+     "recall_at_0.01_false_alarms": 0.0416,
+     "recall_at_0.001_false_alarms": 0.0058,
+     "precision": 0.2991,
+     "recall": 0.0005,
+     "f1": 0.001,
+     "false_alarm_rate": 0.00028,
+     "auc": 0.9728,
+     "average_precision": 0.8271,
+     "rows": 362076,
+     "attacks": 71907
+    },
+    "flows_per_second_gpu": 87175,
+    "recall_by_attack": {
+     "Web Attack - Brute Force": 1.0,
+     "Web Attack - XSS": 1.0,
+     "Web Attack - SQL Injection": 1.0,
+     "Infiltration - Portscan": 0.0001,
+     "Infiltration": 0.0
+    }
+   },
+   "friday": {
+    "flow_transformer": {
+     "recall_at_0.01_false_alarms": 0.5696,
+     "recall_at_0.001_false_alarms": 0.3732,
+     "precision": 0.9988,
+     "recall": 0.373,
+     "f1": 0.5432,
+     "false_alarm_rate": 0.0004,
+     "auc": 0.9421,
+     "average_precision": 0.9424,
+     "rows": 547557,
+     "attacks": 254946
+    },
+    "lightgbm_single_flow": {
+     "recall_at_0.01_false_alarms": 0.397,
+     "recall_at_0.001_false_alarms": 0.3753,
+     "precision": 0.999,
+     "recall": 0.3733,
+     "f1": 0.5435,
+     "false_alarm_rate": 0.00034,
+     "auc": 0.9911,
+     "average_precision": 0.9861,
+     "rows": 547557,
+     "attacks": 254946
+    },
+    "flows_per_second_gpu": 88983,
+    "recall_by_attack": {
+     "Portscan": 0.0001,
+     "DDoS": 0.9995,
+     "Botnet": 0.0
+    }
+   }
+  }
+ },
+ "cic_seen_attacks_later_time": {
+  "threshold": 0.9952680468559265,
+  "tests": {
+   "later_flows_all_days": {
+    "flow_transformer": {
+     "recall_at_0.01_false_alarms": 1.0,
+     "recall_at_0.001_false_alarms": 0.9979,
+     "precision": 0.9991,
+     "recall": 0.9939,
+     "f1": 0.9965,
+     "false_alarm_rate": 0.00029,
+     "auc": 1.0,
+     "average_precision": 0.9999,
+     "rows": 419987,
+     "attacks": 101080
+    },
+    "lightgbm_single_flow": {
+     "recall_at_0.01_false_alarms": 0.9983,
+     "recall_at_0.001_false_alarms": 0.9786,
+     "precision": 0.9955,
+     "recall": 0.9914,
+     "f1": 0.9934,
+     "false_alarm_rate": 0.00144,
+     "auc": 0.9999,
+     "average_precision": 0.9995,
+     "rows": 419987,
+     "attacks": 101080
+    },
+    "flows_per_second_gpu": 87562,
+    "recall_by_attack": {
+     "FTP-Patator": 1.0,
+     "SSH-Patator": 0.9983,
+     "DoS Slowloris": 0.7056,
+     "DoS Slowhttptest": 0.8937,
+     "DoS Hulk": 0.9999,
+     "DoS GoldenEye": 1.0,
+     "Heartbleed": 0.0,
+     "Web Attack - Brute Force": 0.0,
+     "Web Attack - XSS": 0.0,
+     "Web Attack - SQL Injection": 0.0,
+     "Portscan": 0.9995,
+     "DDoS": 0.9909,
+     "Botnet": 0.8707,
+     "Infiltration": 0.4286,
+     "Infiltration - Portscan": 0.9923
+    }
+   }
+  }
+ },
+ "ctu_leave_scenarios_out": {
+  "threshold": 0.9996179342269897,
+  "tests": {
+   "ctu_6": {
+    "flow_transformer": {
+     "recall_at_0.01_false_alarms": 0.9987,
+     "recall_at_0.001_false_alarms": 0.9985,
+     "precision": 0.9994,
+     "recall": 0.9985,
+     "f1": 0.9989,
+     "false_alarm_rate": 0.0001,
+     "auc": 0.9999,
+     "average_precision": 0.9997,
+     "rows": 35959,
+     "attacks": 4630
+    },
+    "lightgbm_single_flow": {
+     "recall_at_0.01_false_alarms": 0.9892,
+     "recall_at_0.001_false_alarms": 0.9391,
+     "precision": 0.9717,
+     "recall": 0.9873,
+     "f1": 0.9794,
+     "false_alarm_rate": 0.00425,
+     "auc": 0.9986,
+     "average_precision": 0.9951,
+     "rows": 35959,
+     "attacks": 4630
+    },
+    "flows_per_second_gpu": 46988,
+    "recall_by_attack": {
+     "flow=From-Botnet-V47-UDP-DNS": 0.8966,
+     "flow=From-Botnet-V47-TCP-Established-HTTP-Ad-4": 0.0,
+     "flow=From-Botnet-V47-TCP-CC73-Not-Encrypted": 0.9899,
+     "flow=From-Botnet-V47-TCP-Attempt-SPAM": 0.9998,
+     "flow=From-Botnet-V47-TCP-Established-HTTP-Ad-62": 1.0,
+     "flow=From-Botnet-V47-TCP-Attempt": 1.0,
+     "flow=From-Botnet-V47-UDP-Attempt": 1.0
+    }
+   },
+   "ctu_7": {
+    "flow_transformer": {
+     "recall_at_0.01_false_alarms": 1.0,
+     "recall_at_0.001_false_alarms": 0.2698,
+     "precision": 1.0,
+     "recall": 0.0317,
+     "f1": 0.0615,
+     "false_alarm_rate": 0.0,
+     "auc": 0.9975,
+     "average_precision": 0.7704,
+     "rows": 5177,
+     "attacks": 63
+    },
+    "lightgbm_single_flow": {
+     "recall_at_0.01_false_alarms": 0.127,
+     "recall_at_0.001_false_alarms": 0.0317,
+     "precision": 0.2857,
+     "recall": 0.0635,
+     "f1": 0.1039,
+     "false_alarm_rate": 0.00196,
+     "auc": 0.8717,
+     "average_precision": 0.0977,
+     "rows": 5177,
+     "attacks": 63
+    },
+    "flows_per_second_gpu": 47111,
+    "recall_by_attack": {
+     "flow=From-Botnet-V48-UDP-DNS": 0.0952,
+     "flow=From-Botnet-V48-TCP-HTTP-Google-Net-Established-6": 0.0,
+     "flow=From-Botnet-V48-UDP-Attempt": 0.0,
+     "flow=From-Botnet-V48-TCP-CC77-HTTP-Not-Encrypted": 0.0,
+     "flow=From-Botnet-V48-TCP-WEB-Established": 0.0,
+     "flow=From-Botnet-V48-TCP-Attempt": 0.0,
+     "flow=From-Botnet-V48-TCP-CC108-Plain-HTTP": 0.0,
+     "flow=From-Botnet-V48-TCP-HTTP-Google-Net-Established-7": 0.0,
+     "flow=From-Botnet-V48-TCP-Established-HTTP-Binary-Download-12": 0.0,
+     "flow=From-Botnet-V48-TCP-Established-HTTP-Ad-4": 0.0
+    }
+   },
+   "ctu_8": {
+    "flow_transformer": {
+     "recall_at_0.01_false_alarms": 0.8934,
+     "recall_at_0.001_false_alarms": 0.0,
+     "precision": 0.5886,
+     "recall": 0.6731,
+     "f1": 0.628,
+     "false_alarm_rate": 0.00246,
+     "auc": 0.9955,
+     "average_precision": 0.4883,
+     "rows": 1179731,
+     "attacks": 6127
+    },
+    "lightgbm_single_flow": {
+     "recall_at_0.01_false_alarms": 0.0098,
+     "recall_at_0.001_false_alarms": 0.0023,
+     "precision": 0.009,
+     "recall": 0.0038,
+     "f1": 0.0053,
+     "false_alarm_rate": 0.00215,
+     "auc": 0.6294,
+     "average_precision": 0.007,
+     "rows": 1179731,
+     "attacks": 6127
+    },
+    "flows_per_second_gpu": 49603,
+    "recall_by_attack": {
+     "flow=From-Botnet-V49-UDP-DNS": 0.4348,
+     "flow=From-Botnet-V49-TCP-Established-HTTP-Ad-40": 0.0,
+     "flow=From-Botnet-V49-TCP-HTTP-Google-Net-Established-6": 0.0,
+     "flow=From-Botnet-V49-UDP-Attempt": 0.0,
+     "flow=From-Botnet-V49-TCP-Attempt": 0.8187,
+     "flow=From-Botnet-V49-TCP-WEB-Established": 0.0,
+     "flow=From-Botnet-V49-UDP-Established": 0.1053,
+     "flow=From-Botnet-V49-TCP-Established": 0.0,
+     "flow=From-Botnet-V49-TCP-CC76-HTTP-Custom-Port-Not-Encrypted-Binary-Download": 0.0,
+     "flow=From-Botnet-V49-TCP-CC74-HTTP-Custom-Port-Not-Encrypted": 0.2176,
+     "flow=From-Botnet-V49-TCP-CC75-HTTP-Custom-Port-Not-Encrypted-Non-Periodic": 0.125,
+     "flow=From-Botnet-V49-TCP-Established-HTTP-Binary-Download-11": 0.0,
+     "flow=From-Botnet-V49-TCP-Established-HTTP-Ad-62": 0.0,
+     "flow=From-Botnet-V49-UDP-Established-Custom-Encryption-2": 0.0,
+     "flow=From-Botnet-V49-UDP-Established-Custom-Encryption-1": 0.0315,
+     "flow=From-Botnet-V49-ICMP": 0.0
+    }
+   },
+   "ctu_9": {
+    "flow_transformer": {
+     "recall_at_0.01_false_alarms": 0.9965,
+     "recall_at_0.001_false_alarms": 0.9719,
+     "precision": 0.998,
+     "recall": 0.9632,
+     "f1": 0.9803,
+     "false_alarm_rate": 0.00043,
+     "auc": 0.9993,
+     "average_precision": 0.9982,
+     "rows": 1024913,
+     "attacks": 184987
+    },
+    "lightgbm_single_flow": {
+     "recall_at_0.01_false_alarms": 0.7155,
+     "recall_at_0.001_false_alarms": 0.4713,
+     "precision": 0.9884,
+     "recall": 0.4898,
+     "f1": 0.655,
+     "false_alarm_rate": 0.00127,
+     "auc": 0.983,
+     "average_precision": 0.9378,
+     "rows": 1024913,
+     "attacks": 184987
+    },
+    "flows_per_second_gpu": 49749,
+    "recall_by_attack": {
+     "flow=From-Botnet-V50-1-UDP-DNS": 0.9684,
+     "flow=From-Botnet-V50-1-TCP-HTTP-Google-Net-Established-6": 0.8696,
+     "flow=From-Botnet-V50-1-UDP-Attempt": 0.6667,
+     "flow=From-Botnet-V50-1-TCP-Attempt": 0.9743,
+     "flow=From-Botnet-V50-1-TCP-Established-Custom-Encryption-4": 0.6667,
+     "flow=From-Botnet-V50-1-TCP-Established-HTTP-Binary-Download-1": 0.0,
+     "flow=From-Botnet-V50-1-TCP-Established-HTTP-Binary-Download-Custom-Port-7": 0.0,
+     "flow=From-Botnet-V50-1-TCP-Established-HTTP-Binary-Download-3": 0.6,
+     "flow=From-Botnet-V50-1-TCP-CC5-Plain-HTTP-Encrypted-Data": 0.5556,
+     "flow=From-Botnet-V50-1-TCP-CC6-Plain-HTTP-Encrypted-Data": 0.7143,
+     "flow=From-Botnet-V50-1-TCP-Established-HTTP-Binary-Download-Custom-Port-4": 0.5,
+     "flow=From-Botnet-V50-1-TCP-Established-HTTP-Ad-64": 1.0,
+     "flow=From-Botnet-V50-1-TCP-Established-HTTP-Binary-Download-Custom-Port-6": 1.0,
+     "flow=From-Botnet-V50-1-TCP-WEB-Established-SSL": 0.9877,
+     "flow=From-Botnet-V50-1-TCP-Established-HTTP-Binary-Download-9": 0.5,
+     "flow=From-Botnet-V50-1-UDP-Custom-Encryption-1": 1.0,
+     "flow=From-Botnet-V50-1-TCP-CC12-HTTP-Not-Encrypted": 1.0,
+     "flow=From-Botnet-V50-1-TCP-CC13-Custom-Encryption": 1.0,
+     "flow=From-Botnet-V50-1-TCP-Attempt-SPAM": 0.9968,
+     "flow=From-Botnet-V50-1-TCP-CC1-HTTP-Not-Encrypted": 1.0,
+     "flow=From-Botnet-V50-1-TCP-Not-Encrypted-SMTP-Private-Proxy-1": 0.9829,
+     "flow=From-Botnet-V50-1-TCP-Established-Custom-Encryption-7": 0.9091,
+     "flow=From-Botnet-V50-1-UDP-Attempt-DNS": 1.0,
+     "flow=From-Botnet-V50-1-TCP-CC16-HTTP-Not-Encrypted": 0.9551,
+     "flow=From-Botnet-V50-1-TCP-WEB-Established": 0.8785,
+     "flow=From-Botnet-V50-1-TCP-Established-HTTP-Binary-Download-2": 1.0,
+     "flow=From-Botnet-V50-1-TCP-Established-HTTP-Ad-1": 0.8667,
+     "flow=From-Botnet-V50-1-TCP-Established-HTTP-Ad-37": 0.8333,
+     "flow=From-Botnet-V50-1-TCP-Established-HTTP-Ad-40": 0.9375,
+     "flow=From-Botnet-V50-1-TCP-Established-HTTP-Ad-2": 0.8382
+    }
+   }
+  }
+ },
+ "final_both_datasets": {
+  "threshold": 0.9943234920501709,
+  "tests": {
+   "cic_later_flows": {
+    "flow_transformer": {
+     "recall_at_0.01_false_alarms": 0.9997,
+     "recall_at_0.001_false_alarms": 0.9923,
+     "precision": 0.9964,
+     "recall": 0.9928,
+     "f1": 0.9946,
+     "false_alarm_rate": 0.00113,
+     "auc": 0.9999,
+     "average_precision": 0.9997,
+     "rows": 419987,
+     "attacks": 101080
+    },
+    "lightgbm_single_flow": {
+     "recall_at_0.01_false_alarms": 0.9955,
+     "recall_at_0.001_false_alarms": 0.9632,
+     "precision": 0.9922,
+     "recall": 0.9937,
+     "f1": 0.993,
+     "false_alarm_rate": 0.00247,
+     "auc": 0.9997,
+     "average_precision": 0.999,
+     "rows": 419987,
+     "attacks": 101080
+    },
+    "flows_per_second_gpu": 47516,
+    "recall_by_attack": {
+     "FTP-Patator": 1.0,
+     "SSH-Patator": 1.0,
+     "DoS Slowloris": 0.6926,
+     "DoS Slowhttptest": 0.4023,
+     "DoS Hulk": 0.9997,
+     "DoS GoldenEye": 1.0,
+     "Heartbleed": 0.0,
+     "Web Attack - Brute Force": 0.0,
+     "Web Attack - XSS": 0.6667,
+     "Web Attack - SQL Injection": 0.0,
+     "Portscan": 0.9998,
+     "DDoS": 0.9988,
+     "Botnet": 0.0,
+     "Infiltration": 0.5714,
+     "Infiltration - Portscan": 0.9949
+    }
+   },
+   "ctu_6": {
+    "flow_transformer": {
+     "recall_at_0.01_false_alarms": 0.9987,
+     "recall_at_0.001_false_alarms": 0.9985,
+     "precision": 0.9996,
+     "recall": 0.9985,
+     "f1": 0.999,
+     "false_alarm_rate": 6e-05,
+     "auc": 0.9998,
+     "average_precision": 0.9994,
+     "rows": 35959,
+     "attacks": 4630
+    },
+    "lightgbm_single_flow": {
+     "recall_at_0.01_false_alarms": 0.9853,
+     "recall_at_0.001_false_alarms": 0.9413,
+     "precision": 0.9652,
+     "recall": 0.9832,
+     "f1": 0.9741,
+     "false_alarm_rate": 0.00523,
+     "auc": 0.9981,
+     "average_precision": 0.9932,
+     "rows": 35959,
+     "attacks": 4630
+    },
+    "flows_per_second_gpu": 46477,
+    "recall_by_attack": {
+     "flow=From-Botnet-V47-UDP-DNS": 0.8966,
+     "flow=From-Botnet-V47-TCP-Established-HTTP-Ad-4": 0.0,
+     "flow=From-Botnet-V47-TCP-CC73-Not-Encrypted": 0.9899,
+     "flow=From-Botnet-V47-TCP-Attempt-SPAM": 0.9998,
+     "flow=From-Botnet-V47-TCP-Established-HTTP-Ad-62": 1.0,
+     "flow=From-Botnet-V47-TCP-Attempt": 1.0,
+     "flow=From-Botnet-V47-UDP-Attempt": 1.0
+    }
+   },
+   "ctu_7": {
+    "flow_transformer": {
+     "recall_at_0.01_false_alarms": 0.6667,
+     "recall_at_0.001_false_alarms": 0.1429,
+     "precision": 0.5,
+     "recall": 0.0159,
+     "f1": 0.0308,
+     "false_alarm_rate": 0.0002,
+     "auc": 0.9919,
+     "average_precision": 0.5421,
+     "rows": 5177,
+     "attacks": 63
+    },
+    "lightgbm_single_flow": {
+     "recall_at_0.01_false_alarms": 0.1111,
+     "recall_at_0.001_false_alarms": 0.1111,
+     "precision": 0.4118,
+     "recall": 0.1111,
+     "f1": 0.175,
+     "false_alarm_rate": 0.00196,
+     "auc": 0.8605,
+     "average_precision": 0.1118,
+     "rows": 5177,
+     "attacks": 63
+    },
+    "flows_per_second_gpu": 45466,
+    "recall_by_attack": {
+     "flow=From-Botnet-V48-UDP-DNS": 0.0476,
+     "flow=From-Botnet-V48-TCP-HTTP-Google-Net-Established-6": 0.0,
+     "flow=From-Botnet-V48-UDP-Attempt": 0.0,
+     "flow=From-Botnet-V48-TCP-CC77-HTTP-Not-Encrypted": 0.0,
+     "flow=From-Botnet-V48-TCP-WEB-Established": 0.0,
+     "flow=From-Botnet-V48-TCP-Attempt": 0.0,
+     "flow=From-Botnet-V48-TCP-CC108-Plain-HTTP": 0.0,
+     "flow=From-Botnet-V48-TCP-HTTP-Google-Net-Established-7": 0.0,
+     "flow=From-Botnet-V48-TCP-Established-HTTP-Binary-Download-12": 0.0,
+     "flow=From-Botnet-V48-TCP-Established-HTTP-Ad-4": 0.0
+    }
+   },
+   "ctu_8": {
+    "flow_transformer": {
+     "recall_at_0.01_false_alarms": 0.2303,
+     "recall_at_0.001_false_alarms": 0.0,
+     "precision": 0.0006,
+     "recall": 0.0003,
+     "f1": 0.0004,
+     "false_alarm_rate": 0.0028,
+     "auc": 0.9698,
+     "average_precision": 0.0838,
+     "rows": 1179731,
+     "attacks": 6127
+    },
+    "lightgbm_single_flow": {
+     "recall_at_0.01_false_alarms": 0.0171,
+     "recall_at_0.001_false_alarms": 0.0007,
+     "precision": 0.006,
+     "recall": 0.0042,
+     "f1": 0.005,
+     "false_alarm_rate": 0.00369,
+     "auc": 0.8726,
+     "average_precision": 0.0203,
+     "rows": 1179731,
+     "attacks": 6127
+    },
+    "flows_per_second_gpu": 47966,
+    "recall_by_attack": {
+     "flow=From-Botnet-V49-UDP-DNS": 0.029,
+     "flow=From-Botnet-V49-TCP-Established-HTTP-Ad-40": 0.0,
+     "flow=From-Botnet-V49-TCP-HTTP-Google-Net-Established-6": 0.0,
+     "flow=From-Botnet-V49-UDP-Attempt": 0.0,
+     "flow=From-Botnet-V49-TCP-Attempt": 0.0,
+     "flow=From-Botnet-V49-TCP-WEB-Established": 0.0,
+     "flow=From-Botnet-V49-UDP-Established": 0.0,
+     "flow=From-Botnet-V49-TCP-Established": 0.0,
+     "flow=From-Botnet-V49-TCP-CC76-HTTP-Custom-Port-Not-Encrypted-Binary-Download": 0.0,
+     "flow=From-Botnet-V49-TCP-CC74-HTTP-Custom-Port-Not-Encrypted": 0.0,
+     "flow=From-Botnet-V49-TCP-CC75-HTTP-Custom-Port-Not-Encrypted-Non-Periodic": 0.0,
+     "flow=From-Botnet-V49-TCP-Established-HTTP-Binary-Download-11": 0.0,
+     "flow=From-Botnet-V49-TCP-Established-HTTP-Ad-62": 0.0,
+     "flow=From-Botnet-V49-UDP-Established-Custom-Encryption-2": 0.0,
+     "flow=From-Botnet-V49-UDP-Established-Custom-Encryption-1": 0.0,
+     "flow=From-Botnet-V49-ICMP": 0.0
+    }
+   },
+   "ctu_9": {
+    "flow_transformer": {
+     "recall_at_0.01_false_alarms": 0.9942,
+     "recall_at_0.001_false_alarms": 0.9789,
+     "precision": 0.9999,
+     "recall": 0.9718,
+     "f1": 0.9856,
+     "false_alarm_rate": 3e-05,
+     "auc": 0.9991,
+     "average_precision": 0.9982,
+     "rows": 1024913,
+     "attacks": 184987
+    },
+    "lightgbm_single_flow": {
+     "recall_at_0.01_false_alarms": 0.6921,
+     "recall_at_0.001_false_alarms": 0.4523,
+     "precision": 0.9843,
+     "recall": 0.4967,
+     "f1": 0.6603,
+     "false_alarm_rate": 0.00175,
+     "auc": 0.9788,
+     "average_precision": 0.927,
+     "rows": 1024913,
+     "attacks": 184987
+    },
+    "flows_per_second_gpu": 47675,
+    "recall_by_attack": {
+     "flow=From-Botnet-V50-1-UDP-DNS": 0.9916,
+     "flow=From-Botnet-V50-1-TCP-HTTP-Google-Net-Established-6": 0.913,
+     "flow=From-Botnet-V50-1-UDP-Attempt": 0.6667,
+     "flow=From-Botnet-V50-1-TCP-Attempt": 0.9877,
+     "flow=From-Botnet-V50-1-TCP-Established-Custom-Encryption-4": 0.6667,
+     "flow=From-Botnet-V50-1-TCP-Established-HTTP-Binary-Download-1": 0.0,
+     "flow=From-Botnet-V50-1-TCP-Established-HTTP-Binary-Download-Custom-Port-7": 0.0,
+     "flow=From-Botnet-V50-1-TCP-Established-HTTP-Binary-Download-3": 0.4,
+     "flow=From-Botnet-V50-1-TCP-CC5-Plain-HTTP-Encrypted-Data": 0.3333,
+     "flow=From-Botnet-V50-1-TCP-CC6-Plain-HTTP-Encrypted-Data": 0.7857,
+     "flow=From-Botnet-V50-1-TCP-Established-HTTP-Binary-Download-Custom-Port-4": 1.0,
+     "flow=From-Botnet-V50-1-TCP-Established-HTTP-Ad-64": 0.0,
+     "flow=From-Botnet-V50-1-TCP-Established-HTTP-Binary-Download-Custom-Port-6": 0.5,
+     "flow=From-Botnet-V50-1-TCP-WEB-Established-SSL": 0.9877,
+     "flow=From-Botnet-V50-1-TCP-Established-HTTP-Binary-Download-9": 1.0,
+     "flow=From-Botnet-V50-1-UDP-Custom-Encryption-1": 1.0,
+     "flow=From-Botnet-V50-1-TCP-CC12-HTTP-Not-Encrypted": 1.0,
+     "flow=From-Botnet-V50-1-TCP-CC13-Custom-Encryption": 1.0,
+     "flow=From-Botnet-V50-1-TCP-Attempt-SPAM": 0.9972,
+     "flow=From-Botnet-V50-1-TCP-CC1-HTTP-Not-Encrypted": 1.0,
+     "flow=From-Botnet-V50-1-TCP-Not-Encrypted-SMTP-Private-Proxy-1": 0.9795,
+     "flow=From-Botnet-V50-1-TCP-Established-Custom-Encryption-7": 0.9091,
+     "flow=From-Botnet-V50-1-UDP-Attempt-DNS": 1.0,
+     "flow=From-Botnet-V50-1-TCP-CC16-HTTP-Not-Encrypted": 0.9744,
+     "flow=From-Botnet-V50-1-TCP-WEB-Established": 0.9337,
+     "flow=From-Botnet-V50-1-TCP-Established-HTTP-Binary-Download-2": 1.0,
+     "flow=From-Botnet-V50-1-TCP-Established-HTTP-Ad-1": 0.9667,
+     "flow=From-Botnet-V50-1-TCP-Established-HTTP-Ad-37": 0.9167,
+     "flow=From-Botnet-V50-1-TCP-Established-HTTP-Ad-40": 0.9375,
+     "flow=From-Botnet-V50-1-TCP-Established-HTTP-Ad-2": 0.9559
+    }
+   }
+  }
+ }
+}

@@ -1,0 +1,79 @@
+{
+ "rows": {
+  "phishing": 150,
+  "normal": 150,
+  "popular_normal": 80
+ },
+ "rules": {
+  "Link model alone": {
+   "phishing": {
+    "flagged": 135,
+    "warned_or_more": 140
+   },
+   "normal": {
+    "flagged": 5,
+    "warned_or_more": 12
+   },
+   "popular_normal": {
+    "flagged": 4,
+    "warned_or_more": 11
+   }
+  },
+  "Same rule as content": {
+   "phishing": {
+    "flagged": 134,
+    "warned_or_more": 144
+   },
+   "normal": {
+    "flagged": 33,
+    "warned_or_more": 35
+   },
+   "popular_normal": {
+    "flagged": 21,
+    "warned_or_more": 24
+   }
+  },
+  "Both must agree": {
+   "phishing": {
+    "flagged": 125,
+    "warned_or_more": 146
+   },
+   "normal": {
+    "flagged": 3,
+    "warned_or_more": 39
+   },
+   "popular_normal": {
+    "flagged": 1,
+    "warned_or_more": 27
+   }
+  },
+  "Language model only clears": {
+   "phishing": {
+    "flagged": 125,
+    "warned_or_more": 140
+   },
+   "normal": {
+    "flagged": 3,
+    "warned_or_more": 12
+   },
+   "popular_normal": {
+    "flagged": 1,
+    "warned_or_more": 11
+   }
+  },
+  "Language model only warns": {
+   "phishing": {
+    "flagged": 135,
+    "warned_or_more": 146
+   },
+   "normal": {
+    "flagged": 5,
+    "warned_or_more": 39
+   },
+   "popular_normal": {
+    "flagged": 4,
+    "warned_or_more": 27
+   }
+  }
+ }
+}

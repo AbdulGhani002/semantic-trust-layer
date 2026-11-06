@@ -1,0 +1,152 @@
+{
+ "threshold": 0.5611833333969116,
+ "ms_per_1000_links": 590.9,
+ "held_out_domains": {
+  "precision": 0.9574,
+  "recall": 0.9113,
+  "f1": 0.9338,
+  "false_alarm_rate": 0.0301,
+  "average_precision": 0.9843,
+  "rows": 295390,
+  "phishing": 125919
+ },
+ "by_source": {
+  "common_crawl_normal": {
+   "rows": 88609,
+   "flagged": 0.0175
+  },
+  "hf_urls_normal": {
+   "rows": 40462,
+   "flagged": 0.0332
+  },
+  "hf_urls_phishing": {
+   "rows": 33122,
+   "flagged": 0.8374
+  },
+  "phishing_database_phishing": {
+   "rows": 80772,
+   "flagged": 0.9562
+  },
+  "phiusiil_normal": {
+   "rows": 11119,
+   "flagged": 0.0445
+  },
+  "phiusiil_phishing": {
+   "rows": 12025,
+   "flagged": 0.8128
+  },
+  "tranco_normal": {
+   "rows": 29281,
+   "flagged": 0.0586
+  }
+ },
+ "openphish_unseen_domains": {
+  "rows": 276,
+  "recall": 0.9094
+ },
+ "openphish_after_training": {
+  "rows": 203,
+  "recall": 0.9458,
+  "retrieved": "2026-11-06 06:02 UTC"
+ },
+ "language_model": "qwen3.5:9b",
+ "language_model_sample": {
+  "size_each": 150,
+  "seconds_each": 0.95,
+  "fast_caught": 143,
+  "both_caught": 136,
+  "fast_wrong": 2,
+  "both_wrong": 0,
+  "missed": [
+   "mqhealthcare.com",
+   "gildenseite.de",
+   "wsecu.learnfrombasics.net",
+   "buscaeditora.com.br/html",
+   "lethicserial.weebly.com",
+   "vestralocus.com/reviews",
+   "truonganiad.com",
+   "steamrcommunity.com/profles/76561198440761564",
+   "is-into-anime.com",
+   "firebrandland.com",
+   "sharingfiles2.azurewebsites.net",
+   "sbcglobal.godaddysites.com",
+   "test10.xn--husy7h.jp/obo/iive",
+   "kneesurgeonhouston.com/homepage01"
+  ],
+  "wrong": []
+ },
+ "fixture_links": {
+  "fraud_caught": "40/44",
+  "normal_false_alarms": "4/22",
+  "flagged_by_kind": {
+   "apk_download": "3/3",
+   "brand_subdomain": "5/5",
+   "credential_path": "2/2",
+   "crypto_scam": "2/2",
+   "deep_link": "0/8",
+   "delivery_scam": "2/2",
+   "download": "2/2",
+   "exe_download": "2/2",
+   "gov_scam": "2/3",
+   "homepage": "1/7",
+   "ip_host": "4/4",
+   "job_scam": "0/1",
+   "login_page": "1/3",
+   "long_query": "0/2",
+   "lookalike": "10/10",
+   "prize_scam": "0/2",
+   "punycode": "2/2",
+   "redirect": "1/1",
+   "shortener": "3/3",
+   "userinfo": "2/2"
+  },
+  "missed": [
+   "https://jeeto-pakistan-winner.test/claim-prize",
+   "https://telenor-lucky-draw.test/winner?id=88213",
+   "https://bisp-8171-payment.test/register",
+   "https://work-from-home-pk.test/register-fee"
+  ],
+  "false_alarms": [
+   "https://www.meezanbank.com/",
+   "https://login.microsoftonline.com/",
+   "https://www.python.org/ftp/python/3.13.1/python-3.13.1-amd64.exe",
+   "https://www.7-zip.org/a/7z2408-x64.exe"
+  ],
+  "with_language_model_caught": "39/44",
+  "with_language_model_false_alarms": "0/22",
+  "with_language_model_missed": [
+   "https://t-co.test/Qz81pL",
+   "https://jeeto-pakistan-winner.test/claim-prize",
+   "https://telenor-lucky-draw.test/winner?id=88213",
+   "https://bisp-8171-payment.test/register",
+   "https://work-from-home-pk.test/register-fee"
+  ],
+  "with_language_model_wrong": []
+ },
+ "fixture_qr": {
+  "images": 96,
+  "read_correctly": 96,
+  "verdict_correct": 84,
+  "by_variant": {
+   "clean": "14/16",
+   "rotated": "14/16",
+   "blurred": "14/16",
+   "dim": "14/16",
+   "perspective": "14/16",
+   "sticker": "14/16"
+  },
+  "wrong_clean_codes": [
+   {
+    "name": "qr_parking_pay",
+    "kind": "url",
+    "risk": 0.231
+   },
+   {
+    "name": "qr_gov_refund",
+    "kind": "url",
+    "risk": 0.485
+   }
+  ],
+  "ms_per_image": 14.0
+ }
+}

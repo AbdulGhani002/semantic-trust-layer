@@ -1,0 +1,700 @@
+{
+ "gligoric": {
+  "arxiv": "2404.01651",
+  "title": "NLP Systems That Can't Tell Use from Mention Censor Counterspeech, but Teaching the Distinction Helps",
+  "authors": [
+   "Kristina Gligoric",
+   "Myra Cheng",
+   "Lucia Zheng",
+   "Esin Durmus",
+   "Dan Jurafsky"
+  ],
+  "year": "2024",
+  "note": "NAACL 2024 (Main conference)"
+ },
+ "fard": {
+  "arxiv": "2606.22450",
+  "title": "Cross-Layer Intrusion Detection in 5G O-RAN: Gains and Limits of Fusing Radio Telemetry with Network Flow Records",
+  "authors": [
+   "Hamed Fard",
+   "Ilya Komarov",
+   "Gerhard Wunder"
+  ],
+  "year": "2026",
+  "note": "Accepted for publication at the 2026 IEEE International Conference on Cyber Security and Resilience (IEEE CSR), Lisbon, Portugal, August 3-5, 2026. 8 pages, 3 figures. Conference: https://www.ieee-csr.org/ Code: https://github.com/afbf4c8996f/cross-layer-ids-5g-oran"
+ },
+ "clouding": {
+  "arxiv": "2602.05484",
+  "title": "Clouding the Mirror: Stealthy Prompt Injection Attacks Targeting LLM-based Phishing Detection",
+  "authors": [
+   "Takashi Koide",
+   "Hiroki Nakano",
+   "Daiki Chiba"
+  ],
+  "year": "2026",
+  "note": "Accepted at RAID 2026"
+ },
+ "mitra": {
+  "arxiv": "2610.07657",
+  "title": "Where Rules End and Judges Begin: Measuring the Judgment Boundary in Multi-Agent Systems Security",
+  "authors": [
+   "Shaswata Mitra",
+   "Raj Patel",
+   "Subash Neupane",
+   "Sudip Mittal",
+   "Md Rayhanur Rahman",
+   "Shahram Rahimi"
+  ],
+  "year": "2026",
+  "note": "26 pages, 20 figures, 24 tables"
+ },
+ "hatecheck": {
+  "arxiv": "2012.15606",
+  "title": "HateCheck: Functional Tests for Hate Speech Detection Models",
+  "authors": [
+   "Paul Röttger",
+   "Bertram Vidgen",
+   "Dong Nguyen",
+   "Zeerak Waseem",
+   "Helen Margetts",
+   "Janet B. Pierrehumbert"
+  ],
+  "year": "2020",
+  "note": "Accepted at ACL 2021 (Main Conference)"
+ },
+ "phreshphish": {
+  "arxiv": "2507.10854",
+  "title": "PhreshPhish: A Real-World, High-Quality, Large-Scale Phishing Website Dataset and Benchmark",
+  "authors": [
+   "Thomas Dalton",
+   "Hemanth Gowda",
+   "Girish Rao",
+   "Sachin Pargi",
+   "Alireza Hadj Khodabakhshi",
+   "Joseph Rombs",
+   "Stephan Jou",
+   "Manish Marwah"
+  ],
+  "year": "2025",
+  "note": ""
+ },
+ "loginject": {
+  "arxiv": "2607.14493",
+  "title": "Context Contamination in LLM Analysis of Network Security Logs: Poison with Passive Prompt Injection and Mitigation Evaluation",
+  "authors": [
+   "Rabimba Karanjai",
+   "Yang Lu",
+   "Hemanth Hegadehalli Madhavarao",
+   "Lei Xu",
+   "Weidong Shi"
+  ],
+  "year": "2026",
+  "note": ""
+ },
+ "li2026": {
+  "arxiv": "2607.07739",
+  "title": "Controllability-Aware Adversarial Examples Against LLM-Based Network Traffic Classifiers",
+  "authors": [
+   "Zhenpeng Li"
+  ],
+  "year": "2026",
+  "note": "13 pages, 5 figures"
+ },
+ "zaro": {
+  "arxiv": "2611.00713",
+  "title": "Adversarial Robustness Is Not Zero-Day Generalization: A Controlled Evaluation of Flow-Based Intrusion Detectors on Corrected CIC-IDS2017",
+  "authors": [
+   "Abdulhamid Zaro"
+  ],
+  "year": "2026",
+  "note": "10 pages, 10 tables. Code and per-seed results: https://github.com/abdulhamid-zaro/robustness-vs-zeroday-nids"
+ },
+ "heiding": {
+  "arxiv": "2412.00586",
+  "title": "Evaluating Large Language Models' Capability to Launch Fully Automated Spear Phishing Campaigns: Validated on Human Subjects",
+  "authors": [
+   "Fred Heiding",
+   "Simon Lermen",
+   "Andrew Kao",
+   "Bruce Schneier",
+   "Arun Vishwanath"
+  ],
+  "year": "2024",
+  "note": ""
+ },
+ "threatcore": {
+  "arxiv": "2605.10563",
+  "title": "ThreatCore: A Benchmark for Explicit and Implicit Threat Detection",
+  "authors": [
+   "Davide Bruni",
+   "Carlo Bardazzi",
+   "Maurizio Tesconi"
+  ],
+  "year": "2026",
+  "note": ""
+ },
+ "chatspam": {
+  "arxiv": "2402.18093",
+  "title": "ChatSpamDetector: Leveraging Large Language Models for Effective Phishing Email Detection",
+  "authors": [
+   "Takashi Koide",
+   "Naoki Fukushi",
+   "Hiroki Nakano",
+   "Daiki Chiba"
+  ],
+  "year": "2024",
+  "note": "Accepted at SecureComm 2024"
+ },
+ "hateday": {
+  "arxiv": "2411.15462",
+  "title": "HateDay: Insights from a Global Hate Speech Dataset Representative of a Day on Twitter",
+  "authors": [
+   "Manuel Tonneau",
+   "Diyi Liu",
+   "Niyati Malhotra",
+   "Scott A. Hale",
+   "Samuel P. Fraiberger",
+   "Victor Orozco-Olvera",
+   "Paul Röttger"
+  ],
+  "year": "2024",
+  "note": "ACL 2025 main conference. Data available at https://huggingface.co/datasets/manueltonneau/hateday"
+ },
+ "moczkodan": {
+  "arxiv": "2606.11098",
+  "title": "Do Transformers Actually Help Intrusion Detection? A Temporal Sequence Evaluation on CIC-IDS2017",
+  "authors": [
+   "Zach Moczkodan",
+   "Hany Ragab"
+  ],
+  "year": "2026",
+  "note": "11 pages, 9 figures, 9 tables. Preprint. Code: https://github.com/zachmocz/temporal-ids-bench"
+ },
+ "alchemist": {
+  "doi": "10.14722/ndss.2021.24445",
+  "title": "ALchemist: Fusing Application and Audit Logs for Precise Attack Provenance without Instrumentation",
+  "authors": [
+   "Le Yu",
+   "Shiqing Ma",
+   "Zhuo Zhang",
+   "Guanhong Tao",
+   "Xiangyu Zhang",
+   "Dongyan Xu",
+   "Vincent E. Urias",
+   "Han Wei Lin",
+   "Gabriela Ciocarlie",
+   "Vinod Yegneswaran",
+   "Ashish Gehani"
+  ],
+  "year": 2021,
+  "venue": "Proceedings 2021 Network and Distributed System Security Symposium",
+  "volume": "",
+  "pages": ""
+ },
+ "promptinfection": {
+  "doi": "10.1007/978-3-032-16092-8_28",
+  "title": "Prompt Infection: LLM-to-LLM Prompt Injection within Multi-agent Systems",
+  "authors": [
+   "Donghyun Lee",
+   "Mo Tiwari",
+   "Brando Miranda"
+  ],
+  "year": 2026,
+  "venue": "Lecture Notes in Computer Science",
+  "volume": "",
+  "pages": "511-520"
+ },
+ "urltran": {
+  "doi": "10.1109/MILCOM52596.2021.9653028",
+  "title": "URLTran: Improving Phishing URL Detection Using Transformers",
+  "authors": [
+   "Pranav Maneriker",
+   "Jack W. Stokes",
+   "Edir Garcia Lazo",
+   "Diana Carutasu",
+   "Farid Tajaddodianfar",
+   "Arun Gururajan"
+  ],
+  "year": 2021,
+  "venue": "MILCOM 2021 - 2021 IEEE Military Communications Conference (MILCOM)",
+  "volume": "",
+  "pages": "197-204"
+ },
+ "topcuoglu": {
+  "doi": "10.1109/COMPSAC69091.2026.00090",
+  "title": "Measuring and Evaluating the Performance of Generative Ai Models for Scam Detection",
+  "authors": [
+   "Cem Topcuoglu",
+   "Seyed Ali Akhavani",
+   "Harel Berger",
+   "Sadia Afroz",
+   "Michalis Pachilakis",
+   "Vibhor Sehgal",
+   "Leyla Bilge",
+   "Engin Kirda"
+  ],
+  "year": 2026,
+  "venue": "2026 IEEE 50th Annual Computers, Software, and Applications Conference (COMPSAC)",
+  "volume": "",
+  "pages": "641-651"
+ },
+ "afane": {
+  "doi": "10.1109/BigData62323.2024.10825018",
+  "title": "Next-Generation Phishing: How LLM Agents Empower Cyber Attackers",
+  "authors": [
+   "Khalifa Afane",
+   "Wenqi Wei",
+   "Ying Mao",
+   "Junaid Farooq",
+   "Juntao Chen"
+  ],
+  "year": 2024,
+  "venue": "2024 IEEE International Conference on Big Data (BigData)",
+  "volume": "",
+  "pages": "2558-2567"
+ },
+ "pervaiz": {
+  "doi": "10.1145/3314344.3332500",
+  "title": "An assessment of SMS fraud in Pakistan",
+  "authors": [
+   "Fahad Pervaiz",
+   "Rai Shah Nawaz",
+   "Muhammad Umer Ramzan",
+   "Maryem Zafar Usmani",
+   "Shrirang Mare",
+   "Kurtis Heimerl",
+   "Faisal Kamiran",
+   "Richard Anderson",
+   "Lubna Razaq"
+  ],
+  "year": 2019,
+  "venue": "Proceedings of the 2nd ACM SIGCAS Conference on Computing and Sustainable Societies",
+  "volume": "",
+  "pages": "195-205"
+ },
+ "ayaz": {
+  "doi": "10.12785/ijcds/150174",
+  "title": "Detection of Roman Urdu fraud/spam SMS in Pakistan Using Machine Learning",
+  "authors": [
+   "Muhammad Ayaz",
+   "Sarwat Nizamani",
+   "Aftab Ahmed Chandio",
+   "Kirshan Kumar Luhana"
+  ],
+  "year": 2024,
+  "venue": "International Journal of Computing and Digital Systems",
+  "volume": "15",
+  "pages": "1053-1061"
+ },
+ "trad": {
+  "doi": "10.1007/978-3-032-30805-4_14",
+  "title": "Detecting Quishing Attacks with Machine Learning Techniques Through QR Code Analysis",
+  "authors": [
+   "Fouad Trad",
+   "Ali Chehab"
+  ],
+  "year": 2026,
+  "venue": "IFIP Advances in Information and Communication Technology",
+  "volume": "",
+  "pages": "194-206"
+ },
+ "ruhsold": {
+  "doi": "10.18653/v1/2020.emnlp-main.197",
+  "title": "Hate-Speech and Offensive Language Detection in Roman Urdu",
+  "authors": [
+   "Hammad Rizwan",
+   "Muhammad Haroon Shakeel",
+   "Asim Karim"
+  ],
+  "year": 2020,
+  "venue": "Proceedings of the 2020 Conference on Empirical Methods in Natural Language Processing (EMNLP)",
+  "volume": "",
+  "pages": "2512-2522"
+ },
+ "zhao": {
+  "doi": "10.1145/3718958.3750498",
+  "title": "The Sweet Danger of Sugar: Debunking Representation Learning for Encrypted Traffic Classification",
+  "authors": [
+   "Yuqi Zhao",
+   "Giovanni Dettori",
+   "Matteo Boffa",
+   "Luca Vassio",
+   "Marco Mellia"
+  ],
+  "year": 2025,
+  "venue": "Proceedings of the ACM SIGCOMM 2025 Conference",
+  "volume": "",
+  "pages": "296-310"
+ },
+ "wickramasinghe": {
+  "doi": "10.1109/SP61157.2025.00165",
+  "title": "SoK: Decoding the Enigma of Encrypted Network Traffic Classifiers",
+  "authors": [
+   "Nimesha Wickramasinghe",
+   "Arash Shaghaghi",
+   "Gene Tsudik",
+   "Sanjay Jha"
+  ],
+  "year": 2025,
+  "venue": "2025 IEEE Symposium on Security and Privacy (SP)",
+  "volume": "",
+  "pages": "1825-1843"
+ },
+ "engelen": {
+  "doi": "10.1109/SPW53761.2021.00009",
+  "title": "Troubleshooting an Intrusion Detection Dataset: the CICIDS2017 Case Study",
+  "authors": [
+   "Gints Engelen",
+   "Vera Rimmer",
+   "Wouter Joosen"
+  ],
+  "year": 2021,
+  "venue": "2021 IEEE Security and Privacy Workshops (SPW)",
+  "volume": "",
+  "pages": "7-12"
+ },
+ "flood": {
+  "doi": "10.1109/EuroSP60621.2024.00042",
+  "title": "Bad Design Smells in Benchmark NIDS Datasets",
+  "authors": [
+   "Robert Flood",
+   "Gints Engelen",
+   "David Aspinall",
+   "Lieven Desmet"
+  ],
+  "year": 2024,
+  "venue": "2024 IEEE 9th European Symposium on Security and Privacy (EuroS&amp;amp;P)",
+  "volume": "",
+  "pages": "658-675"
+ },
+ "houssel": {
+  "doi": "10.1109/BDCAT63179.2024.00021",
+  "title": "Towards Explainable Network Intrusion Detection using Large Language Models",
+  "authors": [
+   "Paul R. B. Houssel",
+   "Priyanka Singh",
+   "Siamak Layeghy",
+   "Marius Portmann"
+  ],
+  "year": 2024,
+  "venue": "2024 IEEE/ACM International Conference on Big Data Computing, Applications and Technologies (BDCAT)",
+  "volume": "",
+  "pages": "67-72"
+ },
+ "hypervision": {
+  "doi": "10.14722/ndss.2023.23080",
+  "title": "Detecting Unknown Encrypted Malicious Traffic in Real Time via Flow Interaction Graph Analysis",
+  "authors": [
+   "Chuanpu Fu",
+   "Qi Li",
+   "Ke Xu"
+  ],
+  "year": 2023,
+  "venue": "Proceedings 2023 Network and Distributed System Security Symposium",
+  "volume": "",
+  "pages": ""
+ },
+ "ctu13": {
+  "doi": "10.1016/j.cose.2014.05.011",
+  "title": "An empirical comparison of botnet detection methods",
+  "authors": [
+   "S. García",
+   "M. Grill",
+   "J. Stiborek",
+   "A. Zunino"
+  ],
+  "year": 2014,
+  "venue": "Computers &amp; Security",
+  "volume": "45",
+  "pages": "100-123"
+ },
+ "civil": {
+  "doi": "10.1145/3308560.3317593",
+  "title": "Nuanced Metrics for Measuring Unintended Bias with Real Data for Text Classification",
+  "authors": [
+   "Daniel Borkan",
+   "Lucas Dixon",
+   "Jeffrey Sorensen",
+   "Nithum Thain",
+   "Lucy Vasserman"
+  ],
+  "year": 2019,
+  "venue": "Companion Proceedings of The 2019 World Wide Web Conference",
+  "volume": "",
+  "pages": "491-500"
+ },
+ "phiusiil": {
+  "doi": "10.1016/j.cose.2023.103545",
+  "title": "PhiUSIIL: A diverse security profile empowered phishing URL detection framework based on similarity index and incremental learning",
+  "authors": [
+   "Arvind Prasad",
+   "Shalini Chandra"
+  ],
+  "year": 2024,
+  "venue": "Computers &amp; Security",
+  "volume": "136",
+  "pages": "103545"
+ },
+ "smsspam": {
+  "doi": "10.1145/2034691.2034742",
+  "title": "Contributions to the study of SMS spam filtering",
+  "authors": [
+   "Tiago A. Almeida",
+   "José María G. Hidalgo",
+   "Akebo Yamakami"
+  ],
+  "year": 2011,
+  "venue": "Proceedings of the 11th ACM symposium on Document engineering",
+  "volume": "",
+  "pages": "259-262"
+ },
+ "tranco": {
+  "doi": "10.14722/ndss.2019.23386",
+  "title": "Tranco: A Research-Oriented Top Sites Ranking Hardened Against Manipulation",
+  "authors": [
+   "Victor Le Pochat",
+   "Tom Van Goethem",
+   "Samaneh Tajalizadehkhoob",
+   "Maciej Korczynski",
+   "Wouter Joosen"
+  ],
+  "year": 2019,
+  "venue": "Proceedings 2019 Network and Distributed System Security Symposium",
+  "volume": "",
+  "pages": ""
+ },
+ "iforest": {
+  "doi": "10.1109/ICDM.2008.17",
+  "title": "Isolation Forest",
+  "authors": [
+   "Fei Tony Liu",
+   "Kai Ming Ting",
+   "Zhi-Hua Zhou"
+  ],
+  "year": 2008,
+  "venue": "2008 Eighth IEEE International Conference on Data Mining",
+  "volume": "",
+  "pages": "413-422"
+ },
+ "cicids": {
+  "doi": "10.5220/0006639801080116",
+  "title": "Toward Generating a New Intrusion Detection Dataset and Intrusion Traffic Characterization",
+  "authors": [
+   "Iman Sharafaldin",
+   "Arash Habibi Lashkari",
+   "Ali A. Ghorbani"
+  ],
+  "year": 2018,
+  "venue": "Proceedings of the 4th International Conference on Information Systems Security and Privacy",
+  "volume": "",
+  "pages": "108-116"
+ },
+ "becguard": {
+  "search": "BEC-Guard: Keeping Your Email Safe from Business Email Compromise",
+  "hits": [
+   {
+    "title": "Business Email Compromise (BEC) fraud",
+    "doi": "10.4324/9781003200383-10",
+    "venue": "The SME Business Guide to Fraud Risk Management",
+    "year": 2022,
+    "authors": [
+     "Robert James Chapman"
+    ]
+   },
+   {
+    "title": "BEC Defender: QR Code-Based Methodology for Prevention of Business Email Compromise (BEC) Attacks",
+    "doi": "10.3390/s24051676",
+    "venue": "Sensors",
+    "year": 2024,
+    "authors": [
+     "Anastasios Papathanasiou",
+     "George Liontos",
+     "Georgios Paparis",
+     "Vasiliki Liagkou",
+     "Euripides Glavas"
+    ]
+   }
+  ]
+ },
+ "phishllm": {
+  "search": "Less Defined Knowledge and More True Alarms: Reference-based Phishing Detection without a Pre-defined Reference List",
+  "hits": [
+   {
+    "title": "Custom selected reference genes outperform pre-defined reference genes in transcriptomic analysis",
+    "doi": "10.21203/rs.2.9587/v2",
+    "venue": "",
+    "year": 2019,
+    "authors": [
+     "Karen Cristine Gonçalves Dos Santos",
+     "Isabel Desgagné-Penix",
+     "Hugo Germain"
+    ]
+   },
+   {
+    "title": "Custom selected reference genes outperform pre-defined reference genes in transcriptomic analysis",
+    "doi": "10.21203/rs.2.9587/v3",
+    "venue": "",
+    "year": 2019,
+    "authors": [
+     "Karen Cristine Gonçalves Dos Santos",
+     "Isabel Desgagné-Penix",
+     "Hugo Germain"
+    ]
+   }
+  ]
+ },
+ "arp": {
+  "search": "Dos and Don'ts of Machine Learning in Computer Security",
+  "hits": [
+   {
+    "title": "Das infizierte steife Kniegelenk – Dos and Don′ts",
+    "doi": "10.1007/s00142-024-00739-x",
+    "venue": "Arthroskopie",
+    "year": 2025,
+    "authors": [
+     "Petros Ismailidis",
+     "Martin Clauss"
+    ]
+   },
+   {
+    "title": "Heir dos and don#ts (succession management)",
+    "doi": "10.1108/hrmid.2007.04415fad.004",
+    "venue": "Human Resource Management International Digest",
+    "year": 2007,
+    "authors": [
+     "D. Benady"
+    ]
+   }
+  ]
+ },
+ "yang": {
+  "search": "Don't Stop Believin': A Unified Evaluation Approach for LLM Honeypots",
+  "hits": [
+   {
+    "title": "Don’t Stop Believin’: A Unified Evaluation Approach for LLM Honeypots",
+    "doi": "10.1109/access.2024.3472460",
+    "venue": "IEEE Access",
+    "year": 2024,
+    "authors": [
+     "Simon B. Weber",
+     "Marc Feger",
+     "Michael Pilgermann"
+    ]
+   },
+   {
+    "title": "Don't Stop Believin': Heterogeneous Updating of Intergenerational Mobility Perceptions Across Income Groups",
+    "doi": "10.2139/ssrn.4540803",
+    "venue": "",
+    "year": 2023,
+    "authors": [
+     "Anna Schwarz",
+     "Philipp Warum"
+    ]
+   }
+  ]
+ },
+ "toxiscope": {
+  "search": "ToxiScope: Detecting Toxic Enterprise Communications",
+  "hits": [
+   {
+    "title": "Unexpected Bi-functional Co-g-GaN monolayer for detecting and scavenging toxic gases",
+    "doi": "10.1016/j.mtcomm.2023.105781",
+    "venue": "Materials Today Communications",
+    "year": 2023,
+    "authors": [
+     "Yafei Zhao",
+     "Yong Wu",
+     "Song Lu"
+    ]
+   },
+   {
+    "title": "Clowns, Crowds, and Clouds: A Cross-Enterprise Approach to Detecting Information Leakage Without Leaking Information",
+    "doi": "10.1007/978-1-4471-2236-4_16",
+    "venue": "Computer Communications and Networks",
+    "year": 2011,
+    "authors": [
+     "Neil Cooke",
+     "Lee Gillam"
+    ]
+   }
+  ]
+ },
+ "lightgbm": {
+  "search": "LightGBM: A Highly Efficient Gradient Boosting Decision Tree",
+  "hits": [
+   {
+    "title": "A Novel Scheme for Mapping of MVT-Type Pb–Zn Prospectivity: LightGBM, a Highly Efficient Gradient Boosting Decision Tree Machine Learning Algorithm",
+    "doi": "10.1007/s11053-023-10249-6",
+    "venue": "Natural Resources Research",
+    "year": 2023,
+    "authors": [
+     "Mahsa Hajihosseinlou",
+     "Abbas Maghsoudi",
+     "Reza Ghezelbash"
+    ]
+   },
+   {
+    "title": "NodeGuard: A Highly Efficient Two-Party Computation Framework for Training Large-Scale Gradient Boosting Decision Tree",
+    "doi": "10.1109/spw63631.2024.00015",
+    "venue": "2024 IEEE Security and Privacy Workshops (SPW)",
+    "year": 2024,
+    "authors": [
+     "Tianxiang Dai",
+     "Yufan Jiang",
+     "Yong Li",
+     "Fei Mei"
+    ]
+   }
+  ]
+ },
+ "mhs": {
+  "search": "The Measuring Hate Speech Corpus: Leveraging Rasch Measurement Theory for Data Perspectivism",
+  "hits": [
+   {
+    "title": "Multilingual Hate Speech Modeling by Leveraging Inter-Annotator Disagreement",
+    "doi": "10.70314/is.2024.sikdd.7",
+    "venue": "Proceedings of Data Mining and Data Warehauses – Sikdd 2024",
+    "year": 2024,
+    "authors": []
+   },
+   {
+    "title": "Measuring Speech-Rate in the Spoken English Corpus",
+    "doi": "10.1163/9789004456815_006",
+    "venue": "Theory and Practice in Corpus Linguistics",
+    "year": 1990,
+    "authors": [
+     "Nick Campbell"
+    ]
+   }
+  ]
+ },
+ "fire": {
+  "search": "Overview of Abusive and Threatening Language Detection in Urdu at FIRE 2021",
+  "hits": [
+   {
+    "title": "Detection of Abusive Language for YouTube Comments in Urdu and Roman Urdu using CLSTM Model",
+    "doi": "10.1016/j.procs.2025.03.214",
+    "venue": "Procedia Computer Science",
+    "year": 2025,
+    "authors": [
+     "Vandana Rajput",
+     "Sandeep Singh Sikarwar"
+    ]
+   },
+   {
+    "title": "Threatening Language Detection and Target Identification in Urdu Tweets",
+    "doi": "10.1109/access.2021.3112500",
+    "venue": "IEEE Access",
+    "year": 2021,
+    "authors": [
+     "Maaz Amjad",
+     "Noman Ashraf",
+     "Alisa Zhila",
+     "Grigori Sidorov",
+     "Arkaitz Zubiaga",
+     "Alexander Gelbukh"
+    ]
+   }
+  ]
+ }
+}

@@ -1,0 +1,18 @@
+{
+ "trace": "202611041400-first-300MB.pcap.gz",
+ "flows_read": 1648523,
+ "hosts_seen": 77230,
+ "hosts_scored": 41657,
+ "flows_scored": 300002,
+ "known_attack_alert_rate": 0.07791,
+ "normal_behaviour_alert_rate": 0.98307,
+ "either_alert_rate": 0.98894,
+ "hosts_with_alerts": 41657,
+ "read_flows_per_second": 2913,
+ "score_flows_per_second_cpu": 2040,
+ "trained_on_this_traffic": {
+  "fitted_on_windows": 72551,
+  "alert_rate_on_other_hosts": 0.00613,
+  "target": 0.005
+ }
+}

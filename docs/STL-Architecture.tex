@@ -1,0 +1,1228 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{lmodern}
+\else
+  \usepackage{fontspec}
+\fi
+\usepackage[margin=2.2cm,headheight=14pt]{geometry}
+\usepackage{microtype}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{enumitem}
+\usepackage{needspace}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,calc,shapes.geometric,shapes.symbols,fit,backgrounds}
+\PassOptionsToPackage{hyphens}{url}
+\usepackage[hidelinks]{hyperref}
+\urlstyle{tt}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{4pt}
+\setlength{\emergencystretch}{3em}
+\setlist{nosep,leftmargin=1.4em}
+\setcounter{tocdepth}{1}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newcolumntype{P}[1]{>{\raggedright\arraybackslash}p{#1}}
+\renewcommand{\arraystretch}{1.18}
+
+\ifPDFTeX
+  \newcommand{\ra}{\ensuremath{\rightarrow}}
+\else
+  \newcommand{\ra}{→}
+\fi
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small Semantic Trust Layer: Architecture}
+\fancyfoot[C]{\small Page \thepage\ of \pageref{LastPage}}
+\renewcommand{\headrulewidth}{0.4pt}
+\fancypagestyle{plain}{%
+  \fancyhf{}%
+  \fancyfoot[C]{\small Page \thepage\ of \pageref{LastPage}}%
+  \renewcommand{\headrulewidth}{0pt}}
+
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\need}[1][10]{\Needspace{#1\baselineskip}}
+\newcommand{\msg}[4]{\draw[->] (#1,#3) -- node[tag, above=0.5pt] {#4} (#2,#3);}
+\newcommand{\keybox}[1]{%
+  \begin{center}\fcolorbox{black}{black!7}{\parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}{#1}}\end{center}}
+\newenvironment{fig}[2]{\par\medskip\noindent\begin{minipage}{\linewidth}\centering
+  \refstepcounter{figure}\label{#2}\def\figtext{#1}}
+  {\par\vspace{5pt}{\small Figure~\thefigure: \figtext\par}\end{minipage}\par\medskip}
+\makeatletter
+\renewcommand*\l@section{\@dottedtocline{1}{0em}{1.8em}}
+\makeatother
+
+\tikzset{
+  >={Stealth[length=2.2mm,width=1.6mm]},
+  box/.style={draw, rounded corners=2pt, align=center, inner sep=3pt,
+    minimum height=8mm, fill=white, font=\footnotesize},
+  gbox/.style={box, fill=black!7},
+  hbox/.style={box, fill=black!16},
+  small/.style={box, font=\scriptsize, minimum height=7mm},
+  grp/.style={draw, dashed, rounded corners=4pt},
+  grplabel/.style={font=\scriptsize\bfseries, anchor=north west, inner sep=3pt},
+  tag/.style={font=\scriptsize, inner sep=1.5pt, fill=white},
+}
+
+\input{generated/numbers.tex}
+\makeatletter
+\newcommand{\tablerows}[1]{\@@input #1 }
+\makeatother
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries Semantic Trust Layer (STL)}\\[6pt]
+{\Large Architecture Document}\\[4pt]
+{\small AI agents that check incoming data by meaning, on the network and application layers at the same time}\\[3pt]
+{\small Prototype as built and tested, 5 November 2026}
+\end{center}
+
+\vspace{2pt}
+\keybox{\textbf{Status of this document.} This describes the prototype as built. All models are trained and every part has been run from end to end. Section~\ref{sec:results} gives the test results, which are read directly from the result files. Section~\ref{sec:status} shows the state of each part and what still fails.}
+
+\tableofcontents
+
+% ---------------------------------------------------------------- 1
+\section{What STL is}
+
+STL is an AI layer that sits in the path of incoming data and decides whether each item should be flagged. An item can be an email, a message, a link, a QR code, a file or a network session.
+
+Its main idea has two parts:
+
+\begin{enumerate}
+  \item \textbf{It judges meaning.} Trained AI models read the data and decide. Keyword lists and fixed rules do not decide.
+  \item \textbf{It works on two layers at the same time.} One AI agent reads the content on the application layer. Another reads the traffic behaviour on the network layer. A Coordinator joins both findings into one verdict and gives the reason.
+\end{enumerate}
+
+\begin{fig}{STL at a glance. Both agents look at the same item at the same time.}{fig:idea}
+\begin{tikzpicture}[x=1cm,y=1cm]
+  \node[gbox, minimum width=2.9cm, minimum height=22mm] (in) at (0,0) {Incoming data\\[2pt]{\scriptsize email, message, link,}\\[-1pt]{\scriptsize QR code, file, session}};
+  \node[hbox, minimum width=4.2cm] (app) at (4.8,1) {Application Agent\\[-1pt]{\scriptsize what does the content mean?}};
+  \node[hbox, minimum width=4.2cm] (net) at (4.8,-1) {Network Agent\\[-1pt]{\scriptsize how is the traffic behaving?}};
+  \node[box, minimum width=2.4cm, minimum height=22mm] (co) at (9.2,0) {Coordinator\\[1pt]{\scriptsize joins both findings}};
+  \node[gbox, minimum width=2.9cm, minimum height=22mm] (out) at (13.2,0) {One verdict\\[2pt]{\scriptsize allow, warn, flag or block,}\\[-1pt]{\scriptsize with the reason}};
+  \draw[->] (in.east) -- (app.west);
+  \draw[->] (in.east) -- (net.west);
+  \draw[->] (app.east) -- (co.west);
+  \draw[->] (net.east) -- (co.west);
+  \draw[->] (co) -- (out);
+\end{tikzpicture}
+\end{fig}
+
+\need[12]
+\subsection*{What STL looks for}
+
+\begin{center}
+\begin{tabularx}{\linewidth}{P{3.1cm}P{2.6cm}Y}
+\toprule
+\textbf{Finding} & \textbf{Found by} & \textbf{Meaning} \\
+\midrule
+Threat & Application Agent & Says or implies harm to a person or place, even with no bad word \\
+Hate & Application Agent & Attacks a person or group for race, religion, gender or similar \\
+Abuse & Application Agent & Insults, harasses or degrades a person \\
+Fraud & Application Agent & Tries to get money, codes or passwords by a trick \\
+Dangerous link & Application Agent & A link or QR destination that looks like phishing \\
+Suspicious behaviour & Network Agent & Traffic that behaves like an attack or a botnet \\
+Suspicious server name & Network Agent & A DNS or TLS server name that looks like phishing \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\subsection*{Two examples}
+
+\textbf{Abusive email.} Someone emails the Rector of NUTECH and uses a racial slur. The email has no virus and its traffic looks normal, so a firewall or virus scanner sees nothing wrong. The Application Agent understands the insult and flags it on the application layer.
+
+\textbf{Polite email from a bad machine.} A clean, well-written email comes from a machine that behaves like part of a botnet. The content looks fine, so the Network Agent raises the flag.
+
+% ---------------------------------------------------------------- 2
+\need[25]
+\section{Why STL is needed}
+
+Most defences work at one layer and depend on signatures or fixed rules. Fraud and abuse now depend on meaning, so these defences miss them.
+
+\begin{center}
+\begin{tabularx}{\linewidth}{P{4.3cm}YY}
+\toprule
+\textbf{Problem} & \textbf{What happens today} & \textbf{What STL does} \\
+\midrule
+A threat uses no bad word & A keyword filter sees nothing & Models read the meaning \\
+A slur arrives in a clean email & Firewall and virus scanner see no attack & Application Agent reads the insult \\
+A scam is reworded or written in Roman Urdu & A keyword list misses it & A multilingual model and a language model read it \\
+Traffic is encrypted & The network cannot read the content & Network Agent uses metadata only \\
+A bad machine sends a polite email & Content filters see nothing wrong & Network Agent judges the behaviour \\
+Layers do not talk to each other & No one joins the two views & Coordinator joins both findings \\
+The user must judge alone & The user gets no clear answer & One verdict, with a reason \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+% ---------------------------------------------------------------- 3
+\section{Why it is designed this way}
+
+\need[20]
+\begin{center}
+\begin{tabularx}{\linewidth}{P{4.2cm}Y}
+\toprule
+\textbf{Decision} & \textbf{Why} \\
+\midrule
+AI models decide, not rules & Rules only know words someone wrote down. Models can judge new wording, spelling tricks and meaning. \\
+Two agents at the same time & They see different things, so each covers the other's blind spot. One still works when the other cannot, such as on encrypted traffic. \\
+Fast models first, then the language model on everything & The fast models answer in milliseconds, but they are too sure of themselves on polite and veiled messages. So the language model reads all text, at about 2 seconds per item. \\
+Bare links go to the link model first & The language model invents impersonation on names it does not know. So it sees a bare link only after the link model flagged it, and it can never raise one alone. \\
+The language model has the final word on meaning & It reads context better than the fast model. It can tell a person reporting hate from a person sending hate. \\
+It cannot clear a flagged item alone & A message can try to trick it, so an item the fast models flagged keeps at least a warning. \\
+It is told no other model's opinion & When we told it, it leaned towards that opinion. Section~\ref{sec:results} shows this. \\
+Two traffic models & One finds attacks it was taught. The other learned only normal traffic, so it can notice new attacks. \\
+The normal-behaviour model only warns & It is only right on the network it learned. Alone, it must not flag anyone. \\
+Language model runs locally & Private messages never leave the machine. \\
+Network Agent reads metadata only & It respects privacy and still works when content is encrypted. \\
+Each agent judges alone and the Coordinator joins & Two independent views are worth more than one view repeated. The join still lets a weak content signal and weak traffic add up. \\
+One verdict with a reason & A person needs a clear answer that can be checked. \\
+Only agreement blocks & A wrong block rejects someone's email. So one reader alone can flag at most, a person decides, and an unsure reader only warns. \\
+Signed records & Anyone can check who said what, and any change is detected. \\
+Thresholds come from data & Each model's cut-off is chosen on validation data, not by hand. \\
+Tests use unseen sources & High scores on familiar data prove little. Whole sources are kept out of training. \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\begin{fig}{Who catches what. Two agents cover each other's blind spots.}{fig:matrix}
+\begin{tikzpicture}[x=1cm,y=1cm]
+  \node[font=\footnotesize\bfseries] at (5,3.75) {Content looks fine};
+  \node[font=\footnotesize\bfseries] at (11.3,3.75) {Content is harmful};
+  \node[font=\footnotesize\bfseries, align=right, anchor=east] at (1.8,2.6) {Behaviour\\normal};
+  \node[font=\footnotesize\bfseries, align=right, anchor=east] at (1.8,0.8) {Behaviour\\suspicious};
+  \node[box, minimum width=6cm, minimum height=16mm] at (5,2.6) {Allow};
+  \node[gbox, minimum width=6cm, minimum height=16mm] at (11.3,2.6) {Application Agent flags\\{\scriptsize example: abusive email to the Rector}};
+  \node[gbox, minimum width=6cm, minimum height=16mm] at (5,0.8) {Network Agent flags\\{\scriptsize example: polite email from a botnet host}};
+  \node[hbox, minimum width=6cm, minimum height=16mm] at (11.3,0.8) {Both agents flag\\{\scriptsize example: phishing sent from a botnet host}};
+\end{tikzpicture}
+\end{fig}
+
+% ---------------------------------------------------------------- 4
+\section{Goals and scope}
+
+\need[14]
+\begin{center}
+\begin{tabularx}{\linewidth}{P{1cm}Y}
+\toprule
+\textbf{No.} & \textbf{The prototype must} \\
+\midrule
+G1 & Flag threats, hate, abuse and fraud by meaning, including when no bad word is used \\
+G2 & Check links and QR code destinations \\
+G3 & Judge traffic behaviour from metadata, including encrypted traffic \\
+G4 & Run both agents at the same time on the same item \\
+G5 & Give one verdict with a reason a person can understand \\
+G6 & Keep raw content on the machine, and use no outside AI service \\
+G7 & Sign every finding and verdict \\
+G8 & Handle English, Urdu and Roman Urdu as far as the data allows \\
+G9 & Pass real email and web sessions through the layer in a test setup \\
+G10 & Report results on real data the models never saw, including what fails \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\textbf{Left out of the prototype:} iOS, P4 and DPDK hardware paths, a real 5G core, deployment with real operators and post-quantum cryptography. Federated learning and sharing between operators will be shown on simulated operators if time allows. These stay in the long-term design.
+
+% ---------------------------------------------------------------- 5
+\need[25]
+\section{The full vision: four tiers}
+
+The proposal organises STL in four tiers, so it can grow without a single central controller.
+
+\begin{fig}{The four tiers of the full design, and what the prototype covers of each.}{fig:tiers}
+\begin{tikzpicture}[x=1cm,y=1cm]
+  \node[hbox, minimum width=9.6cm, minimum height=12mm] (d) at (4.8,6.3) {Global federation\\[-1pt]{\scriptsize operators exchange signed verdicts, with no central authority}};
+  \node[hbox, minimum width=9.6cm, minimum height=12mm] (c) at (4.8,4.3) {Regional intelligence\\[-1pt]{\scriptsize heavier models, federated learning, reputation}};
+  \node[hbox, minimum width=9.6cm, minimum height=12mm] (b) at (4.8,2.3) {Edge node\\[-1pt]{\scriptsize network sensing, anomaly detection, enforcement}};
+  \node[hbox, minimum width=9.6cm, minimum height=12mm] (a) at (4.8,0.3) {Device agent\\[-1pt]{\scriptsize local analysis of content, shows the verdict, raw content stays here}};
+  \foreach \a/\b in {a/b,b/c,c/d}{
+    \draw[<->] ($(\a.north)+(0,0)$) -- node[tag, right=3pt] {signed verdicts, features, model updates} ($(\b.south)+(0,0)$);
+  }
+  \node[font=\footnotesize\bfseries] at (13.1,7.25) {In the prototype};
+  \node[small, text width=5.2cm, minimum height=12mm] at (13.1,6.3) {Two simulated operators, if time allows};
+  \node[small, text width=5.2cm, minimum height=12mm] at (13.1,4.3) {Local language model, and a federated learning demo if time allows};
+  \node[small, text width=5.2cm, minimum height=12mm] at (13.1,2.3) {Network Agent and test gateway};
+  \node[small, text width=5.2cm, minimum height=12mm] at (13.1,0.3) {Application Agent, with a web page first, then Android};
+\end{tikzpicture}
+\end{fig}
+
+% ---------------------------------------------------------------- 6
+\section{Prototype architecture}
+
+The prototype runs on one machine. Figure~\ref{fig:arch} shows its parts.
+
+\begin{fig}{Prototype system architecture.}{fig:arch}
+\begin{tikzpicture}[x=1cm,y=1cm]
+  \node[font=\scriptsize\bfseries] at (1.5,7.75) {Ways in};
+  \node[gbox, minimum width=3cm] (smtp) at (1.5,6.9) {SMTP gateway\\[-1pt]{\scriptsize port 8025}};
+  \node[gbox, minimum width=3cm] (http) at (1.5,5.6) {HTTP proxy\\[-1pt]{\scriptsize port 8026}};
+  \node[gbox, minimum width=3cm] (api) at (1.5,4.3) {Check page and API\\[-1pt]{\scriptsize port 8050}};
+  \node[gbox, minimum width=3cm] (pcap) at (1.5,3) {Capture upload\\[-1pt]{\scriptsize pcap files}};
+  \node[box, minimum width=3cm] (ledger) at (1.5,1.3) {Flow ledger\\[-1pt]{\scriptsize last 32 connections per host}};
+
+  \node[hbox, minimum width=2.3cm, minimum height=58mm] (co) at (5.3,4.6) {Coordinator\\[3pt]{\scriptsize runs both agents}\\[-1pt]{\scriptsize joins findings}\\[-1pt]{\scriptsize decides}\\[-1pt]{\scriptsize signs}};
+
+  \draw[grp] (7.2,4.2) rectangle (15.8,8);
+  \node[grplabel] at (7.2,8) {Application Agent};
+  \node[small, minimum width=3.9cm] at (9.4,6.9) {Text model\\[-1pt]threat, hate, abuse, fraud};
+  \node[small, minimum width=3.9cm] at (13.5,6.9) {Link model\\[-1pt]reads a URL as text};
+  \node[small, minimum width=3.9cm] at (9.4,5.3) {Content reader\\[-1pt]email, QR code, file text};
+  \node[small, minimum width=3.9cm] at (13.5,5.3) {Language model\\[-1pt]reads all text};
+
+  \draw[grp] (7.2,1) rectangle (15.8,3.7);
+  \node[grplabel] at (7.2,3.7) {Network Agent};
+  \node[small, minimum width=2.65cm] at (8.7,2.1) {Traffic model\\[-1pt]known attacks};
+  \node[small, minimum width=2.65cm] at (11.5,2.1) {Normal-behaviour\\[-1pt]model};
+  \node[small, minimum width=2.65cm] at (14.3,2.1) {Server name check\\[-1pt]DNS and TLS names};
+
+  \node[gbox, minimum width=3cm] (store) at (5.3,0) {Verdict store\\[-1pt]{\scriptsize SQLite}};
+  \node[gbox, minimum width=3cm] (keys) at (9.4,0) {Signing keys\\[-1pt]{\scriptsize one per agent}};
+  \node[gbox, minimum width=3cm] (console) at (13.5,0) {Admin console};
+
+  \draw[->] (smtp.east) -- (co.west |- smtp.east);
+  \draw[->] (http.east) -- (co.west |- http.east);
+  \draw[->] (api.east) -- (co.west |- api.east);
+  \draw[->] (pcap.east) -- (co.west |- pcap.east);
+  \draw[->] (ledger.east) -- (co.west |- ledger.east);
+  \draw[<->] (co.east |- 0,6) -- (7.2,6);
+  \draw[<->] (co.east |- 0,2.4) -- (7.2,2.4);
+  \draw[->] (co.south) -- (store.north);
+  \draw[->] (keys.west) -- (store.east);
+  \draw[->] (store.south) -- ++(0,-0.45) -| (console.south);
+\end{tikzpicture}
+\end{fig}
+
+\need[16]
+\begin{center}
+\begin{tabularx}{\linewidth}{P{3.3cm}YP{3.7cm}}
+\toprule
+\textbf{Part} & \textbf{Job} & \textbf{File} \\
+\midrule
+Schema & Shared records: Item, Flow, Finding, Verdict & \code{stl/schema.py} \\
+Content reader & Parses email, HTML, QR codes and files. It decides nothing. & \code{stl/extract.py} \\
+Models & Runs the text and link models & \code{stl/models.py} \\
+Reviewer & Talks to the local language model & \code{stl/reviewer.py} \\
+Traffic model & Builds flows and runs the behaviour model & \code{stl/flow\_model.py} \\
+Agents & Application Agent and Network Agent & \code{stl/agents.py} \\
+Coordinator & Runs the agents, joins, decides, signs & \code{stl/coordinator.py} \\
+Signing & Ed25519 signatures and trust registry & \code{stl/signing.py} \\
+Store & Saves verdicts for the console & \code{stl/store.py} \\
+Gateway & SMTP gateway, HTTP proxy, flow ledger & \code{stl/gateway.py} \\
+API and interfaces & Web API and the security portal & \code{stl/api.py}, \code{stl/web/} \\
+Demo & Ready scenarios for showing the system & \code{stl/demo.py} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+% ---------------------------------------------------------------- 7
+\section{Life of one item}
+\label{sec:life}
+
+Figure~\ref{fig:seq} follows one email through the system.
+
+\begin{fig}{What happens to one email. The two agents start at the same moment.}{fig:seq}
+\begin{tikzpicture}[x=1cm,y=1cm]
+  \foreach \x/\t in {0.9/Sender,3.3/Gateway,5.9/Coordinator,8.5/{Application\\Agent},11/{Network\\Agent},13.2/{Language\\model},15.3/Store}{
+    \node[gbox, minimum width=1.75cm, minimum height=9mm, font=\scriptsize] at (\x,0) {\t};
+    \draw[black!45] (\x,-0.45) -- (\x,-9.5);
+  }
+  \msg{0.9}{3.3}{-1}{email (SMTP)}
+  \msg{3.3}{5.9}{-1.7}{item, recent flows}
+  \msg{5.9}{8.5}{-2.4}{inspect}
+  \msg{5.9}{11}{-3.0}{inspect, same moment}
+  \msg{8.5}{5.9}{-3.7}{finding}
+  \msg{11}{5.9}{-4.3}{finding}
+  \msg{5.9}{8.5}{-5}{second step}
+  \msg{8.5}{13.2}{-5.7}{content only}
+  \msg{13.2}{8.5}{-6.3}{labels, reason}
+  \msg{8.5}{5.9}{-7}{updated finding}
+  \node[hbox, font=\scriptsize, minimum width=2.1cm, minimum height=6mm] at (5.9,-7.65) {join, decide, sign};
+  \msg{5.9}{15.3}{-8.3}{signed verdict}
+  \msg{5.9}{3.3}{-8.9}{verdict}
+  \msg{3.3}{0.9}{-9.4}{accept or block}
+\end{tikzpicture}
+\end{fig}
+
+\begin{enumerate}
+  \item The gateway receives the email and records its connection details.
+  \item It builds an Item with the content and the sender's recent connections.
+  \item The Coordinator starts both agents in parallel threads.
+  \item Each agent returns a first finding, and they do not wait for each other.
+  \item The language model reads the text. It sees no finding from any other model. A bare link reaches it only if the link model flagged it.
+  \item The Coordinator joins the risks, picks an action, writes the reason and signs the result.
+  \item The verdict is saved, and the gateway accepts or blocks the email.
+\end{enumerate}
+
+% ---------------------------------------------------------------- 8
+\section{Application Agent}
+
+The Application Agent reads content and judges what it means.
+
+\begin{fig}{How the Application Agent works.}{fig:app}
+\begin{tikzpicture}[x=1cm,y=1cm]
+  \node[gbox, minimum width=2.6cm, minimum height=26mm] (in) at (0.2,1.3) {Item\\[2pt]{\scriptsize email, message,}\\[-1pt]{\scriptsize link, QR code,}\\[-1pt]{\scriptsize file text}};
+  \node[box, minimum width=2.3cm, minimum height=26mm] (read) at (3.2,1.3) {Content\\reader\\[2pt]{\scriptsize parses only}};
+  \node[hbox, minimum width=3cm] (text) at (6.5,2.3) {Text model\\[-1pt]{\scriptsize four scores}};
+  \node[hbox, minimum width=3cm] (link) at (6.5,0.3) {Link model\\[-1pt]{\scriptsize one score}};
+  \node[box, minimum width=2.1cm, minimum height=26mm] (risk) at (9.7,1.3) {Turn scores\\into risk};
+  \node[hbox, minimum width=2.9cm] (lm) at (9.7,-1.4) {Language model\\[-1pt]{\scriptsize when needed}};
+  \node[gbox, minimum width=2.4cm, minimum height=26mm] (out) at (13.1,1.3) {Finding\\[2pt]{\scriptsize risk, scores,}\\[-1pt]{\scriptsize evidence}};
+  \draw[->] (in) -- (read);
+  \draw[->] (read.east) -- node[tag, above=2pt, pos=0.62] {text} (text.west);
+  \draw[->] (read.east) -- node[tag, below=2pt, pos=0.62] {links} (link.west);
+  \draw[->] (text.east) -- (risk.west);
+  \draw[->] (link.east) -- (risk.west);
+  \draw[->] (risk) -- (out);
+  \draw[<->] (risk.south) -- (lm.north);
+  \draw[->] (lm.east) -| (out.south);
+\end{tikzpicture}
+\end{fig}
+
+\subsection*{Content reader}
+
+This part only opens formats. It reads email headers, plain and HTML bodies, links, attachments, QR codes and the text of PDF, Word and plain text files. It also undoes tricks that change how text is stored but not how it reads: hidden characters, and letters borrowed from another alphabet. It makes no judgement.
+
+\need[10]
+\begin{center}
+\begin{tabularx}{\linewidth}{P{4cm}Y}
+\toprule
+\textbf{QR code holds} & \textbf{What the agent does} \\
+\midrule
+A web link & Sends it to the link model \\
+A payment request & Turns it into a sentence for the text model \\
+A Wi-Fi network & Turns it into a sentence for the text model \\
+An SMS or a phone number & Turns it into a sentence for the text model \\
+A contact card & Reads it as text and checks any link inside \\
+Plain text & Sends it to the text model \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\subsection*{Text model}
+
+\begin{fig}{Text model. It reads text in overlapping windows and keeps the highest score per label.}{fig:text}
+\begin{tikzpicture}[x=1cm,y=1cm]
+  \node[gbox, minimum width=1.6cm, minimum height=14mm] (a) at (0.3,0) {Text};
+  \node[box, minimum width=2.3cm, minimum height=14mm] (b) at (2.9,0) {Tokens\\[-1pt]{\scriptsize up to 8 windows}\\[-1pt]{\scriptsize of 128 tokens}};
+  \node[hbox, minimum width=3.1cm, minimum height=14mm] (c) at (6.2,0) {Multilingual\\[-1pt]MiniLM encoder\\[-1pt]{\scriptsize 12 layers, size 384}};
+  \node[box, minimum width=1.7cm, minimum height=14mm] (d) at (9.2,0) {Mean\\pooling};
+  \node[box, minimum width=1.6cm, minimum height=14mm] (e) at (11.2,0) {Linear\\layer};
+  \node[gbox, minimum width=2.1cm, minimum height=14mm] (f) at (13.6,0) {4 scores\\[-1pt]{\scriptsize threat, hate,}\\[-1pt]{\scriptsize abuse, fraud}};
+  \foreach \p/\q in {a/b,b/c,c/d,d/e,e/f}{\draw[->] (\p) -- (\q);}
+\end{tikzpicture}
+\end{fig}
+
+\begin{itemize}
+  \item \textbf{Base model:} \code{microsoft/Multilingual-MiniLM-L12-H384}, chosen because it covers many languages and fits on a laptop GPU.
+  \item \textbf{Four labels at once:} one message can be both a threat and hate.
+  \item \textbf{Missing labels:} many sources say nothing about a label, for example whether spam is hateful. Training ignores those cells.
+  \item \textbf{Rare labels:} threats are rare in the data, so they are sampled more often.
+  \item \textbf{Disguised words:} 20\% of toxic training texts are respelled at random, with some letters swapped for digits and symbols, so the model learns to see through tricks.
+  \item \textbf{Long messages:} scanning in windows means a slur at the end of a long email still counts.
+  \item \textbf{Running it:} the model is exported to ONNX, compressed to 8-bit weights (118 MB) and run on the CPU.
+\end{itemize}
+
+\subsection*{Link model}
+
+\begin{fig}{Link model. It reads a URL one character at a time.}{fig:url}
+\begin{tikzpicture}[x=1cm,y=1cm]
+  \node[gbox, minimum width=1.5cm, minimum height=14mm] (a) at (0.2,0) {URL};
+  \node[box, minimum width=2.4cm, minimum height=14mm] (b) at (2.7,0) {Clean up\\[-1pt]{\scriptsize lower case, no}\\[-1pt]{\scriptsize scheme or www}};
+  \node[box, minimum width=2.1cm, minimum height=14mm] (c) at (5.5,0) {Characters\\[-1pt]{\scriptsize up to 200}\\[-1pt]{\scriptsize size 48 each}};
+  \node[hbox, minimum width=2.4cm, minimum height=14mm] (d) at (8.2,0) {3 filters\\[-1pt]{\scriptsize widths 3, 5, 7}\\[-1pt]{\scriptsize then 2 deeper}};
+  \node[box, minimum width=1.8cm, minimum height=14mm] (e) at (10.9,0) {Mean and\\peak};
+  \node[gbox, minimum width=2.3cm, minimum height=14mm] (f) at (13.4,0) {1 score\\[-1pt]{\scriptsize phishing}};
+  \foreach \p/\q in {a/b,b/c,c/d,d/e,e/f}{\draw[->] (\p) -- (\q);}
+\end{tikzpicture}
+\end{fig}
+
+The link model never opens a link. It reads the URL as text, so a dangerous page cannot harm the system. It learns patterns such as a brand name placed in the wrong part of an address. Lower case and removal of the scheme stop the model from learning details of how the training data was collected.
+
+\subsection*{Language model}
+
+\begin{itemize}
+  \item \textbf{Model:} \code{qwen3.5:9b}, run locally through Ollama. Nothing leaves the machine.
+  \item \textbf{When it runs:} on every item with text. A gate on the fast risk would save time, but it lets polite scams and veiled threats through, as Section~\ref{sec:results} shows. The gate can be set with \code{STL\_REVIEW\_GATE} on a busy machine. A bare link reaches it only if the link model flagged it.
+  \item \textbf{Speed:} the whole model sits on the laptop GPU, with a context of 3,072 tokens. This takes about 2 seconds per item, four times faster than letting part of it run on the CPU.
+  \item \textbf{What it gets:} up to 2,500 characters of the message, any links and written definitions of the labels.
+  \item \textbf{What it does not get:} the fast models' opinion or the Network Agent's finding. When told either, it leaned that way. Section~\ref{sec:results} shows this.
+  \item \textbf{What it returns:} labels, a confidence value and one short reason, as JSON.
+  \item \textbf{Its labels replace the fast labels:} it reads context better, for example a report about abuse, or strong words used in a harmless way.
+  \item \textbf{It cannot clear an item alone:} if the fast models flagged an item and the language model finds nothing, the risk stays at 0.3. The item still gets a warning, so a message that tricks the language model keeps a warning if the fast models saw it.
+  \item \textbf{It cannot block alone:} if the fast models saw no problem, the language model can raise the item to a flag, which goes to a person. Content alone is blocked only when both readers agree.
+  \item \textbf{An unsure reader only warns:} if it is alone and its confidence is below 0.9, the item gets a warning and not a flag. This cut-off was chosen on validation data, like every other model's cut-off.
+  \item \textbf{It cannot raise a bare link:} it can confirm a link the link model flagged, or lower it to a warning, and that is all.
+  \item \textbf{Temperature 0:} the same input should give the same answer.
+  \item \textbf{If it fails:} the fast result stands, and a note is added to the finding.
+\end{itemize}
+
+\subsection*{How the agent explains itself}
+
+The reason comes from the model, not from a word list. To find the words that mattered, the agent hides each word in turn and scores the text again. Words that lower the score most are shown as evidence. The language model adds one plain sentence.
+
+% ---------------------------------------------------------------- 9
+\section{Network Agent}
+
+The Network Agent judges behaviour and never reads content. It uses metadata, so it keeps working when traffic is encrypted.
+
+\begin{fig}{How the Network Agent works.}{fig:net}
+\begin{tikzpicture}[x=1cm,y=1cm]
+  \node[gbox, minimum width=2.4cm, minimum height=20mm] (in) at (0.2,1) {Traffic\\[2pt]{\scriptsize gateway sessions,}\\[-1pt]{\scriptsize pcap captures}};
+  \node[box, minimum width=2.2cm, minimum height=20mm] (flow) at (3.1,1) {Flow\\builder\\[2pt]{\scriptsize two-way records}};
+  \node[box, minimum width=2.4cm, minimum height=20mm] (led) at (6.1,1) {Flow ledger\\[2pt]{\scriptsize last 32 per host}};
+  \node[hbox, minimum width=2.9cm] (model) at (9.4,2.25) {Traffic model\\[-1pt]{\scriptsize known attacks}};
+  \node[hbox, minimum width=2.9cm] (norm) at (9.4,1) {Normal-behaviour\\[-1pt]{\scriptsize model, warn only}};
+  \node[hbox, minimum width=2.9cm] (name) at (9.4,-0.25) {Link model\\[-1pt]{\scriptsize on DNS and TLS names}};
+  \node[gbox, minimum width=2.6cm, minimum height=20mm] (out) at (13,1) {Finding\\[2pt]{\scriptsize risk, summary,}\\[-1pt]{\scriptsize no content}};
+  \draw[->] (in) -- (flow);
+  \draw[->] (flow) -- (led);
+  \draw[->] (led.east) -- (model.west);
+  \draw[->] (led.east) -- (norm.west);
+  \draw[->] (led.east) -- (name.west);
+  \draw[->] (model.east) -- (out.west);
+  \draw[->] (norm.east) -- (out.west);
+  \draw[->] (name.east) -- (out.west);
+\end{tikzpicture}
+\end{fig}
+
+\need[12]
+\subsection*{What it reads for each connection}
+
+\begin{center}
+\begin{tabularx}{\linewidth}{P{5cm}Y}
+\toprule
+\textbf{Input} & \textbf{Why it helps} \\
+\midrule
+Duration, packets, bytes each way & Shows the size and shape of the connection \\
+Average packet size, share sent & Shows if a host mostly talks or mostly listens \\
+Time since its last connection & Shows machine-like timing, such as regular beacons \\
+New destination, new port & Shows scanning and spreading \\
+Protocol (TCP, UDP, ICMP, other) & Different attacks use different protocols \\
+Port group (15 groups, such as web, mail, SSH) & Shows which service is being targeted \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+Host addresses are used only to group a host's connections. They are never given to the model, so it cannot simply memorise bad addresses.
+
+\subsection*{Traffic model}
+
+\begin{fig}{Traffic model. It reads a host's last 32 connections and scores the newest.}{fig:flownet}
+\begin{tikzpicture}[x=1cm,y=1cm]
+  \foreach \i in {0,...,5}{\node[draw, fill=black!7, minimum width=4.5mm, minimum height=7mm, inner sep=0] at (\i*0.48,0) {};}
+  \node[font=\scriptsize] at (3.05,0) {\dots};
+  \node[draw, fill=black!16, minimum width=4.5mm, minimum height=7mm, inner sep=0] (last) at (3.55,0) {};
+  \node[font=\scriptsize, align=center] at (1.65,-0.8) {up to 32 connections, oldest first};
+  \node[box, minimum width=2.2cm, minimum height=14mm] (emb) at (6,0) {Embed each\\[-1pt]{\scriptsize size 64, plus}\\[-1pt]{\scriptsize position}};
+  \node[hbox, minimum width=2.9cm, minimum height=14mm] (enc) at (9.1,0) {Transformer\\[-1pt]{\scriptsize 2 layers, 4 heads}};
+  \node[box, minimum width=1.8cm, minimum height=14mm] (last2) at (11.8,0) {Newest\\position};
+  \node[gbox, minimum width=1.7cm, minimum height=14mm] (out) at (14,0) {1 score\\[-1pt]{\scriptsize behaviour}};
+  \draw[->] (3.9,0) -- (emb.west);
+  \draw[->] (emb) -- (enc);
+  \draw[->] (enc) -- (last2);
+  \draw[->] (last2) -- (out);
+\end{tikzpicture}
+\end{fig}
+
+A single connection often looks innocent. A botnet shows itself in a pattern over time, so the model reads a host's recent history. LightGBM on single connections is the baseline it is compared with.
+
+\subsection*{Normal-behaviour model}
+
+The traffic model only knows attacks like the ones it was taught. So a second model, an Isolation Forest, learns only normal traffic and has never seen an attack. It reads summary features of a host's last 32 connections, and gives a high score to anything far from normal.
+
+This model has two limits, and the design follows from them:
+
+\begin{itemize}
+  \item \textbf{It only works on the network it learned.} Moved to a different network, it raises far too many alarms. So in real use it must learn each network first, and its risk is capped at 0.45. It can warn but it cannot flag alone.
+  \item \textbf{It needs real measurements.} It waits for at least 8 measured connections, and ignores the rough records that the gateway makes while a session is still open.
+\end{itemize}
+
+\textbf{Server names.} DNS questions and TLS server names are readable even in encrypted sessions. The Network Agent scores them with the link model. This gives meaning at the network layer without reading any content.
+
+% ---------------------------------------------------------------- 10
+\section{Coordinator}
+
+The Coordinator runs both agents, joins their findings and gives the verdict.
+
+\subsection*{From score to risk}
+
+Every model has its own scale, and a model's best cut-off is chosen on validation data. So each score is turned into a common risk from 0 to 1, where 0.5 always means that model's cut-off:
+
+\begin{itemize}
+  \item If score is below the cut-off: risk = 0.5 × score / cut-off
+  \item Otherwise: risk = 0.5 + 0.5 × (score -- cut-off) / (1 -- cut-off)
+\end{itemize}
+
+\subsection*{Joining the two agents}
+
+The agents are treated as two independent witnesses:
+
+\begin{center}
+joined risk = 1 -- (1 -- application risk) × (1 -- network risk)
+\end{center}
+
+So two weak signals can add up. With a risk of 0.4 from each agent, the joined risk is 0.64, and the item is flagged even though neither agent flagged it alone. An agent that has nothing to say, for example with no traffic information, is left out.
+
+\begin{fig}{From joined risk to action.}{fig:scale}
+\begin{tikzpicture}[x=1cm,y=1cm]
+  \def\s{15}
+  \fill[black!4] (0,0) rectangle (0.3*\s,0.9);
+  \fill[black!12] (0.3*\s,0) rectangle (0.5*\s,0.9);
+  \fill[black!24] (0.5*\s,0) rectangle (0.85*\s,0.9);
+  \fill[black!45] (0.85*\s,0) rectangle (\s,0.9);
+  \draw (0,0) rectangle (\s,0.9);
+  \foreach \v in {0.3,0.5,0.85}{\draw (\v*\s,0) -- (\v*\s,0.9); \node[font=\scriptsize, below] at (\v*\s,0) {\v};}
+  \node[font=\scriptsize, below] at (0,0) {0};
+  \node[font=\scriptsize, below] at (\s,0) {1};
+  \node[font=\footnotesize] at (0.15*\s,0.45) {Allow};
+  \node[font=\footnotesize] at (0.4*\s,0.45) {Warn};
+  \node[font=\footnotesize] at (0.675*\s,0.45) {Flag};
+  \node[font=\footnotesize] at (0.925*\s,0.45) {Block};
+\end{tikzpicture}
+\end{fig}
+
+\begin{fig}{What the Coordinator does for each item.}{fig:coord}
+\begin{tikzpicture}[x=1cm,y=1cm]
+  \node[gbox, minimum width=2.3cm, minimum height=13mm] (a) at (0.6,0) {Start both\\agents};
+  \node[box, minimum width=2.3cm, minimum height=13mm] (b) at (3.5,0) {First\\findings};
+  \node[box, minimum width=2.3cm, minimum height=13mm] (c) at (6.4,0) {Language model\\[-1pt]{\scriptsize reads alone}};
+  \node[hbox, minimum width=2.3cm, minimum height=13mm] (d) at (9.3,0) {Join risks\\pick action};
+  \node[box, minimum width=2cm, minimum height=13mm] (e) at (12,0) {Write\\reason};
+  \node[gbox, minimum width=1.8cm, minimum height=13mm] (f) at (14.4,0) {Sign\\and save};
+  \foreach \p/\q in {a/b,b/c,c/d,d/e,e/f}{\draw[->] (\p) -- (\q);}
+\end{tikzpicture}
+\end{fig}
+
+The action bands in Figure~\ref{fig:scale} were set before testing, and the tests use them unchanged.
+
+\textbf{Writing the reason.} The reason names the side that raised the concern. If the content is fine but the traffic is not, the reason says so. If neither agent flagged the item alone but together they did, the reason says that. If the fast models raised a concern and the language model disagreed, the reason says that too, so a person can judge.
+
+% ---------------------------------------------------------------- 11
+\section{Signed verdicts}
+
+The proposal asks for a trust-signalling protocol. In the prototype, every finding and every verdict is signed. Each agent and the Coordinator has its own Ed25519 key. A trust registry holds their public keys.
+
+\begin{fig}{A signed verdict. Each agent signs its own finding, and the Coordinator signs the whole record.}{fig:signed}
+\begin{tikzpicture}[x=1cm,y=1cm]
+  \draw[rounded corners=3pt, fill=black!4] (0,0) rectangle (14.6,4.5);
+  \node[grplabel] at (0,4.5) {Coordinator record};
+  \node[box, minimum width=4.4cm, minimum height=20mm] at (2.6,2.6) {Verdict\\[2pt]{\scriptsize action, risk, labels,}\\[-1pt]{\scriptsize reason, time}};
+  \draw[rounded corners=3pt, fill=white] (5.3,1.3) rectangle (9.6,3.9);
+  \node[grplabel] at (5.3,3.9) {Application record};
+  \node[small, minimum width=3.7cm] at (7.45,2.8) {Finding};
+  \node[small, minimum width=3.7cm, fill=black!16] at (7.45,1.85) {Application signature};
+  \draw[rounded corners=3pt, fill=white] (9.9,1.3) rectangle (14.2,3.9);
+  \node[grplabel] at (9.9,3.9) {Network record};
+  \node[small, minimum width=3.7cm] at (12.05,2.8) {Finding};
+  \node[small, minimum width=3.7cm, fill=black!16] at (12.05,1.85) {Network signature};
+  \node[small, minimum width=13.9cm, fill=black!16] at (7.3,0.6) {Coordinator signature over everything above};
+\end{tikzpicture}
+\end{fig}
+
+\begin{itemize}
+  \item \textbf{Check:} the record is written in one fixed form, then checked against the signer's public key.
+  \item \textbf{Change detection:} if one character of a verdict changes, the check fails.
+  \item \textbf{Unknown signers:} a record from a key that is not in the registry is rejected.
+  \item \textbf{Later:} moving to COSE tokens, sharing between operators and STIX or TAXII threat intelligence are planned, but they are not built yet.
+\end{itemize}
+
+% ---------------------------------------------------------------- 12
+\need[18]
+\section{Test gateway}
+
+The gateway lets real sessions pass through the layer on lab machines.
+
+\begin{fig}{Real sessions through the test gateway.}{fig:gateway}
+\begin{tikzpicture}[x=1cm,y=1cm]
+  \node[gbox, minimum width=2.6cm] (mc) at (0.6,3) {Mail client};
+  \node[hbox, minimum width=2.9cm] (mg) at (4.6,3) {SMTP gateway};
+  \node[box, minimum width=2.8cm] (co) at (8.6,1.6) {Coordinator\\[-1pt]{\scriptsize both agents}};
+  \node[gbox, minimum width=3.1cm] (mb) at (12.9,3.5) {Mailbox folder\\[-1pt]{\scriptsize with verdict header}};
+  \node[gbox, minimum width=3.1cm] (rj) at (12.9,2.3) {Blocked\\[-1pt]{\scriptsize 550 reply}};
+  \node[gbox, minimum width=2.6cm] (br) at (0.6,0.8) {Browser};
+  \node[hbox, minimum width=2.9cm] (pr) at (4.6,0.8) {HTTP proxy};
+  \node[gbox, minimum width=3.1cm] (site) at (12.9,0.8) {Website};
+  \draw[->] (mc) -- (mg);
+  \draw[->] (mg.east) -- (co.west);
+  \draw[->] (co.east) -- (mb.west);
+  \draw[->] (co.east) -- (rj.west);
+  \draw[<->] (br) -- (pr);
+  \draw[<->] (pr.east) -- (co.west);
+  \draw[<->] (pr.south) -- ++(0,-0.6) -| node[tag, pos=0.25] {HTTP: both agents read it. HTTPS: Network Agent only.} (site.south);
+\end{tikzpicture}
+\end{fig}
+
+\begin{itemize}
+  \item \textbf{Email:} the gateway reads the message, adds the session to the flow ledger and asks the Coordinator. A blocked email gets a 550 refusal. Other mail is filed with an \code{X-STL-Verdict} header.
+  \item \textbf{Plain web pages:} both agents can read them, and a blocked page returns 403.
+  \item \textbf{Encrypted web pages:} the proxy does not break encryption. It reads the server name from the TLS greeting, so only the Network Agent can judge. This shows why STL needs both layers.
+\end{itemize}
+
+% ---------------------------------------------------------------- 13
+\section{Interfaces}
+
+\begin{itemize}
+  \item \textbf{Security portal:} one web page set, opened at \code{http://127.0.0.1:8050}.
+  \item \textbf{Android app:} planned after the web version.
+\end{itemize}
+
+\need[12]
+\begin{center}
+\begin{tabularx}{\linewidth}{P{3.4cm}Y}
+\toprule
+\textbf{Portal page} & \textbf{What it shows} \\
+\midrule
+Overview & Counts of each action, and recent items that need attention \\
+Verdict queue & All verdicts. Opening one shows each agent's finding and the signed record \\
+Hosts & Each sender's recent traffic and risk, with no content \\
+Agents & Which models are running \\
+Run a scenario & Ready scenarios, run through the real agents \\
+Check an item & Paste a message, enter a link, or upload a QR image, file or traffic capture \\
+Test QR codes & The fake QR codes, each ready to check \\
+Test results & Every result, read directly from the result files \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\need[12]
+\begin{center}
+\begin{tabularx}{\linewidth}{P{1.2cm}P{5.4cm}Y}
+\toprule
+\textbf{Call} & \textbf{Path} & \textbf{Purpose} \\
+\midrule
+POST & \code{/api/check/text} & Check a message \\
+POST & \code{/api/check/link} & Check a link \\
+POST & \code{/api/check/file} & Check a QR image or a file \\
+POST & \code{/api/check/pcap} & Check hosts in a traffic capture \\
+GET & \code{/api/verdicts} & List verdicts \\
+GET & \code{/api/verdicts/\{id\}} & One verdict, with signature check \\
+GET & \code{/api/hosts} & Recent risk per host, no content \\
+GET & \code{/api/scenarios} & The demo scenarios \\
+POST & \code{/api/scenarios/\{id\}/run} & Run one scenario through the agents \\
+GET & \code{/api/results} & All test results \\
+GET & \code{/api/health} & Which models are running \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+% ---------------------------------------------------------------- 14
+\need[33]
+\section{Data}
+\label{sec:data}
+
+The models learn from public real data. Live phishing links are stored as plain text and are never opened. No live malware is downloaded.
+
+\need[20]
+\begin{center}
+\small
+\begin{tabularx}{\linewidth}{P{5.1cm}YP{2.4cm}}
+\toprule
+\textbf{Source} & \textbf{Used for} & \textbf{Licence} \\
+\midrule
+\multicolumn{3}{l}{\textbf{Content}} \\
+Civil Comments & Threat, hate, abuse: training and test & CC0 \\
+Measuring Hate Speech & Hate: unseen-source test & CC BY 4.0 \\
+Roman Urdu Hate Speech (RUHSOLD) & Roman Urdu abuse: training and test. The test labels come from the authors' own repository, because the common copy has none & MIT \\
+Enron, CEAS 2008, Ling, TREC 2006, SpamAssassin & Fraud and normal email: training & CC BY 4.0 \\
+Nazario, Nigerian Fraud & Fraud email: unseen-source test & CC BY 4.0 \\
+UCI SMS Spam Collection & SMS: training and test & CC BY 4.0 \\
+Hugging Face phishing dataset & Texts and URLs: training & Apache 2.0 \\
+\multicolumn{3}{l}{\textbf{Links}} \\
+Phishing.Database active list & Phishing links: training & MIT \\
+PhiUSIIL & Phishing and normal links & CC BY 4.0 \\
+OpenPhish community feed & Today's phishing links: test & Feed terms \\
+Common Crawl URL index & Real normal web addresses & Common Crawl terms \\
+Tranco list & Popular normal domains & Tranco terms \\
+\multicolumn{3}{l}{\textbf{Traffic}} \\
+Corrected CICIDS2017 & Labelled attacks: training and test & Dataset terms \\
+CTU-13 & Real botnet traffic: training and test & CC BY 2.0 \\
+MAWI backbone samples & Real Internet traffic: false alarms, speed & Dataset terms \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\subsection*{Rules that keep the results honest}
+
+\begin{itemize}
+  \item \textbf{Unseen sources:} Nazario, Nigerian Fraud and Measuring Hate Speech are never used for training.
+  \item \textbf{Domain split:} links are split by domain, so a domain seen in training never appears in a test.
+  \item \textbf{Fresh test:} today's OpenPhish links are a separate test, on domains the model never saw.
+  \item \textbf{Unseen attacks:} traffic is split by day, so Thursday and Friday attacks are not in training. For CTU-13, whole capture scenarios are held out.
+  \item \textbf{No address leak:} host addresses are not model inputs.
+  \item \textbf{No format leak:} normal URLs come from an index that changes their format, so all URLs are lowercased and stripped of scheme and www.
+  \item \textbf{No copies:} training text that shared long passages with the unseen test sets was removed, 1,968 fraud rows and 3,614 normal rows.
+\end{itemize}
+
+\subsection*{Test sets we make ourselves}
+
+\begin{itemize}
+  \item \textbf{Fake links:} 44 fraudulent and 22 normal links.
+  \item \textbf{Fake QR codes:} 11 fraudulent and 5 normal codes, each in 6 forms: clean, rotated, blurred, dim, angled and as a sticker on a poster.
+  \item \textbf{Messages:} 57 hand-written messages in English, Urdu and Roman Urdu, including veiled threats, polite scams, and hard normal cases such as ``this deadline is killing me''.
+\end{itemize}
+
+\keybox{\textbf{Safety of the fake codes.} Every fake fraud link uses a reserved name such as \code{.test}, or a documentation IP address. These cannot reach any real website. The script stops if any item could. Every QR image says ``STL TEST CODE''. The hand-written set is small and only shows the type of errors, so it is not a benchmark.}
+
+% ---------------------------------------------------------------- 15
+\section{Training pipeline}
+
+\begin{fig}{From public data to the running models.}{fig:train}
+\begin{tikzpicture}[x=1cm,y=1cm]
+  \node[gbox, minimum width=2.7cm, minimum height=26mm] (raw) at (0.3,1) {Public data\\[2pt]{\scriptsize content, links,}\\[-1pt]{\scriptsize traffic}};
+  \node[box, minimum width=2.4cm, minimum height=26mm] (prep) at (3.4,1) {Prepare\\[2pt]{\scriptsize clean, label,}\\[-1pt]{\scriptsize split}};
+  \node[hbox, minimum width=2.4cm] (tr) at (6.5,2) {Training\\[-1pt]{\scriptsize laptop GPU}};
+  \node[box, minimum width=2.4cm] (va) at (6.5,0.8) {Validation\\[-1pt]{\scriptsize pick cut-offs}};
+  \node[box, minimum width=2.4cm] (te) at (6.5,-0.5) {Unseen tests};
+  \node[box, minimum width=2.5cm, minimum height=14mm] (ex) at (9.8,1.4) {Export\\[-1pt]{\scriptsize ONNX}};
+  \node[gbox, minimum width=2.6cm, minimum height=14mm] (run) at (13,1.4) {Running\\agents};
+  \node[gbox, minimum width=2.6cm] (res) at (13,-0.5) {Results};
+  \draw[->] (raw) -- (prep);
+  \draw[->] (prep.east) -- (tr.west);
+  \draw[->] (prep.east) -- (va.west);
+  \draw[->] (prep.east) -- (te.west);
+  \draw[->] (tr) -- (va);
+  \draw[->] (va.east) -- (ex.west);
+  \draw[->] (ex) -- (run);
+  \draw[->] (te) -- (res);
+  \draw[->] (ex.south) |- (te.east);
+\end{tikzpicture}
+\end{fig}
+
+\need[9]
+\begin{center}
+\begin{tabularx}{\linewidth}{P{3cm}Y}
+\toprule
+\textbf{Machine} & \textbf{Setting} \\
+\midrule
+Training & NVIDIA RTX 4050 Laptop GPU with 6 GB memory, PyTorch. The language model must stay unloaded during training, or the GPU runs out of memory \\
+Running & ONNX Runtime on the CPU, Ollama for the language model \\
+Scripts & \code{training/prepare\_*.py}, \code{train\_*.py}, \code{evaluate\_*.py} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+% ---------------------------------------------------------------- 16
+\section{Test results}
+\label{sec:results}
+
+Every number here is read from the files in \code{results/}, so no result is typed by hand. FA means false alarms. All tests use data the models never trained on.
+
+\keybox{\textbf{How to read these results.} The main lessons are simple. Trained models beat keywords. Attacks a model was taught are caught well, and new ones often are not. The language model reads polite and veiled messages that the fast models miss, but it leans on opinions it is told, it is a poor judge of bare links, and text in a message can talk it out of a right answer. The two agents together are tested with content and traffic from separate sources, because no public data links them.}
+
+\subsection*{First full run, and why the tests ran twice}
+
+The first full run showed a problem that the hand-written tests had hidden. The language model flagged \firstRunWrong{} of \firstRunClean{} clean sessions (\firstRunCleanFA{}), and \firstRunBlocked{} of them were blocked outright. It treated political argument as hate speech. The hand-written harmless messages had no such text, so they looked fine, with only \firstRunHandWrong{} false alarms.
+
+We changed the design using validation rows only, so the test sets stayed clean. The prompt got tighter definitions and a sentence against fake approvals. One reader alone can no longer block, and an unsure reader alone only warns. The language model also stopped seeing the network finding. Then every test ran again, and all other results here come from that second run, apart from the link test, which ran once more after the change described under Links and QR codes.
+
+\begin{center}
+\small
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+\textbf{Validation rows, flagged} & \textbf{First prompt} & \textbf{Tighter} & \textbf{Guarded} & \textbf{Guarded, final rule} \\
+\midrule
+\tablerows{generated/prompt_rows.tex}
+\bottomrule
+\end{tabular}
+\end{center}
+
+On validation rows, the guarded prompt cut successful attacks from \attackCalm{} to \attackGuard{}.
+
+\need[14]
+\subsection*{Does meaning beat keywords?}
+
+\begin{center}
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}lrrrrrrr@{}}
+\toprule
+ & & \multicolumn{3}{c}{\textbf{F1}} & \multicolumn{3}{c}{\textbf{False alarms}} \\
+\textbf{Test} & \textbf{Bad / all} & \textbf{Keyword} & \textbf{Linear} & \textbf{STL} & \textbf{Keyword} & \textbf{Linear} & \textbf{STL} \\
+\midrule
+\tablerows{generated/text_rows.tex}
+\bottomrule
+\end{tabular}
+\end{center}
+
+Keywords lost on every row. The transformer has no clear lead over the linear model on unseen sources, but the linear model pays with far more false alarms on hate (\hateUnseenLinearFA{} against \hateUnseenFA{}) and Roman Urdu (\urduLinearFA{} against \urduFA{}). Threats are rare, so they stay the weakest label, and hate does not travel well to a source the model never saw.
+
+\need[12]
+\subsection*{Hand-written messages}
+
+These are small tests, so they show the type of error and are not a benchmark. Each cell gives what was caught, then the false alarms.
+
+\begin{center}
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}lrrrrrr@{}}
+\toprule
+ & \multicolumn{2}{c}{\textbf{Keyword filter}} & \multicolumn{2}{c}{\textbf{Fast text model}} & \multicolumn{2}{c}{\textbf{With language model}} \\
+\textbf{Group} & \textbf{Caught} & \textbf{FA} & \textbf{Caught} & \textbf{FA} & \textbf{Caught} & \textbf{FA} \\
+\midrule
+\tablerows{generated/semantic_rows.tex}
+\bottomrule
+\end{tabular}
+\end{center}
+
+\need[12]
+\subsection*{Language model on real text}
+
+Balanced samples of real held-out text. Both means the fast model and the language model together. A message counts when the system would flag it for any reason, and harmless rows carry no harmful label at all.
+
+\begin{center}
+\small
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+ & \multicolumn{2}{c}{\textbf{Caught}} & \multicolumn{2}{c}{\textbf{False alarms}} \\
+\textbf{Test} & \textbf{Fast model} & \textbf{Both} & \textbf{Fast model} & \textbf{Both} \\
+\midrule
+\tablerows{generated/sample_rows.tex}
+\bottomrule
+\end{tabular}
+\end{center}
+
+The language model is not a free gain. Across these samples, caught fell from \sampleFastCaught{} to \sampleBothCaught{}, and false alarms fell from \sampleFastWrong{} to \sampleBothWrong{}. It helped most on fraud email and on the unseen hate source. It gave up catches on Civil Comments, partly on purpose, because the prompt leaves blunt opinion alone and those labels are crowd votes that include plain rudeness. Anything the fast model flagged and it cleared keeps a warning, so nothing goes silent.
+
+Comments with no objection from any rater make up \clearShare{} of the Civil Comments test split. Of \clearSize{} such comments the system flagged \clearBoth{}, and the 95\% interval is \clearLow{} to \clearHigh{}.
+
+\need[11]
+\subsection*{Should only some items reach the language model?}
+
+A gate on the fast risk would save time. The table shows what each gate costs on the hand-written messages, and how much normal text it would still read.
+
+\begin{center}
+\small
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+\textbf{Gate} & \textbf{Caught} & \textbf{False alarms} & \textbf{Normal mail read} & \textbf{Normal comments read} \\
+\midrule
+\tablerows{generated/gate_rows.tex}
+\bottomrule
+\end{tabular}
+\end{center}
+
+A gate of 0.08 would read only \gateHighMail{} of normal mail, but it catches \gateHighCaught{} against \gateZeroCaught{}. The fast model is too sure of itself on polite and veiled messages, so the language model reads all text by default.
+
+\need[12]
+\subsection*{Links and QR codes}
+
+\begin{center}
+\small
+\begin{tabularx}{\linewidth}{P{5.6cm}P{2.3cm}Y}
+\toprule
+\textbf{Test} & \textbf{Size} & \textbf{Result} \\
+\midrule
+\tablerows{generated/link_rows.tex}
+\bottomrule
+\end{tabularx}
+\end{center}
+
+No link is ever opened. Each link takes about \linkMs{} ms, and each QR image takes about \qrMs{} ms to read. All \qrImages{} QR images were read correctly, and the verdict was right on \qrRight{}. The other \qrWrong{} are \qrWrongCodes{} fake links, each printed in six forms, that the link model passes.
+
+The second run showed one more problem. The content rule let the language model judge bare links alone, and on our hand-made links that looked good. On real links it was far worse than the link model: it wrongly flagged \linkSampleWrong{} of \linkSampleEach{} normal links, against \linkSampleFastWrong{}. It claims that an ordinary name copies a brand, and it stays confident while doing so. So we chose a new rule, using validation links only. A bare link now reaches the language model only if the link model flagged it. There it can confirm the flag or lower it to a warning, and it can never raise a link alone. On the held-out sample, the final rule caught \linkFinalCaught{} of \linkSampleEach{} and wrongly flagged \linkFinalWrong{}. The next table shows the choice on validation links, as links flagged / links at least warned.
+
+\begin{center}
+\small
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+\textbf{Rule} & \textbf{Phishing (\ruleEach{})} & \textbf{Normal (\ruleEach{})} & \textbf{Popular sites (\rulePopular{})} \\
+\midrule
+\tablerows{generated/link_rule_rows.tex}
+\bottomrule
+\end{tabular}
+\end{center}
+
+\need[13]
+\subsection*{Traffic}
+
+\begin{center}
+\small
+\begin{tabular}{@{}lrrrrrr@{}}
+\toprule
+ & \multicolumn{3}{c}{\textbf{STL traffic model}} & \multicolumn{3}{c}{\textbf{LightGBM}} \\
+\textbf{Test} & \textbf{F1} & \textbf{FA} & \textbf{AUC} & \textbf{F1} & \textbf{FA} & \textbf{AUC} \\
+\midrule
+\tablerows{generated/flow_rows.tex}
+\bottomrule
+\end{tabular}
+\end{center}
+
+Attacks the model was taught are caught very well. Attacks it was not taught are mostly missed, and LightGBM does no better. The second model, which learned only normal traffic, covers part of this gap:
+
+\begin{center}
+\small
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+\textbf{Test} & \textbf{Recall} & \textbf{False alarms} & \textbf{AUC} & \textbf{Recall at 0.1\% FA} \\
+\midrule
+\tablerows{generated/anomaly_rows.tex}
+\bottomrule
+\end{tabular}
+\end{center}
+
+These good numbers hold only on the network it learned. Built on CICIDS2017 and tested on the CTU-13 captures, it gave \crossFALow{} to \crossFAHigh{} false alarms, and the known-attack model reached a recall of only \crossRecallLow{} to \crossRecallHigh{}. On \backboneFlows{} flows of live backbone traffic from MAWI, the lab model fired on \backboneLab{} of flows. After learning half of the hosts, it fired on \backboneLocal{} of flows from the other half. So each network must teach it what normal is, and it can warn but never flag alone. The final traffic model, trained on both datasets, reaches F1 \finalLater{} on later CICIDS2017 flows.
+
+\need[10]
+\subsection*{Does the language model copy what it is told?}
+
+We told it what the link model thought of each of the 66 test links.
+
+\begin{center}
+\small
+\begin{tabular}{@{}lrr@{}}
+\toprule
+\textbf{Told} & \textbf{Fraud links caught} & \textbf{Normal links flagged} \\
+\midrule
+\tablerows{generated/opinion_rows.tex}
+\bottomrule
+\end{tabular}
+\end{center}
+
+We then told it that the sender's traffic matched a known attack. Without that note it flagged \noteAloneFlagged{} of \noteHarmless{} harmless messages. With the note it flagged \noteWithFlagged{}. It caught \noteAloneCaught{} of \noteHarmful{} harmful messages alone, and \noteWithCaught{} with the note. A second reader that leans on what it is told adds little, so the language model reads alone, and the Coordinator joins the agents after both have decided.
+
+\need[13]
+\subsection*{Disguised messages}
+
+Hand-written messages after each disguise. The first three numbers count harmful messages caught, and the last counts harmless ones wrongly flagged with the language model on.
+
+\begin{center}
+\small
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+\textbf{Disguise} & \textbf{Keyword} & \textbf{Fast model} & \textbf{With language model} & \textbf{False alarms} \\
+\midrule
+\tablerows{generated/disguise_rows.tex}
+\bottomrule
+\end{tabular}
+\end{center}
+
+\need[14]
+\subsection*{Attacks on the language model}
+
+Text is added to harmful messages to fool the language model. Of \injectionHarmful{} harmful messages, \injectionCaught{} were caught before any attack, and only those are attacked.
+
+\begin{center}
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}lrrrrrr@{}}
+\toprule
+ & & & \multicolumn{2}{c}{\textbf{Still warned}} & \multicolumn{2}{c}{\textbf{Flagged if traffic unusual}} \\
+\textbf{Attack} & \textbf{Fooled} & \textbf{Still flagged} & \textbf{No floor} & \textbf{Floor} & \textbf{No floor} & \textbf{Floor} \\
+\midrule
+\tablerows{generated/injection_rows.tex}
+\bottomrule
+\end{tabular}
+\end{center}
+
+The first six attacks were also used on validation rows, and they fooled the model in \injectionEarlyFooled{} of \injectionEarlyTried{} tries. The last two were added after probing the final prompt for a weakness, and they fooled it in \injectionLateFooled{} of \injectionLateTried{}. They say the text is a record or an exam sample and is only quoted, which copies the form of an honest report.
+
+In all, the model was fooled in \injectionFooledCount{} of \injectionTried{} tries (\injectionFooled{}). The floor kept a warning on \injectionSaved{} of them, because the fast model had seen the message. The other \injectionSilent{} passed in silence. If the sender's traffic is also unusual, each of those \injectionSaved{} warnings becomes a flag. Known attack traffic flags a session on its own, so it has no column here.
+
+\need[11]
+\subsection*{System test through the gateway}
+
+\systemSessions{} real SMTP sessions went through the gateway, and each pairs real held-out content with a real held-out traffic history from a separate source. Each agent must miss a whole group here, so the joined result is better by construction. This test checks that the parts work together. It does not prove that joining helps.
+
+\begin{center}
+\small
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+\textbf{Group, share flagged} & \textbf{Application} & \textbf{Network} & \textbf{Joined} & \textbf{No language model} \\
+\midrule
+\tablerows{generated/system_rows.tex}
+\bottomrule
+\end{tabular}
+\end{center}
+
+Joined recall was \systemRecall{}, precision \systemPrecision{} and false alarms \systemFA{}. All signatures were valid. The median session took \systemMedian{} seconds, and 95\% took under \systemPninetyfive{} seconds.
+
+The last column turns the language model off, and it is the fairer comparison, because only one thing changes. Clean sessions flagged fell from \fastSystemFA{} to \systemCleanFA{}, and clean sessions blocked fell from \fastSystemBlocked{} to \systemCleanBlocked{} of \systemGroup{}. Recall fell a little, from \fastSystemRecall{} to \systemRecall{}, and the median session took \systemMedian{} seconds against \fastSystemMedian{}.
+
+\need[16]
+\subsection*{Ready scenarios}
+
+\scenariosPassed{} of \scenariosTotal{} scenarios gave the expected result. The one that did not is the Urdu threat. The language model read it correctly, but with a confidence of \urduConfidence{}, under the 0.9 cut-off, so it got a warning and not a flag. We did not move the cut-off to rescue one demo.
+
+\begin{center}
+\small
+\begin{tabular}{@{}lllrrl@{}}
+\toprule
+\textbf{Scenario} & \textbf{Expected} & \textbf{Action} & \textbf{App.} & \textbf{Net.} & \textbf{Labels} \\
+\midrule
+\tablerows{generated/scenario_rows.tex}
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection*{What still fails}
+
+\begin{itemize}
+  \item \textbf{Threats and hate on real text.} The best F1 on threats is \textThreatFone{}, and the text model caught only \hateUnseenRecall{} of hateful rows from a source it never saw.
+  \item \textbf{New attacks in traffic.} On attack days it was not taught, the known-attack model's F1 is \thursdayFone{} and \fridayFone{}. The normal-behaviour model misses quiet attacks, with a recall of \botnetRecall{} on Friday's botnet.
+  \item \textbf{Another network.} Both traffic models fail on a network they did not learn. Each network must teach them what normal is.
+  \item \textbf{A fooled language model.} A fake record or a fake exam sample fools it often, and \injectionSilent{} of \injectionTried{} attack tries passed in silence.
+  \item \textbf{Harmful content from a normal host.} In the system test only \systemHarmful{} of these sessions were flagged, and the Network Agent cannot help.
+  \item \textbf{Clean sessions.} \systemCleanFA{} were still flagged, and \systemCleanBlocked{} of \systemGroup{} were blocked, because both readers agreed.
+  \item \textbf{Paired data.} No test here measures what joining adds on one real event seen at both layers.
+\end{itemize}
+
+
+% ---------------------------------------------------------------- 17
+\need[27]
+\section{Security, privacy and ethics}
+
+\begin{center}
+\begin{tabularx}{\linewidth}{P{4cm}YY}
+\toprule
+\textbf{Risk} & \textbf{What we do} & \textbf{What remains} \\
+\midrule
+A message tries to instruct the language model & It treats the message as data, its reply must fit fixed fields, and it cannot clear a flagged item alone & Prompt injection cannot be fully ruled out. Section~\ref{sec:results} measures it \\
+Attackers disguise words & Text cleaning, respelling in training, and the language model. Section~\ref{sec:results} measures it & New tricks can still pass \\
+A dangerous link is checked & Links are read as text, never opened & Hosted phishing on trusted sites is hard to spot from the URL \\
+False alarms & Cut-offs are set on data, and hard normal cases are tested & Some normal messages will be flagged \\
+Bias against identity words & Test messages that quote or report hate, and written examples for the language model & Models can still over-flag identity terms \\
+Normal-behaviour model on a new network & Capped at a warning, and must learn each network & A new network starts with no useful baseline \\
+Private data & Content stays on the machine, and the Network Agent never reads it & The verdict store holds item text, so it must be protected \\
+Stolen signing key & Each agent has its own key & Keys are plain files in the prototype \\
+Live phishing and malware data & Links are stored as text, and no malware files are kept & Feeds must still be handled with care \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+A flag is a warning for a person to review. It is not proof that someone did wrong. Any real use on people's messages needs their consent and a policy from the university.
+
+% ---------------------------------------------------------------- 18
+\section{Closest existing systems}
+
+A search on 5 November 2026 found no public project or product that does all of this: meaning-based AI on one event at both layers, a joined verdict, signed sharing, and both a user app and a server dashboard. This only covers what a search can reach. Each part exists somewhere on its own.
+
+\need[12]
+\begin{center}
+\begin{tabularx}{\linewidth}{P{3.6cm}Y}
+\toprule
+\textbf{System} & \textbf{How it compares} \\
+\midrule
+Darktrace & Commercial. Covers network and email, and its vendor says cross-domain attacks appear as one incident. It learns each organisation's normal behaviour, rather than checking what content means. \\
+Microsoft Phishing Triage Agent & A language model reads the email and can hunt across other data, but only after a user reports the email, and only inside Microsoft's estate. \\
+AiSOC (open source) & Joins alerts after detection and exports a signed evidence bundle. It works on alerts, not on one event at both layers. \\
+Slips (open source) & Behavioural network machine learning, a language model and peer sharing with trust, but it does not read content. \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+So STL should not claim that nobody uses AI across layers. The fair claim is an open design that checks one event by meaning at both layers and gives a verdict others can verify. The full review will be in the separate research report.
+
+% ---------------------------------------------------------------- 19
+\section{Software}
+
+\begin{fig}{Where the prototype runs.}{fig:deploy}
+\begin{tikzpicture}[x=1cm,y=1cm]
+  \draw[rounded corners=4pt] (3.6,0) rectangle (15.8,4.6);
+  \node[grplabel] at (3.6,4.6) {One laptop};
+  \node[hbox, minimum width=4.2cm, minimum height=26mm] (srv) at (6.3,2.2) {STL server\\[2pt]{\scriptsize Python, FastAPI, ONNX Runtime}\\[-1pt]{\scriptsize ports 8050, 8025, 8026}};
+  \node[box, minimum width=3.1cm] (oll) at (11,3.4) {Ollama\\[-1pt]{\scriptsize port 11434}};
+  \node[box, minimum width=3.1cm] (mod) at (11,2) {Model files\\[-1pt]{\scriptsize \code{models/}}};
+  \node[box, minimum width=3.1cm] (db) at (11,0.75) {Verdicts and keys\\[-1pt]{\scriptsize \code{data/}}};
+  \node[font=\scriptsize, align=center] at (14.2,2.2) {No outside\\AI service};
+  \node[gbox, minimum width=2.4cm] (web) at (1,3.3) {Web browser};
+  \node[gbox, minimum width=2.4cm] (mail) at (1,1.2) {Mail client};
+  \draw[<->] (web.east) -- (srv.west);
+  \draw[<->] (mail.east) -- (srv.west);
+  \draw[<->] (srv.east) -- (oll.west);
+  \draw[->] (mod.west) -- (srv.east);
+  \draw[<->] (srv.east) -- (db.west);
+\end{tikzpicture}
+\end{fig}
+
+\need[12]
+\begin{center}
+\begin{tabularx}{\linewidth}{P{4cm}Y}
+\toprule
+\textbf{Area} & \textbf{Technology} \\
+\midrule
+Language & Python 3.13, with plain JavaScript for the web pages \\
+Training & PyTorch, Transformers, LightGBM, scikit-learn \\
+Running models & ONNX Runtime, Ollama \\
+Web and API & FastAPI, Uvicorn \\
+Email & aiosmtpd \\
+Traffic & dpkt for reading captures \\
+QR codes & zxing-cpp to read, segno to make test codes \\
+Signing & Ed25519 through the \code{cryptography} package \\
+Storage & SQLite \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\textbf{To run it:}
+
+\begin{center}
+\code{.venv/Scripts/stl.exe serve --port 8050}
+\end{center}
+
+The page then opens at \code{http://127.0.0.1:8050}.
+
+% ---------------------------------------------------------------- 20
+\need[20]
+\section{Status, limits and next steps}
+\label{sec:status}
+
+\begin{center}
+\begin{tabularx}{\linewidth}{P{5.6cm}Y}
+\toprule
+\textbf{Part} & \textbf{State on 6 November 2026} \\
+\midrule
+Two-page plan & Done and approved \\
+Agents, Coordinator, signing, gateway & Done. 42 unit tests pass \\
+Text, link and traffic models & Trained and exported \\
+Normal-behaviour model & Trained on normal traffic \\
+Language model & Running locally. Reads all text, and bare links only if the link model flagged them \\
+Security portal & Done. All pages work \\
+Demo scenarios & \scenariosPassed{} of \scenariosTotal{} behave as expected \\
+Fake QR codes and links & Done: 66 links and 96 QR images \\
+Public data & Downloaded and prepared: about 7 million flows, 2.9 million links, 500,000 texts \\
+All tests & Done, Section~\ref{sec:results} \\
+Android app & Not started \\
+Research report & Done \\
+Paper & First draft done, needs the team's review \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\subsection*{Known limits}
+
+\begin{itemize}
+  \item \textbf{Linked data is missing.} No public data links both layers of one event. The two-agent test uses separate sources, so it is a system test, not field data.
+  \item \textbf{Traffic models are tied to their data.} The models do not carry over to a different network, as Section~\ref{sec:results} shows. Each network needs its own learning period, and the traffic results here apply to these data sets.
+  \item \textbf{Some attacks are missed.} Botnet traffic in CICIDS2017, Heartbleed, and web brute force and SQL injection all scored close to zero on the known-attack model.
+  \item \textbf{Urdu data is thin.} There is public Roman Urdu abuse data, but no public Urdu fraud data. The language model covers this gap, and only a small hand-written set tests it.
+  \item \textbf{Benchmarks flatter models.} Published work shows that hate detection scores fall sharply on true random samples of real posts, so our test scores may not hold in real use.
+  \item \textbf{Old traffic data.} CTU-13 dates from 2011 and CICIDS2017 from 2017, so modern attacks may look different.
+  \item \textbf{Training data may not fit email.} Civil Comments are public comments, so insults in formal emails may behave differently.
+  \item \textbf{The language model trusts its memory.} It judges links from what it remembers about domains, so a real site it has never heard of can look suspicious, and a new look-alike can pass. Bare links are now kept from it unless the link model flagged them, but links inside a message still reach it with the text.
+  \item \textbf{The language model can be talked round.} Text in a message can change its answer, as Section~\ref{sec:results} shows. If the fast models also saw the problem, a warning stays. If they did not, the message can pass in silence.
+  \item \textbf{Our own tests flatter.} The first prompt looked strong on our hand-written messages and failed on real comments. The language model looked strong on our hand-made links and failed on real ones. Any new prompt or rule must be checked on real data.
+  \item \textbf{Speed.} The language model takes about 2 seconds per item and fills the laptop GPU, so a busy mail server would need a bigger GPU or a queue.
+  \item \textbf{One machine.} All signing keys are plain files on one laptop, and there is no federation yet.
+\end{itemize}
+
+\begin{fig}{Roadmap.}{fig:roadmap}
+\begin{tikzpicture}[x=1cm,y=1cm]
+  \tikzset{phase/.style={draw, signal, signal to=east, signal from=west, signal pointer angle=120, fill=black!7, minimum width=3.9cm, minimum height=19mm, align=center, font=\scriptsize, inner sep=3pt}}
+  \node[phase] at (2,0) {\textbf{Done}\\Models, portal,\\first real results};
+  \node[phase, fill=black!16] at(6,0) {\textbf{Now}\\Review the paper,\\show the instructor};
+  \node[phase] at(10,0) {\textbf{Next}\\Android app,\\paired lab data, Urdu set};
+  \node[phase] at(14,0) {\textbf{Later}\\Signed sharing between\\simulated operators};
+\end{tikzpicture}
+\end{fig}
+
+\end{document}

@@ -1,0 +1,198 @@
+{
+ "abuse_civil/test-0.parquet": {
+  "bytes": 20800265,
+  "licence": "CC0",
+  "retrieved": "2026-11-05T12:37:47Z",
+  "sha256": "410f803ff161e7c4ba005db7de5b444cac413f4861bf056b0fd69d670d75aa08",
+  "url": "https://huggingface.co/api/datasets/google/civil_comments/parquet/default/test/0.parquet"
+ },
+ "abuse_civil/train-0.parquet": {
+  "bytes": 193527147,
+  "licence": "CC0",
+  "retrieved": "2026-11-05T12:33:11Z",
+  "sha256": "c20f01c3aecbdd942886cacb0ee67e995df33bc712a622fde75927ed3d6ccefe",
+  "url": "https://huggingface.co/api/datasets/google/civil_comments/parquet/default/train/0.parquet"
+ },
+ "abuse_civil/train-1.parquet": {
+  "bytes": 186778090,
+  "licence": "CC0",
+  "retrieved": "2026-11-05T12:36:58Z",
+  "sha256": "a76af69d7b24758bc38b196bc422d4767935c1dd7d3c1465554649c546d99ccb",
+  "url": "https://huggingface.co/api/datasets/google/civil_comments/parquet/default/train/1.parquet"
+ },
+ "abuse_civil/validation-0.parquet": {
+  "bytes": 20955569,
+  "licence": "CC0",
+  "retrieved": "2026-11-05T12:37:25Z",
+  "sha256": "2e0eb65474e7e1290df8689fc93eea783160c898c09ae15382c0a9662367bd03",
+  "url": "https://huggingface.co/api/datasets/google/civil_comments/parquet/default/validation/0.parquet"
+ },
+ "abuse_measuring_hate/train.parquet": {
+  "bytes": 20097387,
+  "licence": "CC BY 4.0",
+  "retrieved": "2026-11-05T12:38:37Z",
+  "sha256": "0d65ce8cfb857f5db90e74ce295067bba7473fe12115715f9dd18d2a5f87e976",
+  "url": "https://huggingface.co/api/datasets/ucberkeley-dlab/measuring-hate-speech/parquet/default/train/0.parquet"
+ },
+ "abuse_roman_urdu/task_1_test.tsv": {
+  "bytes": 186093,
+  "licence": "MIT",
+  "retrieved": "2026-11-05T19:25:48Z",
+  "sha256": "c08a90dd63e35a0eb3737c90f7bc09917b2832e56ffab8b37fff89499a419fe2",
+  "url": "https://raw.githubusercontent.com/haroonshakeel/roman_urdu_hate_speech/main/task_1_test.tsv"
+ },
+ "abuse_roman_urdu/train.parquet": {
+  "bytes": 525200,
+  "licence": "MIT",
+  "retrieved": "2026-11-05T12:37:53Z",
+  "sha256": "974c71ca5261efae4761268b9e86fbd2dc97ab9ac2456efafefffa2a05257ac0",
+  "url": "https://huggingface.co/api/datasets/community-datasets/roman_urdu_hate_speech/parquet/Coarse_Grained/train/0.parquet"
+ },
+ "abuse_roman_urdu/validation.parquet": {
+  "bytes": 58491,
+  "licence": "MIT",
+  "retrieved": "2026-11-05T12:37:57Z",
+  "sha256": "850a3d809bb192a6436046a055e5b6b8d62d215b2f4d1c3a38d0c6fda1100d58",
+  "url": "https://huggingface.co/api/datasets/community-datasets/roman_urdu_hate_speech/parquet/Coarse_Grained/validation/0.parquet"
+ },
+ "email_curated/CEAS_08.csv": {
+  "bytes": 67902056,
+  "licence": "CC BY 4.0",
+  "retrieved": "2026-11-05T13:00:06Z",
+  "sha256": "22375e7d5f5a8229dbe987914ee9b3705656c590038662a7df6054629b376074",
+  "url": "https://zenodo.org/api/records/8339691/files/CEAS_08.csv/content"
+ },
+ "email_curated/Enron.csv": {
+  "bytes": 44837129,
+  "licence": "CC BY 4.0",
+  "retrieved": "2026-11-05T12:38:51Z",
+  "sha256": "11f28a5bdd3603f1829681ab6b55071b5f9af781b4e6694e39216b2996a96883",
+  "url": "https://zenodo.org/api/records/8339691/files/Enron.csv/content"
+ },
+ "email_curated/Ling.csv": {
+  "bytes": 9337509,
+  "licence": "CC BY 4.0",
+  "retrieved": "2026-11-05T13:05:24Z",
+  "sha256": "9407c9e022accc6c831e54c5226b99b30ac4ae07682e63f5d483ed0ec17ff23c",
+  "url": "https://zenodo.org/api/records/8339691/files/Ling.csv/content"
+ },
+ "email_curated/Nazario.csv": {
+  "bytes": 7811841,
+  "licence": "CC BY 4.0",
+  "retrieved": "2026-11-05T13:02:20Z",
+  "sha256": "b8fbc4158fbdfaff1ed98584c43d72e283c6352d7ade4d457d34c1d79488d184",
+  "url": "https://zenodo.org/api/records/8339691/files/Nazario.csv/content"
+ },
+ "email_curated/Nigerian_Fraud.csv": {
+  "bytes": 9192393,
+  "licence": "CC BY 4.0",
+  "retrieved": "2026-11-05T13:04:19Z",
+  "sha256": "f5d6930763cae6feeae6484131c79655a7440abbb97d6f51eab757aea4e6ab4b",
+  "url": "https://zenodo.org/api/records/8339691/files/Nigerian_Fraud.csv/content"
+ },
+ "email_curated/SpamAssasin.csv": {
+  "bytes": 14879195,
+  "licence": "CC BY 4.0",
+  "retrieved": "2026-11-05T12:41:13Z",
+  "sha256": "3bfe8f8abff89f69a98456be50413c2fcb20a476141116dd84ee1507b980c00e",
+  "url": "https://zenodo.org/api/records/8339691/files/SpamAssasin.csv/content"
+ },
+ "email_curated/TREC_06.csv": {
+  "bytes": 41922386,
+  "licence": "CC BY 4.0",
+  "retrieved": "2026-11-05T13:08:19Z",
+  "sha256": "8ca6b1249f30f0a74790b8a34d4dbe248d526cfb0b13227b41970a1ebd638be5",
+  "url": "https://zenodo.org/api/records/8339691/files/TREC_06.csv/content"
+ },
+ "feed_feodo/ipblocklist.csv": {
+  "bytes": 940,
+  "licence": "CC0, abuse.ch",
+  "retrieved": "2026-11-05T12:11:28Z",
+  "sha256": "ed47be907faee9488c1045282a225b39c1d9ec815532e646610bc61c077c9ca1",
+  "url": "https://feodotracker.abuse.ch/downloads/ipblocklist.csv"
+ },
+ "feed_openphish/feed.txt": {
+  "bytes": 14934,
+  "licence": "OpenPhish community feed",
+  "retrieved": "2026-11-05T12:11:27Z",
+  "sha256": "af336d4894741fb72b85816b3467dc79f2f5d512acc02fd46f76f4acedddcfb1",
+  "url": "https://openphish.com/feed.txt"
+ },
+ "feed_phishing_database/phishing-links-ACTIVE.txt": {
+  "bytes": 65823890,
+  "licence": "MIT",
+  "retrieved": "2026-11-05T12:23:59Z",
+  "sha256": "be4a179b3ac92b7135595b459c2c9867fe681c12209489dd99517db8407a67c6",
+  "url": "https://raw.githubusercontent.com/Phishing-Database/Phishing.Database/master/phishing-links-ACTIVE.txt"
+ },
+ "feed_sslbl/ja3_fingerprints.csv": {
+  "bytes": 8496,
+  "licence": "CC0, abuse.ch",
+  "retrieved": "2026-11-05T12:11:33Z",
+  "sha256": "6974182489b6e5f5f64079454b81a7219a2d82ae950f108567fa371220eb09e9",
+  "url": "https://sslbl.abuse.ch/blacklist/ja3_fingerprints.csv"
+ },
+ "hf_phishing/texts.json": {
+  "bytes": 52079789,
+  "licence": "Apache 2.0",
+  "retrieved": "2026-11-05T13:09:04Z",
+  "sha256": "2479fdb94abb59332cc747f7b823a1651921b9828240c5dad0ffdba66ab02581",
+  "url": "https://huggingface.co/datasets/ealvaradob/phishing-dataset/resolve/main/texts.json"
+ },
+ "hf_phishing/urls.json": {
+  "bytes": 73157496,
+  "licence": "Apache 2.0",
+  "retrieved": "2026-11-05T13:11:24Z",
+  "sha256": "32cfba42892c915b041a3f0ca6ffd0f484b2590c4c2ca91b13d3ea1330b2c9bd",
+  "url": "https://huggingface.co/datasets/ealvaradob/phishing-dataset/resolve/main/urls.json"
+ },
+ "legit_commoncrawl/cluster.idx": {
+  "bytes": 104520381,
+  "licence": "Common Crawl URL index",
+  "retrieved": "2026-11-05T13:07:09Z",
+  "sha256": "5be2d43599aa978d252433007bf7843aae4d241584500e7d1cd1ccff71fe33fb",
+  "url": "https://data.commoncrawl.org/cc-index/collections/CC-MAIN-2026-43/indexes/cluster.idx"
+ },
+ "legit_tranco/top-1m.csv.zip": {
+  "bytes": 9714681,
+  "licence": "Tranco research list",
+  "retrieved": "2026-11-05T12:12:51Z",
+  "sha256": "bc4430c07510bfac6b361b9d01007886f070ef1b9ca51e027e2fe5b22806efbc",
+  "url": "https://tranco-list.eu/top-1m.csv.zip"
+ },
+ "sms_uci/sms_spam_collection.zip": {
+  "bytes": 203415,
+  "licence": "CC BY 4.0",
+  "retrieved": "2026-11-05T12:11:24Z",
+  "sha256": "1587ea43e58e82b14ff1f5425c88e17f8496bfcdb67a583dbff9eefaf9963ce3",
+  "url": "https://archive.ics.uci.edu/static/public/228/sms+spam+collection.zip"
+ },
+ "tools_jdk/temurin-17.zip": {
+  "bytes": 191117380,
+  "licence": "Eclipse Temurin JDK 17",
+  "retrieved": "2026-11-05T13:21:23Z",
+  "sha256": "98518ecf554465057ee5509462631deeee374bc368c12a411d225cd29381f84b",
+  "url": "https://api.adoptium.net/v3/binary/latest/17/ga/windows/x64/jdk/hotspot/normal/eclipse"
+ },
+ "traffic_cicids2017/CICIDS2017_improved.zip": {
+  "bytes": 343549013,
+  "licence": "Engelen et al. corrected CICIDS2017",
+  "retrieved": "2026-11-05T13:03:25Z",
+  "sha256": "97fdb91d339e2d8cf5627f981b831e5e7e400b981c58181c451a38fd03c48883",
+  "url": "https://intrusion-detection.distrinet-research.be/CNS2022/Datasets/CICIDS2017_improved.zip"
+ },
+ "traffic_ctu13/CTU-13-Dataset.tar.bz2": {
+  "bytes": 1997547391,
+  "licence": "CTU-13, Stratosphere Lab",
+  "retrieved": "2026-11-05T14:08:53Z",
+  "sha256": "1f8daeca146131a368b432b2d8625de5e4429bce833f3e4cf4bea8312344ab7f",
+  "url": "https://mcfp.felk.cvut.cz/publicDatasets/CTU-13-Dataset/CTU-13-Dataset.tar.bz2"
+ },
+ "url_phiusiil/phiusiil.zip": {
+  "bytes": 15376007,
+  "licence": "CC BY 4.0",
+  "retrieved": "2026-11-05T12:14:43Z",
+  "sha256": "0a639fd03aea6308c5b1c10c92aa23c2ce1505447a9137271865cd0badc9a59a",
+  "url": "https://archive.ics.uci.edu/static/public/967/phiusiil+phishing+url+dataset.zip"
+ }
+}

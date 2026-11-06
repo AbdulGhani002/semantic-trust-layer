@@ -1,0 +1,45 @@
+<!doctype html><meta charset=utf-8><title>Look A</title><style>*{box-sizing:border-box}
+    body{margin:0;font:13px/1.35 'Segoe UI',Arial,sans-serif;color:#242424;background:#fff;height:900px;overflow:hidden}
+    .top{height:44px;background:#1b1a19;color:#fff;display:flex;align-items:center;padding:0 16px;font-size:14px;font-weight:600}
+    .top span{margin-left:auto;font-weight:400;font-size:12px;color:#d6d6d6}
+    .wrap{display:flex;height:856px}
+    nav{width:208px;background:#f5f5f5;border-right:1px solid #e0e0e0;padding:8px 0}
+    nav div{padding:7px 18px;color:#424242}
+    nav div.on{background:#e6e6e6;font-weight:600;color:#111}
+    nav small{display:block;padding:12px 18px 4px;color:#707070;font-size:11px}
+    main{flex:1;padding:14px 20px;min-width:0;overflow:hidden}
+    h1{font-size:20px;font-weight:600;margin:0 0 8px}
+    .bar{display:flex;gap:18px;padding:6px 0;border-bottom:1px solid #e0e0e0;color:#0f6cbd}
+    .bar b{color:#fff;background:#0f6cbd;padding:4px 12px;font-weight:600;border-radius:2px;margin:-3px 0}
+    .bar i{margin-left:auto;font-style:normal;color:#424242}
+    .filters{display:flex;gap:8px;padding:8px 0;color:#424242}
+    .filters span{border:1px solid #d1d1d1;padding:2px 10px;border-radius:2px;background:#fff}
+    table{width:100%;border-collapse:collapse}
+    th{font-weight:600;text-align:left;border-bottom:1px solid #d1d1d1;padding:6px 8px;color:#424242;white-space:nowrap}
+    td{padding:6px 8px;border-bottom:1px solid #f0f0f0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:170px}
+    tr.sel td{background:#ebf3fc}
+    .sq{display:inline-block;width:9px;height:9px;margin-right:6px}
+    .block .sq{background:#b10e1c}.flag .sq{background:#d83b01}.warn .sq{background:#c19c00}.allow .sq{background:#a0a0a0}
+    aside{width:400px;flex:none;background:#fff;border-left:1px solid #d1d1d1;padding:14px 18px;box-shadow:-2px 0 6px rgba(0,0,0,.08)}
+    aside h2{font-size:16px;margin:0 0 2px;font-weight:600}
+    .tabs{display:flex;gap:16px;border-bottom:1px solid #e0e0e0;margin:10px 0 10px}
+    .tabs span{padding:5px 0}.tabs .on{border-bottom:2px solid #0f6cbd;font-weight:600}
+    dl{display:grid;grid-template-columns:120px 1fr;gap:4px 8px;margin:0 0 12px}dt{color:#616161}dd{margin:0}
+    h3{font-size:13px;margin:12px 0 4px;font-weight:600}
+    p{margin:0 0 6px}.foot{color:#707070;font-size:11px;padding-top:10px}
+    </style>
+    <div class=top>Semantic Trust Layer<span>Text model on · Link model on · Traffic model on · Language model on</span></div>
+    <div class=wrap>
+    <nav><div>Overview</div><div class=on>Verdict queue</div><div>Hosts</div><div>Agents</div><small>Demonstration</small><div>Run a scenario</div><div>Check an item</div><small>Evaluation</small><div>Test results</div></nav>
+    <main><h1>Verdict queue</h1>
+    <div class=bar><b>Run a scenario</b><span>Refresh</span><span>Export</span><i>Checked 1,204 &nbsp;·&nbsp; Allowed 1,131 &nbsp;·&nbsp; Warned 23 &nbsp;·&nbsp; Flagged 38 &nbsp;·&nbsp; Blocked 12</i></div>
+    <div class=filters><span>Action: Any</span><span>Found by: Any</span><span>Type: Any</span><span>Last 24 hours</span></div>
+    <table><tr><th></th><th>Action</th><th>Risk</th><th>Type</th><th>Item</th><th>From</th><th>Found by</th><th>Time</th></tr><tr class='sel block'><td><input type=checkbox></td><td><span class=sq></span>Block</td><td>0.97</td><td>Email</td><td>Fee policy</td><td>ahmed.raza@student.test</td><td>Application</td><td>14:02:11</td></tr><tr class='flag'><td><input type=checkbox></td><td><span class=sq></span>Flag</td><td>0.91</td><td>Qr</td><td>hbl-digital-banking.test/signin</td><td>poster camera 2</td><td>Application</td><td>14:01:58</td></tr><tr class='flag'><td><input type=checkbox></td><td><span class=sq></span>Flag</td><td>0.72</td><td>Email</td><td>Updated bank details for invoice</td><td>billing@vendor.test</td><td>Both</td><td>14:01:40</td></tr><tr class='flag'><td><input type=checkbox></td><td><span class=sq></span>Flag</td><td>0.66</td><td>Session</td><td>TLS to update-cdn-check.test</td><td>10.20.4.17</td><td>Network</td><td>14:01:22</td></tr><tr class='allow'><td><input type=checkbox></td><td><span class=sq></span>Allow</td><td>0.04</td><td>Email</td><td>Spring semester fee challan</td><td>registrar@nutech.test</td><td>-</td><td>14:00:47</td></tr><tr class='block'><td><input type=checkbox></td><td><span class=sq></span>Block</td><td>0.93</td><td>Message</td><td>Mubarak ho! Aap ka inam nikla hai</td><td>+92 300 0000000</td><td>Application</td><td>14:00:31</td></tr><tr class='allow'><td><input type=checkbox></td><td><span class=sq></span>Allow</td><td>0.02</td><td>Email</td><td>Minutes of the academic council</td><td>council@nutech.test</td><td>-</td><td>14:00:12</td></tr><tr class='allow'><td><input type=checkbox></td><td><span class=sq></span>Allow</td><td>0.06</td><td>Link</td><td>en.wikipedia.org/wiki/Phishing</td><td>check page</td><td>-</td><td>13:59:58</td></tr><tr class='flag'><td><input type=checkbox></td><td><span class=sq></span>Flag</td><td>0.78</td><td>Email</td><td>Accidents happen to people who ask</td><td>unknown@mail.test</td><td>Application</td><td>13:59:41</td></tr><tr class='block'><td><input type=checkbox></td><td><span class=sq></span>Block</td><td>0.89</td><td>Session</td><td>312 connections to port 445</td><td>10.20.4.33</td><td>Network</td><td>13:59:20</td></tr><tr class='allow'><td><input type=checkbox></td><td><span class=sq></span>Allow</td><td>0.08</td><td>File</td><td>semester_report.pdf</td><td>check page</td><td>-</td><td>13:58:55</td></tr><tr class='warn'><td><input type=checkbox></td><td><span class=sq></span>Warn</td><td>0.41</td><td>Email</td><td>Your mailbox is full</td><td>it-helpdesk@mail.test</td><td>Application</td><td>13:58:30</td></tr><tr class='allow'><td><input type=checkbox></td><td><span class=sq></span>Allow</td><td>0.03</td><td>Qr</td><td>nutech.edu.pk</td><td>check page</td><td>-</td><td>13:58:02</td></tr><tr class='allow'><td><input type=checkbox></td><td><span class=sq></span>Allow</td><td>0.05</td><td>Email</td><td>Exam schedule update</td><td>dean.office@nutech.test</td><td>-</td><td>13:57:44</td></tr><tr class='allow'><td><input type=checkbox></td><td><span class=sq></span>Allow</td><td>0.02</td><td>Session</td><td>HTTPS to github.com</td><td>10.20.4.8</td><td>-</td><td>13:57:19</td></tr><tr class='warn'><td><input type=checkbox></td><td><span class=sq></span>Warn</td><td>0.44</td><td>Message</td><td>Your parcel is held at customs</td><td>+92 300 0000001</td><td>Application</td><td>13:56:51</td></tr></table>
+    <div class=foot>Sample data for choosing a look</div></main>
+    <aside><h2>Fee policy</h2><div>Email to rector@nutech.test · Blocked · Risk 0.97</div>
+    <div class=tabs><span class=on>Summary</span><span>Application Agent</span><span>Network Agent</span><span>Signed record</span></div>
+    <p>The message uses a racial slur to attack the recipient and demands that they leave the institution.</p>
+    <h3>Application Agent</h3><dl><dt>Risk</dt><dd>0.97</dd><dt>Hate</dt><dd>0.98</dd><dt>Abuse</dt><dd>0.94</dd><dt>Threat</dt><dd>0.12</dd><dt>Fraud</dt><dd>0.01</dd><dt>Model</dt><dd>MiniLM + stl, Qwen review</dd><dt>Time</dt><dd>6.4 s</dd></dl>
+    <h3>Network Agent</h3><dl><dt>Risk</dt><dd>0.03</dd><dt>Behaviour</dt><dd>3 recent connections to 1 host, port 25</dd><dt>Time</dt><dd>4 ms</dd></dl>
+    <h3>Record</h3><dl><dt>Signature</dt><dd>Valid, 3 signers</dd><dt>Flagged by</dt><dd>Application Agent</dd></dl>
+    </aside></div>
