@@ -40,7 +40,7 @@ Some files are not in Git. The trained models are in the `models-v1` release, be
 
 [SETUP.md, Part 3](SETUP.md#part-3-retrain-and-retest) lists every command in order.
 
-Unload the language model before training the text model, or the GPU runs out of memory. `run_tests.sh` runs every test that uses the language model, in order. It starts with `compare_prompts.py` and `compare_link_rules.py`, which show how the review prompt and the decision rules were chosen on validation rows. `run_scenarios.py` needs `stl serve` running.
+Unload the language model before training the text model, or the GPU runs out of memory. `run_tests.sh` runs every test that uses the language model, in order. It starts with `compare_prompts.py` and `compare_link_rules.py`, which show how the review prompt and the decision rules were chosen on validation rows. `run_scenarios.py` needs STL running.
 
 ## Folders
 
