@@ -12,18 +12,21 @@ This is a final year project prototype. Agents run on one machine, and the two-a
 
 ## Run it
 
-```bash
+**[SETUP.md](SETUP.md) has every step for a new PC**, from installing the tools to retraining the models and building the documents.
+
+In short, in PowerShell:
+
+```powershell
 python -m venv .venv
-.venv\Scripts\activate
-pip install -e ".[dev]"
-gh release download models-v1 --repo AbdulGhani002/semantic-trust-layer
+.venv\Scripts\python -m pip install -e ".[dev]" -c requirements-lock.txt
+gh release download models-v1
 tar -xf stl-models.zip
-stl serve
+.venv\Scripts\python -m stl.cli serve
 ```
 
 Then open http://127.0.0.1:8050. Ollama with `qwen3.5:9b` is optional, and adds the language model review.
 
-The trained models come from the `models-v1` release, because `text.onnx` is over GitHub's 100 MB file limit. Raw data is not in the repo either. `training/download_data.py` fetches it, and `data/manifest.json` lists every source with its licence. Signing keys are made on the first run and stay on your machine.
+Some files are not in Git. The trained models are in the `models-v1` release, because `text.onnx` is over GitHub's 100 MB file limit. The training checkpoints are in the `checkpoints-v1` release. `training/download_data.py` fetches the raw data, and `data/manifest.json` lists every source with its licence. Signing keys are made on the first run and stay on your machine.
 
 ## Use the dashboard
 
@@ -35,28 +38,9 @@ The trained models come from the `models-v1` release, because `text.onnx` is ove
 
 ## Train and test
 
-Run these from the project folder, in order:
+[SETUP.md, Part 3](SETUP.md#part-3-retrain-and-retest) lists every command in order.
 
-```bash
-python training/download_data.py
-python training/prepare_text.py
-python training/train_text.py --epochs 1 --batch 16 --accumulate 2 --max-length 128
-python training/train_text.py --epochs 1 --batch 16 --accumulate 2 --max-length 128 --lr 1.5e-5 --resume
-python training/prepare_urls.py
-python training/train_url.py
-python training/prepare_flows.py
-python training/train_flows.py
-cd training && python train_anomaly.py && python evaluate_cross.py && cd ..
-python training/make_demo_flows.py
-python training/make_test_fixtures.py
-python training/evaluate_backbone.py
-bash training/run_tests.sh
-python training/run_scenarios.py
-python docs/make_tables.py
-python -m pytest
-```
-
-Unload the language model before training the text model, or the GPU runs out of memory. `run_tests.sh` runs every test that uses the language model, in order, and takes about two and a half hours. It starts with `compare_prompts.py` and `compare_link_rules.py`, which show how the review prompt and the decision rules were chosen on validation rows. `run_scenarios.py` needs `stl serve` running.
+Unload the language model before training the text model, or the GPU runs out of memory. `run_tests.sh` runs every test that uses the language model, in order. It starts with `compare_prompts.py` and `compare_link_rules.py`, which show how the review prompt and the decision rules were chosen on validation rows. `run_scenarios.py` needs `stl serve` running.
 
 ## Folders
 

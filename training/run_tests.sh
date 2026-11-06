@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Runs every test that uses the language model, one after another, so timings stay clean.
-# It takes about two and a half hours on the laptop. The traffic tests are separate.
+# It takes about three and a half hours on the laptop from a fresh copy. The traffic tests are separate.
 cd "$(dirname "$0")/.." || exit 1
 mkdir -p logs
 rm -f logs/run_tests.done
