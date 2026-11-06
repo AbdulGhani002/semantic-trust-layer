@@ -11,6 +11,7 @@ data/mailbox/
 data/mailbox_eval/
 data/*.db
 models/
+stl-models.zip
 logs/
 docs/paper/build/
 training/runs/
