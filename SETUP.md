@@ -149,7 +149,7 @@ The first line gets the graphics card build of PyTorch, about 2.5 GB. Run them i
 
 ### 2. Get the checkpoints (optional)
 
-You only need these to continue text training with `--resume`, or to export `text.onnx` again with `training\export_text.py`. They are an 800 MB download.
+You only need these to continue text training with `--resume`, or to export `text.onnx` again with `training\export_text.py`. They are a 740 MB download.
 
 ```powershell
 gh release download checkpoints-v1
@@ -298,4 +298,4 @@ Tested on 6 November 2026 from a clean clone with a new Python environment, on t
 
 Versions: Python 3.13.15, Ollama 0.40.14, Tectonic 0.17.0. The tools and the Ollama model were already on that laptop, so the `winget` lines and the 6.6 GB download were not run again, and this was not a separate PC.
 
-Part 3 uses the commands that built our results, but it has not been rerun from a clean copy. Only its package versions were checked.
+Part 3 uses the commands that built our results, but it has not been rerun from a clean copy. Only its package versions and the checkpoint download were checked. The restored checkpoints matched the originals exactly.
