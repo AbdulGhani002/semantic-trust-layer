@@ -34,7 +34,7 @@ dev = ["pytest>=8", "httpx>=0.27"]
 train = [
   "pandas>=2.2",
   "pyarrow>=16",
-  "torch>=2.4",
+  "torch>=2.13.0",
   "transformers>=4.44",
   "accelerate>=0.33",
   "sentencepiece>=0.2",
@@ -48,7 +48,7 @@ train = [
 stl = "stl.cli:main"
 
 [build-system]
-requires = ["setuptools>=68"]
+requires = ["setuptools>=84.1.0"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools.packages.find]
