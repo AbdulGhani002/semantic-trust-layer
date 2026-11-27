@@ -268,6 +268,7 @@ Set these before you start STL, if you need them. For example: `$env:STL_REVIEW_
 |---|---|---|
 | `STL_REVIEW_MODEL` | `qwen3.5:9b` | Language model name |
 | `STL_OLLAMA` | `http://127.0.0.1:11434` | Where Ollama runs |
+| `STL_KEEP_ALIVE` | `60m` | How long the language model stays loaded on the graphics card after the last item. STL also loads it when it starts, so the first item is fast |
 | `STL_REVIEW_GATE` | `0` | Fast risk an item needs before the language model reads it. Raising it saves time on a slow PC but misses polite and veiled messages |
 
 STL uses ports 8050 (dashboard), 8025 (SMTP gateway), 8026 (HTTP proxy) and 11434 (Ollama). They all stay on this PC.

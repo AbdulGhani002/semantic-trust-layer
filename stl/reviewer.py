@@ -11,6 +11,7 @@ import urllib.request
 
 OLLAMA = os.environ.get("STL_OLLAMA", "http://127.0.0.1:11434")
 MODEL = os.environ.get("STL_REVIEW_MODEL", "qwen3.5:9b")
+KEEP_ALIVE = os.environ.get("STL_KEEP_ALIVE", "60m")
 LABELS = ("threat", "hate", "abuse", "fraud")
 OPTIONS = {"temperature": 0, "num_predict": 160, "num_ctx": 3072}
 LAB_NAMES = (".test", ".invalid", ".example")
@@ -58,9 +59,13 @@ class Reviewer:
             return False
         return self.model in names
 
+    def warm(self) -> None:
+        self._ask([{"role": "user", "content": "ok"}], {"num_predict": 1})
+
     def _ask(self, messages: list[dict], extra: dict) -> dict | None:
         body = {
             "model": self.model,
+            "keep_alive": KEEP_ALIVE,
             "stream": False,
             "think": False,
             "format": "json",

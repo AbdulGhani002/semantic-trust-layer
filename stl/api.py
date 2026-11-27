@@ -4,6 +4,7 @@ from __future__ import annotations
 import asyncio
 import csv
 import json
+import threading
 from contextlib import asynccontextmanager
 from pathlib import Path
 
@@ -160,6 +161,8 @@ def create_app(start_gateways: bool = False) -> FastAPI:
             proxy = WebProxy(layer.coordinator, layer.ledger, WEB_PROXY_PORT)
             await proxy.start()
             layer.mail_running = layer.proxy_running = True
+        if layer.reviewer:
+            threading.Thread(target=layer.reviewer.warm, daemon=True).start()
         yield
         if mail:
             mail.stop()
