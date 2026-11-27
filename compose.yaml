@@ -1,0 +1,45 @@
+services:
+  ollama:
+    image: ollama/ollama:0.40.18
+    environment:
+      OLLAMA_KEEP_ALIVE: 60m
+    volumes:
+      - ollama:/root/.ollama
+    healthcheck:
+      test: ["CMD", "ollama", "list"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+    restart: unless-stopped
+
+  ollama-pull:
+    image: ollama/ollama:0.40.18
+    environment:
+      OLLAMA_HOST: ollama:11434
+    entrypoint: ["ollama", "pull", "qwen3.5:9b"]
+    depends_on:
+      ollama:
+        condition: service_healthy
+    restart: "no"
+
+  stl:
+    build: .
+    image: stl:latest
+    ports:
+      - "127.0.0.1:8050:8050"
+      - "127.0.0.1:8025:8025"
+      - "127.0.0.1:8026:8026"
+    environment:
+      GH_TOKEN: ${GH_TOKEN:-}
+    volumes:
+      - stl-models:/app/models
+      - stl-data:/app/data
+    depends_on:
+      ollama-pull:
+        condition: service_completed_successfully
+    restart: unless-stopped
+
+volumes:
+  ollama:
+  stl-models:
+  stl-data:

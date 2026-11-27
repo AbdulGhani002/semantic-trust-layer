@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import asyncio
 import json
+import os
 import time
 from collections import defaultdict, deque
 from email import message_from_bytes, policy
@@ -22,6 +23,7 @@ from .schema import Flow, Item
 
 HISTORY = 32
 MAX_BODY = 1_000_000
+GATEWAY_HOST = os.environ.get("STL_GATEWAY_HOST", "127.0.0.1")
 
 
 class FlowLedger:
@@ -91,7 +93,7 @@ class MailHandler:
 
 
 def start_mail(coordinator: Coordinator, ledger: FlowLedger, mailbox: Path, port: int = 8025) -> Controller:
-    controller = Controller(MailHandler(coordinator, ledger, mailbox, port), hostname="127.0.0.1", port=port)
+    controller = Controller(MailHandler(coordinator, ledger, mailbox, port), hostname=GATEWAY_HOST, port=port)
     controller.start()
     return controller
 
@@ -127,7 +129,7 @@ class WebProxy:
         self.server: asyncio.AbstractServer | None = None
 
     async def start(self) -> None:
-        self.server = await asyncio.start_server(self.handle, "127.0.0.1", self.port)
+        self.server = await asyncio.start_server(self.handle, GATEWAY_HOST, self.port)
 
     async def stop(self) -> None:
         if self.server:

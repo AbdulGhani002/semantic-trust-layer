@@ -1,0 +1,10 @@
+*
+!pyproject.toml
+!requirements-lock.txt
+!README.md
+!stl/
+!tests/
+!results/
+**/__pycache__/
+**/*.pyc
+stl.egg-info/

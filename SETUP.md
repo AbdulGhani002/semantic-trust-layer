@@ -11,6 +11,57 @@ Most people only need Parts 1 and 2.
 | [3. Retrain and retest](#part-3-retrain-and-retest) | New models and new test results | About 8 hours, plus downloads | 10 GB |
 | [4. Build the documents](#part-4-build-the-documents) | The paper and architecture PDFs | 5 minutes | 100 MB |
 
+## Quick start with Docker
+
+This runs the same thing as Parts 1 and 2 in two containers: STL and Ollama with the language model. It works on Windows, Linux and macOS.
+
+1. Install Docker Desktop and open it once. On Windows:
+
+   ```powershell
+   winget install --id Docker.DockerDesktop -e
+   ```
+
+   Restart the PC if it asks. On Linux, install Docker Engine, and for an NVIDIA graphics card also the NVIDIA Container Toolkit.
+
+2. Get the code:
+
+   ```powershell
+   git clone https://github.com/AbdulGhani002/semantic-trust-layer.git stl
+   cd stl
+   ```
+
+3. Start it. With an NVIDIA graphics card:
+
+   ```powershell
+   docker compose -f compose.yaml -f compose.gpu.yaml up -d --build
+   ```
+
+   Without one:
+
+   ```powershell
+   docker compose up -d --build
+   ```
+
+   The first start downloads everything by itself: the Python packages, the 6.6 GB language model, the trained models (`models-v1`, 85 MB) and the training checkpoints (`checkpoints-v1`, 707 MB). Follow it with `docker compose logs -f stl`. Later starts skip the downloads and take about a minute.
+
+   If the repo is ever made private again, give the container a GitHub token first: `$env:GH_TOKEN = gh auth token`.
+
+4. Open http://127.0.0.1:8050. The top bar should say all four models are on.
+
+| Task | Command |
+|---|---|
+| See if it is ready | `docker compose ps` |
+| Follow the log | `docker compose logs -f stl` |
+| Run the unit tests | `docker compose exec stl python -m pytest -q` |
+| Stop it | `docker compose down` |
+| Rebuild after `git pull` | Run the start command again |
+
+`docker compose down` keeps the language model, the trained models and STL's data (signing keys, verdicts) in Docker volumes. `docker compose down -v` deletes them too, so the next start downloads everything again.
+
+Without Docker, the same download works with `.venv\Scripts\python -m stl.cli download --checkpoints` (leave out `--checkpoints` to get only the 85 MB of trained models).
+
+The ports only open on this PC. To let other devices on the network reach the dashboard, remove `127.0.0.1:` from the ports in `compose.yaml`. The dashboard has no login, so do this only on a network you trust.
+
 ## What the PC needs
 
 | | Needed | What we used |
@@ -35,7 +86,7 @@ Close PowerShell and open it again, so it can find the new tools. If `winget` is
 
 ### 2. Sign in to GitHub
 
-The repo is private. Your own account already has access. A teammate's account must be added first, in the repo under Settings, Collaborators.
+The repo is public, so anyone can clone it. Signing in is still needed for `gh release download` below, and to push changes, which needs collaborator access (repo Settings, Collaborators).
 
 ```powershell
 gh auth login
@@ -270,6 +321,7 @@ Set these before you start STL, if you need them. For example: `$env:STL_REVIEW_
 | `STL_OLLAMA` | `http://127.0.0.1:11434` | Where Ollama runs |
 | `STL_KEEP_ALIVE` | `60m` | How long the language model stays loaded on the graphics card after the last item. STL also loads it when it starts, so the first item is fast |
 | `STL_REVIEW_GATE` | `0` | Fast risk an item needs before the language model reads it. Raising it saves time on a slow PC but misses polite and veiled messages |
+| `STL_GATEWAY_HOST` | `127.0.0.1` | Address the SMTP gateway and HTTP proxy listen on. The Docker image sets `0.0.0.0` |
 
 STL uses ports 8050 (dashboard), 8025 (SMTP gateway), 8026 (HTTP proxy) and 11434 (Ollama). They all stay on this PC.
 

@@ -26,6 +26,12 @@ tar -xf stl-models.zip
 
 Then open http://127.0.0.1:8050. Ollama with `qwen3.5:9b` is optional, and adds the language model review.
 
+With Docker, one command in the cloned folder downloads the models, checkpoints and language model, then starts STL and Ollama together (drop `-f compose.gpu.yaml` without an NVIDIA card):
+
+```powershell
+docker compose -f compose.yaml -f compose.gpu.yaml up -d --build
+```
+
 Some files are not in Git. The trained models are in the `models-v1` release, because `text.onnx` is over GitHub's 100 MB file limit. The training checkpoints are in the `checkpoints-v1` release. `training/download_data.py` fetches the raw data, and `data/manifest.json` lists every source with its licence. Signing keys are made on the first run and stay on your machine.
 
 ## Use the dashboard
